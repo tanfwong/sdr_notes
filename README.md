@@ -12,5 +12,4 @@ consideration,
 * proficiently use UHD as a programming tool to support development with USRP
 radios, and
 * implement simple communication algorithms and systems using USRP radios.
-
-[URL: tanfwong.github.io/sdr_notes/](tanfwong.github.io/sdr_notes/)
+* 
