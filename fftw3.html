@@ -1,0 +1,604 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>3.1. FFTW3 Library &#8212; Digital Communications with SDRs</title>
+    
+  <link rel="stylesheet" href="_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.3da636dd464baa7582d2.js">
+
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="canonical" href="wing.ece.ufl.edu/eel6528/fftw3.html" />
+    <link rel="shortcut icon" href="_static/logo.png"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="3.2. References and further reading" href="filter_exs.html" />
+    <link rel="prev" title="3. Multi-rate Filtering" href="filter.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+<!-- Opengraph tags -->
+<meta property="og:url"         content="wing.ece.ufl.edu/eel6528/fftw3.html" />
+<meta property="og:type"        content="article" />
+<meta property="og:title"       content="FFTW3 Library" />
+<meta property="og:description" content="FFTW3 Library  The FFTW3 library is a C/C++ library for computing DFT (and some other related transforms) in one or more dimensions, of arbitrary input size, an" />
+<meta property="og:image"       content="wing.ece.ufl.edu/eel6528/_static/logo.png" />
+
+<meta name="twitter:card" content="summary" />
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="index.html">
+  
+  <img src="_static/logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">Digital Communications with SDRs</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="intro.html">
+   EEL6528 Digital Communications with Software Defined Radios
+  </a>
+ </li>
+</ul>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="ch1/introduction.html">
+   1. Introduction
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="ch2/prelims.html">
+   2. Some Programming Prelims
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="ch2/uhd.html">
+     2.1. UHD
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="ch2/multithread.html">
+     2.2. Elementary Multi-threading
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="ch2/prelims_exs.html">
+     2.3. References and further reading
+    </a>
+   </li>
+   <li class="toctree-l2 collapsible-parent">
+    <a class="reference internal" href="ch2/prelims_exs.html#code-examples">
+     2.4. Code Examples
+    </a>
+    <ul class="collapse-ul">
+     <li class="toctree-l3">
+      <a class="reference internal" href="ch2/uhd_safe_main.html">
+       2.4.1.
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         uhd_safe_main.hpp
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ch2/age.html">
+       2.4.2.
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         age.cpp
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ch2/txrx_setup.html">
+       2.4.3.
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         txrx_loopback_to_file.cpp
+        </span>
+       </code>
+       (setup)
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ch2/txrx_stream.html">
+       2.4.4.
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         txrx_loopback_to_file.cpp
+        </span>
+       </code>
+       (stream)
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ch2/stream.html">
+       2.4.5.
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         stream.hpp
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ch2/tx_samples_from_file.html">
+       2.4.6.
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         tx_samples_from_file.cpp
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ch2/txrx_TX.html">
+       2.4.7.
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         txrx_loopback_to_file.cpp
+        </span>
+       </code>
+       (TX)
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ch2/txrx_RX.html">
+       2.4.8.
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         txrx_loopback_to_file.cpp
+        </span>
+       </code>
+       (RX)
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ch2/age_threads.html">
+       2.4.9.
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         age_threads.cpp
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ch2/txrx_thread.html">
+       2.4.10.
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         txrx_loopback_to_file.cpp
+        </span>
+       </code>
+       (thread)
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ch2/age_mutex.html">
+       2.4.11.
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         age_mutex.cpp
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ch2/age_mutex_caller.html">
+       2.4.12.
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         age_mutex_caller.cpp
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ch2/count_atomic.html">
+       2.4.13.
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         count_atomic.cpp
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ch2/queue.html">
+       2.4.14.
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         queue.hpp
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ch2/age_fifo.html">
+       2.4.15.
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         age_fifo.cpp
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+    <i class="fas fa-chevron-down">
+    </i>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 current active collapsible-parent">
+  <a class="reference internal" href="filter.html">
+   3. Multi-rate Filtering
+  </a>
+  <ul class="current collapse-ul">
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     3.1. FFTW3 Library
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="filter_exs.html">
+     3.2. References and further reading
+    </a>
+   </li>
+   <li class="toctree-l2 collapsible-parent">
+    <a class="reference internal" href="filter_exs.html#code-examples">
+     3.3. Code Examples
+    </a>
+    <ul class="collapse-ul">
+     <li class="toctree-l3">
+      <a class="reference internal" href="fft.html">
+       3.3.1.
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         fft.hpp
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="test_fft.html">
+       3.3.2.
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         test_fft.cpp
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+    <i class="fas fa-chevron-down">
+    </i>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/fftw3.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+        <!-- Source interaction buttons -->
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="fftw3-library">
+<h1><span class="section-number">3.1. </span>FFTW3 Library<a class="headerlink" href="#fftw3-library" title="Permalink to this headline">¶</a></h1>
+<ul>
+<li><p>The <a class="reference external" href="http://fftw.org/">FFTW3</a> library is a C/C++ library for
+computing DFT (and some other related transforms) in one or more
+dimensions, of arbitrary input size, and of both real- and
+complex-valued data. The FFTW3 library has been highly optimized to
+run with different levels of precision and under a number of CPU
+architectures. We will employ in most cases the multi-threaded,
+single-precision, 1-d FFT library functions.</p></li>
+<li><p>The nice thing about FFTW3 is that a detailed
+manual <a class="bibtex reference internal" href="filter_exs.html#frigo2020" id="id1">[1]</a> is available. One should
+consult the manual to check out the many different settings,
+configurations, and usages of the library. Here, we briefly summarize
+the steps to use FFTW3 to do a single-precision, 1-d FFT calculation:</p>
+<ol>
+<li><p>Allocate memory to hold the input and output arrays</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">fftwf_complex</span><span class="o">*</span> <span class="n">in</span> <span class="o">=</span> <span class="p">(</span><span class="n">fftwf_complex</span><span class="o">*</span><span class="p">)</span> <span class="n">fftwf_malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">fftw_complex</span><span class="p">)</span> <span class="o">*</span> <span class="n">N</span><span class="p">);</span>
+<span class="n">fftwf_complex</span><span class="o">*</span> <span class="n">out</span> <span class="o">=</span> <span class="p">(</span><span class="n">fftwf_complex</span><span class="o">*</span><span class="p">)</span> <span class="n">fftwf_malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">fftw_complex</span><span class="p">)</span> <span class="o">*</span> <span class="n">N</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The method <code class="docutils literal notranslate"><span class="pre">fftwf_malloc</span></code> should be used to work best with SIMD
+instructions. The type <code class="docutils literal notranslate"><span class="pre">fftwf_complex</span></code> is the compatible with
+<code class="docutils literal notranslate"><span class="pre">std::complex&lt;float&gt;</span></code>.</p>
+</li>
+<li><p>Instantiate a plan for the FFT using library methods such as <code class="docutils literal notranslate"><span class="pre">fftwf_plan_dft_1d</span></code>:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">fftwf_plan</span> <span class="n">p</span> <span class="o">=</span> <span class="n">fftwf_plan_dft_1d</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">in</span><span class="p">,</span> <span class="n">out</span><span class="p">,</span> <span class="n">FFTW_FORWARD</span><span class="p">,</span> <span class="n">FFTW_ESTIMATE</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>where <code class="docutils literal notranslate"><span class="pre">N</span></code> specifies the size of the FFT, <code class="docutils literal notranslate"><span class="pre">FFTW_FORWARD</span></code> is a flag
+specifying forward FFT should be calculated, and <code class="docutils literal notranslate"><span class="pre">FFTW_ESTIMATE</span></code> is
+another flag that tells FFTW3 the strategy that it should use to
+speed up the FFT implementation.</p>
+</li>
+<li><p>Enter the FFT input data to the input array <code class="docutils literal notranslate"><span class="pre">in</span></code>, calculate the
+FFT by executing the FFT plan:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">fftwf_execute</span><span class="p">(</span><span class="n">p</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>and the FFT output will be stored in the array <code class="docutils literal notranslate"><span class="pre">out</span></code> after
+execution.</p>
+</li>
+<li><p>After all FFT calculations are done, clean up by destroying the
+plan and freeing up the arrays:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">fftwf_destroy_plan</span><span class="p">(</span><span class="n">p</span><span class="p">);</span>
+<span class="n">fftwf_free</span><span class="p">(</span><span class="n">in</span><span class="p">);</span> 
+<span class="n">fftwf_free</span><span class="p">(</span><span class="n">out</span><span class="p">);</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</li>
+<li><p>Let <span class="math notranslate nohighlight">\(N\)</span> be the FFT size and <span class="math notranslate nohighlight">\(x[n]\)</span> and <span class="math notranslate nohighlight">\(X_k\)</span> be the inputs of the
+forward (<code class="docutils literal notranslate"><span class="pre">FFTW_FORWARD</span></code>) and inverse (<code class="docutils literal notranslate"><span class="pre">FFTW_BACKWARD</span></code>) FFT
+plans above, respectively. Executing the forward plan calculates</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+     \sum_{n=0}^{N-1} x_n e^{-j \frac{2\pi n k}{N}},
+   \end{equation*}\]</div>
+<p>while executing the inverse plan calculates</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+       \sum_{k=0}^{N-1} X_k e^{j \frac{2\pi n k}{N}}.
+   \end{equation*}\]</div>
+<p>Note that one must remember to divide the output of the
+inverse FFT calculation obtained from executing the inverse plan by
+<span class="math notranslate nohighlight">\(N\)</span> in order to get the “standard” inverse FFT result.</p>
+</li>
+<li><p>While FFTW3 allows any FFT size, I would recommend sticking to powers of 2 for
+most efficient calculations.</p></li>
+<li><p>In addition to single-precision arithmetic with the <code class="docutils literal notranslate"><span class="pre">float</span></code> type,
+FFTW3 also supports doing calculation with the
+<code class="docutils literal notranslate"><span class="pre">double</span></code> and <code class="docutils literal notranslate"><span class="pre">long</span> <span class="pre">double</span></code> types. To use <code class="docutils literal notranslate"><span class="pre">double</span></code> and <code class="docutils literal notranslate"><span class="pre">long</span> <span class="pre">double</span></code>,
+simply replace the prefix <code class="docutils literal notranslate"><span class="pre">fftwf</span></code> in each method or type name by
+<code class="docutils literal notranslate"><span class="pre">fftw</span></code> and <code class="docutils literal notranslate"><span class="pre">fftwl</span></code>, respectively.</p></li>
+<li><p>The method <code class="docutils literal notranslate"><span class="pre">fftwf_plan_dft_1d</span></code> above is one of the many <em>basic
+interface</em> that FFTW3 provides. A basic interface computes a single
+transform of contiguous data. See <a class="bibtex reference internal" href="filter_exs.html#frigo2020" id="id2">[1]</a> for other basic
+interfaces provided. FFTW3 also provides two more levels of
+interfaces — <em>advance</em> and <em>guru</em>. An advanced interface computes
+multiple transforms of over contiguous or strided data. A
+guru interface supports the most general data layouts,
+multiplicities, and strides.</p></li>
+<li><p>For later purposes, we often need to perform multiple FFT
+calculations on a batch of samples. To avoid overheads incurred in
+calling a basic interfacing method multiple times, it is
+beneficial to use advanced or guru interface instead. For ease of
+later use and as an example to show the use of an advanced
+interface, I have implemented the class <code class="docutils literal notranslate"><span class="pre">fft</span></code> which serves as a
+simple wrapper to use an advance interface for doing multi-threaded,
+single-precision, 1-d FFT calculations on a batch of samples in the
+header file <a class="reference internal" href="fft.html#code-fft"><span class="std std-ref">fft.hpp</span></a>. Steps 1-2 and 4 above are
+implemented in the constructor and destructor of <code class="docutils literal notranslate"><span class="pre">fft</span></code> whereas the
+FFT calculations on the whole batch can be executed by calling the
+class method <code class="docutils literal notranslate"><span class="pre">fft::calculate()</span></code>. The “divide-by-<span class="math notranslate nohighlight">\(N\)</span>”
+normalization mentioned above is included in <code class="docutils literal notranslate"><span class="pre">fft::calculate()</span></code> for inverse FFT.</p></li>
+<li><p>To use the wrapper:</p>
+<ol>
+<li><p>Instantiate the <code class="docutils literal notranslate"><span class="pre">fft</span></code> object:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="c1">// Perform nblocks forward fftsize-point FFTs on a batch of samples</span>
+<span class="c1">// using nthreads threads</span>
+<span class="c1">// Input and output strides are set to fftsize</span>
+<span class="n">fft</span> <span class="nf">fwd_fft</span><span class="p">(</span><span class="n">nthreads</span><span class="p">,</span> <span class="n">fftsize</span><span class="p">,</span> <span class="n">nblocks</span><span class="p">,</span> <span class="n">fftsize</span><span class="p">,</span> <span class="n">fftsize</span><span class="p">,</span> <span class="nb">false</span><span class="p">);</span>
+</pre></div>
+</div>
+</li>
+<li><p>Get pointer to the input and output arrays:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">complex</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;*</span> <span class="n">in</span> <span class="o">=</span> <span class="n">fwd_fft</span><span class="p">.</span><span class="n">get_in</span><span class="p">();</span>
+<span class="n">std</span><span class="o">::</span><span class="n">complex</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;*</span> <span class="n">out</span> <span class="o">=</span> <span class="n">fwd_fft</span><span class="p">.</span><span class="n">get_out</span><span class="p">();</span>
+</pre></div>
+</div>
+</li>
+<li><p>Perform FFT calculations:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="c1">// Load samples into the array pointed to by in</span>
+<span class="n">fwd_fft</span><span class="p">.</span><span class="n">calculate</span><span class="p">();</span>
+<span class="c1">// Output stored in the array pointed to by out</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</li>
+<li><p>Refer to <a class="reference internal" href="fft.html#code-fft"><span class="std std-ref">fft.hpp</span></a> and the example code
+<a class="reference internal" href="test_fft.html#code-test-fft"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">test_fft.cpp</span></code></span></a> for detailed information about how
+to use the wrapper.</p></li>
+</ul>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="filter.html" title="previous page"><span class="section-number">3. </span>Multi-rate Filtering</a>
+    <a class='right-next' id="next-link" href="filter_exs.html" title="next page"><span class="section-number">3.2. </span>References and further reading</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Tan F. Wong<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="_static/js/index.3da636dd464baa7582d2.js"></script>
+
+
+    
+  </body>
+</html>

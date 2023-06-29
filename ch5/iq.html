@@ -1,0 +1,838 @@
+
+
+<!DOCTYPE html>
+
+
+<html >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>5.2. DC Offset and IQ Imbalance &#8212; Digital Communications with SDRs</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'ch5/iq';</script>
+    <link rel="canonical" href="wing.ece.ufl.edu/eel6528/ch5/iq.html" />
+    <link rel="shortcut icon" href="../_static/logo.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="5.3. References and further reading" href="usrp_refs.html" />
+    <link rel="prev" title="5.1. Frequency Tuning" href="tuning.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="None"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Digital Communications with Software Defined Radios
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../ch1/introduction.html">1. Introduction</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch2/prelims.html">2. Some Programming Prelims</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch2/uhd.html">2.1. UHD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch2/multithread.html">2.2. Elementary Multi-threading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch2/prelims_exs.html">2.3. References and further reading</a></li>
+
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch3/filter.html">3. Multi-rate Filtering</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch3/fftw3.html">3.1. FFTW3 Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch3/overlapsave.html">3.2. Overlap Save Algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch3/multirate.html">3.3. Multi-rate Filtering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch3/polyphase.html">3.4. Polyphase Filtering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch3/filter_exs.html">3.5. References and further reading</a></li>
+
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../ch4/part15.html">4. Digest of FCC Regulations Part 15</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="usrp.html">5. USRP Tuning and Calibration</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="tuning.html">5.1. Frequency Tuning</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">5.2. DC Offset and IQ Imbalance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usrp_refs.html">5.3. References and further reading</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch6/signal.html">6. Signal Generation and Capture</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch6/generate.html">6.1. TX Pulse Shaping</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch6/capture.html">6.2. RX Signal Capture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch6/signal_refs.html">6.3. References and further reading</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch7/sync.html">7. Signal Acquisition and Synchronization</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch7/dll.html">7.1. Closed-Loop Symbol Synchronization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch7/acq.html">7.2. Signal Acquisition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch7/signature.html">7.3. Signature Signal Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch7/mseq.html">7.4. Maximal-length Sequences</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch7/zc.html">7.5. Zadoff–Chu Sequences</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch7/sync_refs.html">7.6. References and further reading</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch8/noncoh.html">8. Non-coherent Demodulation</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch8/mlnoncoh.html">8.1. Maximum Likelihood Non-coherent Demodulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch8/ask.html">8.2. <span class="math notranslate nohighlight">\(M\)</span>-ary Amplitude Shift Keying (<span class="math notranslate nohighlight">\(M\)</span>-ASK)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch8/dpsk.html">8.3. <span class="math notranslate nohighlight">\(M\)</span>-ary Differential Phase Shift Keying (<span class="math notranslate nohighlight">\(M\)</span>-DPSK)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch8/noncoh_usrp.html">8.4. USRP Implementation</a></li>
+
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch9/carrier.html">9. Carrier Synchronization</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch9/mlest.html">9.1. Basic Model</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../ch9/dd_pll.html">9.3. Decision-directed Phase-locked Loop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch9/ndd_pll.html">9.4. Non-decision-directed Phase-locked Loop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch9/carrier_refs.html">9.5. References and further reading</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../ch10/coh.html">10. Coherent Demodulation</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch11/arq.html">11. Automatic Repeat Request</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch11/crc.html">11.1. Cyclic Redundancy Check Codes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch11/protocols.html">11.2. Simple ARQ Protocols</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch11/duplex.html">11.3. Duplex Transmission using USRPs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch11/arq_exs.html">11.4. References and further reading</a></li>
+
+</ul>
+</li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/ch5/iq.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>DC Offset and IQ Imbalance</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tx-model">5.2.1. TX model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rx-model">5.2.2. RX model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#effects-on-single-tone-transmission">5.2.3. Effects on single-tone transmission</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#correction">5.2.4. Correction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parameter-estimation-and-uhd-implementation">5.2.5. Parameter estimation and UHD implementation</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="dc-offset-and-iq-imbalance">
+<span id="sec-iq"></span><h1><span class="section-number">5.2. </span>DC Offset and IQ Imbalance<a class="headerlink" href="#dc-offset-and-iq-imbalance" title="Permalink to this headline">#</a></h1>
+<section id="tx-model">
+<h2><span class="section-number">5.2.1. </span>TX model<a class="headerlink" href="#tx-model" title="Permalink to this headline">#</a></h2>
+<ul>
+<li><p>Consider the TX chain shown in the N210 architecture
+<a class="reference internal" href="tuning.html#sec-tuning"><span class="std std-ref">before</span></a>. The mixers in the I and Q chains are not
+perfectly balanced, and thus may apply different gains to the mixed
+signals. In addition, the phase shifter may not perfectly provide a
+<span class="math notranslate nohighlight">\(90^\circ\)</span> phase shift, and thus the I and Q carriers generated may
+not be exactly <span class="math notranslate nohighlight">\(90^\circ\)</span> out of phase. The combination of the gain
+and phase imbalance between the I and Q paths is commonly referred
+to as <strong>IQ imbalance</strong>. More generally, the two lowpass filters in
+the I and Q paths may not be perfectly matched either. Thus, IQ
+imbalance may also be frequency selective.</p></li>
+<li><p>The isolation between the VCO and the TX amplifier may not be
+perfect in that the (hopefully weakened) VCO signal may leak
+directly to the amplifier input. This adds an unintended carrier
+component to the TX signal. In the complex baseband, this added
+carrier component becomes a <strong>DC offset</strong>. In addition, the filters
+and other circuitry in the I and Q paths may produce DC
+biases. These DC biases will also contribute to the DC offset.</p></li>
+<li><p>Assume for simplicity that the DC offset and IQ imbalance are
+time-invariant and frequency non-selective and that the TX amplifier
+is perfectly linear. Then the following model can be used to
+describe the above circuit defects:</p>
+<div class="math notranslate nohighlight" id="equation-e-txmodel-real">
+<span class="eqno">(5.1)<a class="headerlink" href="#equation-e-txmodel-real" title="Permalink to this equation">#</a></span>\[\begin{equation} 
+x_{BP}(t) = \alpha_I m_I(t) \cos \left(2\pi
+f_c t + \frac{\phi}{2} \right) - \alpha_Q m_Q(t) \sin \left(2\pi f_c
+t -\frac{\phi}{2} \right) + \alpha_{dc} \cos(2\pi f_c t + \theta)
+\end{equation}\]</div>
+<p>where <span class="math notranslate nohighlight">\(x_{BP}(t)\)</span> is the real-valued bandpass signal at the TX
+amplifier output, <span class="math notranslate nohighlight">\(m_I(t)\)</span> and <span class="math notranslate nohighlight">\(m_Q(t)\)</span> are the I and Q message
+signals at the DAC outputs, <span class="math notranslate nohighlight">\(\alpha_I\)</span> and <span class="math notranslate nohighlight">\(\alpha_Q\)</span> are the gains
+over the I and Q paths, <span class="math notranslate nohighlight">\(\phi\)</span> models the deviation of the phase
+shifter from <span class="math notranslate nohighlight">\(90^\circ\)</span>, and <span class="math notranslate nohighlight">\(\alpha_{dc}\)</span> and <span class="math notranslate nohighlight">\(\theta\)</span> together
+model the amplitude and phase of the added carrier component due to
+DC offset. In the complex baseband notation, <a class="reference internal" href="#equation-e-txmodel-real">(5.1)</a>
+becomes</p>
+<div class="math notranslate nohighlight" id="equation-e-txmodel-complex">
+<span class="eqno">(5.2)<a class="headerlink" href="#equation-e-txmodel-complex" title="Permalink to this equation">#</a></span>\[\begin{equation}
+x(t) = %\left\{ 
+\frac{1}{2} \left(\alpha_I e^{j\frac{\phi}{2}} +
+\alpha_Q e^{-j \frac{\phi}{2} } \right) m(t) + \frac{1}{2}
+\left(\alpha_I e^{j\frac{\phi}{2}} - \alpha_Q e^{-j \frac{\phi}{2} }
+\right) m^*(t) + \alpha_{dc} e^{j\theta} 
+%\right\} e^{j 2\pi f_c t}
+\end{equation}\]</div>
+<p>where <span class="math notranslate nohighlight">\(m(t) = m_I(t) + j m_Q (t)\)</span> and <span class="math notranslate nohighlight">\(x(t)\)</span> are the
+complex envelops of the message and TX signals, respectively.</p>
+</li>
+<li><p>Practically, the value of <span class="math notranslate nohighlight">\(\phi\)</span> should be no larger than a few degrees,
+and <span class="math notranslate nohighlight">\(\alpha_I\)</span> and <span class="math notranslate nohighlight">\(\alpha_Q\)</span> should differ by only a few percentages.</p></li>
+</ul>
+</section>
+<section id="rx-model">
+<h2><span class="section-number">5.2.2. </span>RX model<a class="headerlink" href="#rx-model" title="Permalink to this headline">#</a></h2>
+<ul>
+<li><p>The same circuit mismatches and biases also occur in the I and Q paths
+of the RX chain. The VCO leakage on the RX side is to the input of
+the LNA. The effect still results in a DC offset in the complex baseband
+demodulated signal. Again, assume that the DC offset and IQ imbalance
+are time-invariant and frequency non-selective and that the RX amplifiers
+aree perfectly linear. Then the following model can be used
+to describe the RX circuit defects in the complex baseband:</p>
+<div class="math notranslate nohighlight" id="equation-e-rxmodel-complex">
+<span class="eqno">(5.3)<a class="headerlink" href="#equation-e-rxmodel-complex" title="Permalink to this equation">#</a></span>\[\begin{equation} 
+\hat m(t) = \frac{1}{2} \left(\beta_I e^{j\frac{\psi}{2}} + \beta_Q
+e^{-j \frac{\psi}{2} } \right) %\left( 
+y(t) %e^{-j 2\pi f_c t} \right)
++\frac{1}{2} \left(\beta_I e^{j\frac{\psi}{2}} - \beta_Q
+e^{-j \frac{\psi}{2} } \right) %\left( 
+y^*(t) %^e^{-j 2\pi f_c t} \right)^* 
++ \beta_{dc} e^{j \zeta}
+\end{equation}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\hat m(t)\)</span> and <span class="math notranslate nohighlight">\(y(t)\)</span> are the complex envelops
+of the demodulated baseband message and RX signals, respectively.</p>
+</li>
+<li><p>As before, the value of <span class="math notranslate nohighlight">\(\psi\)</span> is no larger than a few degrees, and
+<span class="math notranslate nohighlight">\(\beta_I\)</span> and <span class="math notranslate nohighlight">\(\beta_Q\)</span> differ by at most a few percentages.</p></li>
+</ul>
+</section>
+<section id="effects-on-single-tone-transmission">
+<span id="sec-single-tone"></span><h2><span class="section-number">5.2.3. </span>Effects on single-tone transmission<a class="headerlink" href="#effects-on-single-tone-transmission" title="Permalink to this headline">#</a></h2>
+<ul>
+<li><p>Comparing <a class="reference internal" href="#equation-e-txmodel-complex">(5.2)</a> and <a class="reference internal" href="#equation-e-rxmodel-complex">(5.3)</a> shows
+that the models for DC offset and IQ imbalance at the TX and RX are
+essentially the same. Hence, it suffices to consider say the RX
+model.</p></li>
+<li><p>Assume that the complex baseband RX signal <span class="math notranslate nohighlight">\(y(t)\)</span> is a single tone
+<span class="math notranslate nohighlight">\(e^{j 2\pi f_0 t}\)</span> at frequency <span class="math notranslate nohighlight">\(f_0\)</span>. Substituting
+into <a class="reference internal" href="#equation-e-rxmodel-complex">(5.3)</a> gives us</p>
+<div class="math notranslate nohighlight" id="equation-e-tone">
+<span class="eqno">(5.4)<a class="headerlink" href="#equation-e-tone" title="Permalink to this equation">#</a></span>\[\begin{equation} 
+\hat m(t) = \frac{1}{2} \left(\beta_I e^{j\frac{\psi}{2}} + \beta_Q
+e^{-j \frac{\psi}{2} } \right) e^{j 2\pi f_0 t} +  \frac{1}{2}   \left(\beta_I e^{j\frac{\psi}{2}} - \beta_Q  e^{-j \frac{\psi}{2} } \right) e^{-j 2\pi f_0 t} + \beta_{dc} e^{j \zeta}.
+\end{equation}\]</div>
+</li>
+<li><p>Clearly from <a class="reference internal" href="#equation-e-tone">(5.4)</a>, the IQ imbalance creates a spurious tone
+(also called an <em>image</em>) at frequency <span class="math notranslate nohighlight">\(-f_0\)</span> while the DC offset
+adds the unintended carrier component at frequency <span class="math notranslate nohighlight">\(0\)</span>.</p></li>
+<li><p>It is not hard to work out that the ratio of the power of the
+spurious tone at <span class="math notranslate nohighlight">\(-f_0\)</span> to that of the desired tone at <span class="math notranslate nohighlight">\(f_0\)</span> is
+given by</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+  \frac{P_{\text{spurious}}}{P_{\text{desired}}} = 
+  \frac{\gamma_{RX}^2 + 1 - 2 \cos \psi}{\gamma_{RX}^2 + 1 + 2 \cos \psi} \approx \frac{(\gamma_{RX} -1)^2 + \psi^2}{4}
+  \end{equation*}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\gamma_{RX} \triangleq \frac{\beta_I}{\beta_Q}\)</span> and the
+approximation is accurate when <span class="math notranslate nohighlight">\(\gamma_{RX}\)</span> is close to 1 and <span class="math notranslate nohighlight">\(\psi\)</span> (in
+radians) is small. The power ratio is often called the <strong>image
+rejection (suppression) ratio (IRR)</strong>.</p>
+</li>
+<li><p>The captured spectrum below shows the effects of DC offset (some
+correction has been applied, see below) and IQ imbalance when a single
+tone at frequency <span class="math notranslate nohighlight">\(5.7205\)</span> GHz is transmitted and <span class="math notranslate nohighlight">\(f_c\)</span> is set to
+<span class="math notranslate nohighlight">\(5.72\)</span> GHz:</p>
+<a class="reference internal image-reference" href="../_images/iq_image_with_dc_correction.png"><img alt="Image created by IQ imbalance" class="align-center" src="../_images/iq_image_with_dc_correction.png" style="width: 800px;" /></a>
+<p>Observe that the IRR is about <span class="math notranslate nohighlight">\(-37\)</span> dB.</p>
+</li>
+</ul>
+</section>
+<section id="correction">
+<h2><span class="section-number">5.2.4. </span>Correction<a class="headerlink" href="#correction" title="Permalink to this headline">#</a></h2>
+<ul>
+<li><p>If the parameters associated with DC offset and IQ imbalance are
+time-invariant and can be estimated, then it is straightforward to
+correct for the detriments caused by them.</p></li>
+<li><p>Consider the RX side first. We may apply the follow correction steps
+on <span class="math notranslate nohighlight">\(\hat m(t)\)</span> to compensate for DC offset and IQ imbalance:</p>
+<ol class="arabic simple">
+<li><p><u>Remove DC offset</u>: <span class="math notranslate nohighlight">\(\tilde m(t) = \hat m(t) - \beta_{dc} e^{j\zeta}\)</span>.</p></li>
+<li><p><u>Remove IQ imbalance</u>: Output <span class="math notranslate nohighlight">\(\tilde m(t) + c_{RX} \tilde m^*(t)\)</span>,
+where <span class="math notranslate nohighlight">\(c_{RX} = \frac{1- \gamma_{RX} e^{j\psi}}{1+\gamma_{RX} e^{-j\psi}} e^{-j \psi}\)</span>.</p></li>
+</ol>
+</li>
+<li><p>Simple algebra shows that</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+  \tilde m(t) + c_{RX} \tilde m^*(t) =
+  \frac{2\beta_I \beta_Q \cos\psi}{\beta_I e^{-j\psi/2} + \beta_Q
+  e^{j\psi/2}} \cdot y(t).
+  \end{equation*}\]</div>
+<p>Hence, the detrimental effects due to DC offset and IQ imbalance at the RX
+are all removed.</p>
+</li>
+<li><p>We may use the class methods
+<code class="docutils literal notranslate"><span class="pre">uhd::usrp::multi_usrp::set_rx_dc_offset()</span></code> and
+<code class="docutils literal notranslate"><span class="pre">uhd::usrp::multi_usrp::set_rx_iq_balance()</span></code> to implement steps 1.
+and 2. above, respectively. The DC offset <span class="math notranslate nohighlight">\(\beta_{dc} e^{j\zeta}\)</span>
+and IQ correction factor <span class="math notranslate nohighlight">\(c_{RX}\)</span> should be provided to the
+respective methods as input arguments. The correction is of course
+applied to the output samples of the ADCs (sampled version of <span class="math notranslate nohighlight">\(\hat
+m(t)\)</span>) in the FPGA on the USRP motherboard.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>UHD also provides overload methods to
+<code class="docutils literal notranslate"><span class="pre">uhd::usrp::multi_usrp::set_rx_dc_offset()</span></code> and
+<code class="docutils literal notranslate"><span class="pre">uhd::usrp::multi_usrp::set_rx_iq_balance()</span></code> for automatic DC offset
+and IQ imbalance correction on the RX side. The parameters needed
+for correction are estimated on-the-fly (see the discussion below).
+The overload methods may be invoked by passing a <code class="docutils literal notranslate"><span class="pre">true</span></code> as the first
+input argument to the methods. The default setting is to perform
+automatic correction for DC offset. See the UHD <a class="reference external" href="https://files.ettus.com/manual_archive/v3.15.0.0/html/classuhd_1_1usrp_1_1multi__usrp.html#a7beb49c1a04a81b3e7569db482453746">manual</a>
+for details.</p>
+</div>
+</li>
+<li><p>Similarly, the effects of TX DC offset and IQ imbalance can be
+compensated by pre-correcting the message signal <span class="math notranslate nohighlight">\(m(t)\)</span> according to
+following steps below:</p>
+<ol class="arabic simple">
+<li><p><u>Pre-correct IQ imbalance</u>: Obtain <span class="math notranslate nohighlight">\(m(t) + c_{TX} m^*(t)\)</span>,
+where <span class="math notranslate nohighlight">\(c_{TX} = \frac{1- \gamma_{TX} e^{j\phi}}{1+\gamma_{TX} e^{j\phi}}\)</span>
+and <span class="math notranslate nohighlight">\(\gamma_{TX} \triangleq \frac{\alpha_I}{\alpha_Q}\)</span>.</p></li>
+<li><p><u>Pre-correct DC offset</u>: Use <span class="math notranslate nohighlight">\(\bar m(t) = m(t) + c_{TX}
+m^*(t) -
+\left[ \frac{\alpha_{dc}}{\alpha_I} \cos\left(\theta + \frac{\phi}{2} \right) + 
+j \frac{\alpha_{dc}}{\alpha_Q} \sin\left(\theta - \frac{\phi}{2} \right) \right]\)</span>
+to replace <span class="math notranslate nohighlight">\(m(t)\)</span> in <a class="reference internal" href="#equation-e-txmodel-complex">(5.2)</a> as input to the
+mixers.</p></li>
+</ol>
+</li>
+<li><p>Again, simple algebra shows that the resulting complex baseband
+transmit signal becomes</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+  x(t) = \frac{2\alpha_I \alpha_Q
+  \cos\phi}{\alpha_I e^{-j\phi/2} + \alpha_Q e^{j\phi/2}}  \cdot m(t) 
+  %e^{j 2\pi f_c t}$ 
+  \end{equation*}\]</div>
+<p>when <span class="math notranslate nohighlight">\(\bar m(t)\)</span> is applied to the TX mixers instead of <span class="math notranslate nohighlight">\(m(t)\)</span>
+as in step 2. above. Thus, the detrimental effects due to DC offset and
+IQ imbalance at the TX are all removed.</p>
+</li>
+<li><p>We may similarly use the class methods
+<code class="docutils literal notranslate"><span class="pre">uhd::usrp::multi_usrp::set_tx_iq_balance()</span></code> and
+<code class="docutils literal notranslate"><span class="pre">uhd::usrp::multi_usrp::set_tx_dc_offset()</span></code> to implement steps 1 and
+2 above, respectively. The correction is of course applied to the
+input samples of the DACs (sampled version of <span class="math notranslate nohighlight">\(m(t)\)</span>) in the FPGA on
+the USRP motherboard.</p></li>
+</ul>
+</section>
+<section id="parameter-estimation-and-uhd-implementation">
+<h2><span class="section-number">5.2.5. </span>Parameter estimation and UHD implementation<a class="headerlink" href="#parameter-estimation-and-uhd-implementation" title="Permalink to this headline">#</a></h2>
+<ul>
+<li><p>From the discussion above, we conclude:</p>
+<ul class="simple">
+<li><p>To implement RX DC offset and IQ balance correction, we need to
+estimate the parameters <span class="math notranslate nohighlight">\(\gamma_{RX}\)</span>, <span class="math notranslate nohighlight">\(\psi\)</span>, and <span class="math notranslate nohighlight">\(\beta_{dc}
+e^{j \zeta}\)</span>.</p></li>
+<li><p>To implement TX DC offset and IQ balance correction, we need to
+estimate the parameters <span class="math notranslate nohighlight">\(\alpha_I\)</span>, <span class="math notranslate nohighlight">\(\alpha_Q\)</span>, <span class="math notranslate nohighlight">\(\phi\)</span>, and
+<span class="math notranslate nohighlight">\(\alpha_{dc} e^{j \theta}\)</span>.</p></li>
+</ul>
+</li>
+<li><p>Some of these parameters can be easily estimated while some others
+may not be so. For example, <span class="math notranslate nohighlight">\(\beta_{dc} e^{j \zeta}\)</span> can be
+estimated directly by averaging the ADC outputs during idle
+transmission periods, or with the RX antenna input port properly
+terminated. On the other hand, accurate estimation of <span class="math notranslate nohighlight">\(\alpha_I\)</span> and
+<span class="math notranslate nohighlight">\(\alpha_Q\)</span> for example may require more involved algorithms as well
+as external RF measurement equipment.</p></li>
+<li><p>Instead of directly estimating the parameters, a more practical
+approach is to estimate the optimal values to use for the TX and RX IQ
+balancing correction factors <span class="math notranslate nohighlight">\(c_{TX}\)</span> and <span class="math notranslate nohighlight">\(c_{RX}\)</span> and the TX and RX
+DC offset correction factors <span class="math notranslate nohighlight">\(\frac{\alpha_{dc}}{\alpha_I}
+\cos\left(\theta + \frac{\phi}{2} \right) + j
+\frac{\alpha_{dc}}{\alpha_Q} \sin\left(\theta - \frac{\phi}{2}
+\right)\)</span> and <span class="math notranslate nohighlight">\(\beta_{dc} e^{j \zeta}\)</span> so that the effects of DC
+offset and IQ imbalance are minimized.</p></li>
+<li><p>This can be done by sending for example a single tone at an offset
+frequency <span class="math notranslate nohighlight">\(f_0\)</span> with respect to the carrier frequency <span class="math notranslate nohighlight">\(f_c\)</span> as in
+<a class="reference internal" href="#equation-e-tone">(5.4)</a> above. One may then determine the severity of IQ
+imbalance and DC offset by measuring the IRR and the power ratio of
+the leakage RX power at <span class="math notranslate nohighlight">\(f_c\)</span> to the offset tone’s power,
+respectively. Then, the correction factors are adaptively tuned
+until the measured IRR and relatively leakage power ratio attain
+their respective minima. See <span id="id1">[<a class="reference internal" href="usrp_refs.html#id11" title="J. K. Cavers and M. W. Liao. Adaptive compensation for imbalance and offset losses in direct conversion transceivers. IEEE Transactions on Vehicular Technology, 42(4):581-588, 1993. doi:10.1109/25.260752.">2</a>]</span> for a more detailed
+description of such an adaptive approach.</p></li>
+<li><p>If the parameters vary only slightly over a long period of time
+(that is the case for the SBX/CBX frontends), one may
+pre-calibrate the optimal values of correction factors at different
+carrier frequencies, and use these pre-calibrated values to perform
+correction each time the transceiver is used. This is the approach
+adopted by UHD:</p>
+<ul>
+<li><p>For RX DC offset, the FPGA calculates a long-term average of the
+DAC outputs as an estimate of <span class="math notranslate nohighlight">\(\beta_{dc} e^{j \zeta}\)</span> (based on
+the assumption that transmission is mostly idle over a long term
+or that the RX DC offset dominates over the level of most RX
+signals). Then it automatically removes the DC offset from the RX
+samples. This automatic RX DC offset correction process can be
+turned off by passing the <code class="docutils literal notranslate"><span class="pre">bool</span></code> value <code class="docutils literal notranslate"><span class="pre">false</span></code> as the first input
+argument to the class method
+<code class="docutils literal notranslate"><span class="pre">uhd::usrp::multi_usrp::set_rx_dc_offset()</span></code>. A comparison between
+with and without this automatic RX DC offset correction
+implementation is shown by the two captured spectrums below:</p>
+<p align=center><strong>Automatic RX DC offset correction
+OFF</strong></p>
+<a class="reference internal image-reference" href="../_images/rx_dc_offset.png"><img alt="Without RX DC offset correction" class="align-center" src="../_images/rx_dc_offset.png" style="width: 800px;" /></a>
+ <p align=center><strong>Automatic RX DC offset correction
+ON</strong></p>
+<a class="reference internal image-reference" href="../_images/rx_dc_offset_after_correction.png"><img alt="With RX DC offset correction" class="align-center" src="../_images/rx_dc_offset_after_correction.png" style="width: 800px;" /></a>
+<p>Both spectrums are captured when the channel is idle. The RX LO
+frequency is set to <span class="math notranslate nohighlight">\(5.72\)</span> GHz. From the first spectrum (when RX
+DC offset correction is OFF), we can see that the RX DC offset at
+this frequency is very severe. Fron the second spectrum (when RX
+DC offset correction is ON), the correction process successfully
+removes the majority of the DC offset but nonetheless still
+leaves a leaked carrier component significantly above the noise
+floor. Hence if the RX signal is weak, we may still need to do
+low-IF tuning to avoid the remaining leaked carrier component.</p>
+</li>
+<li><p>For TX DC offset and IQ imbalance correction at the TX and RX, the
+pre-calibration approach with the transmission of an offset tone
+mentioned above is employed. For the SBX/CBX daughterboard, UHD
+provides a CAL “antenna port” in addition to the TX/RX and RX2
+antenna ports that are used in normal operations. When the TX
+antenna is selected to be CAL, the TX chain output will be
+switched to an unused port. With any external connections to the
+RF ports removed, the RX chain picks up mostly the offset tone
+leaked from the TX chain’s transmission. The pre-calibration
+process to
+obtain the correction parameters can be invoked by running the
+following three programs:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">uhd_cal_rx_iq_balance</span></code>,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uhd_cal_tx_dc_offset</span></code>, and</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uhd_cal_tx_iq_balance</span></code>.</p></li>
+</ul>
+<p>The optimal correction factors are obtained by a straightforward
+search over each carrier frequency step over the frequency range
+supported by the daughterboard. The pre-calibration results are
+stored in the directory <code class="docutils literal notranslate"><span class="pre">~/.uhd/cal/</span></code>. Corrections are made
+automatically by UHD each time the TX and RX frequency is set by
+the class methods <code class="docutils literal notranslate"><span class="pre">uhd::usrp::multi_usrp::set_tx_freq()</span></code> and
+<code class="docutils literal notranslate"><span class="pre">uhd::usrp::multi_usrp::set_rx_freq()</span></code>. For more details about the
+implementation of this pre-calibration process, refer to the
+<a class="reference external" href="https://github.com/EttusResearch/uhd/tree/UHD-3.15.LTS/host/utils">source codes</a>
+of the calibration programs above.</p>
+<p>The captured spectrums below show the improvements obtained after
+applying all three corrections to the single-tone image example
+considered <a class="reference internal" href="#sec-single-tone"><span class="std std-ref">above</span></a> and to the low-IF tuning image
+example considered in the <a class="reference internal" href="tuning.html#sec-tuning"><span class="std std-ref">previous</span></a> section:</p>
+<p align=center><strong>Offset single-tone image with corrections</strong></p>
+<a class="reference internal image-reference" href="../_images/iq_image_with_iq_balancing.png"><img alt="Offset single-tone image with corrections" class="align-center" src="../_images/iq_image_with_iq_balancing.png" style="width: 800px;" /></a>
+<p align=center><strong>Low-IF tuning with corrections</strong></p>
+<a class="reference internal image-reference" href="../_images/lo_offset_with_iq_balancing.png"><img alt="Low-IF tuning with corrections" class="align-center" src="../_images/lo_offset_with_iq_balancing.png" style="width: 800px;" /></a>
+<p>We observe that the images are now below the noise floor
+in both examples. The IQ imbalance problem is much alleviated with
+the corrections making the IRR in the single-tone example at least
+<span class="math notranslate nohighlight">\(-50\)</span> dB and the low-IF image suppressed by at least 45
+dB. However, the continuous transmission of the offset tone appears
+to have skewed the long-term averaging correction of the RC DC
+offset.</p>
+</li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./ch5"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="tuning.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><span class="section-number">5.1. </span>Frequency Tuning</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="usrp_refs.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">5.3. </span>References and further reading</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tx-model">5.2.1. TX model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rx-model">5.2.2. RX model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#effects-on-single-tone-transmission">5.2.3. Effects on single-tone transmission</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#correction">5.2.4. Correction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parameter-estimation-and-uhd-implementation">5.2.5. Parameter estimation and UHD implementation</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Tan F. Wong
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

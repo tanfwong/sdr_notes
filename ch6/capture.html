@@ -1,0 +1,744 @@
+
+
+<!DOCTYPE html>
+
+
+<html >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>6.2. RX Signal Capture &#8212; Digital Communications with SDRs</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'ch6/capture';</script>
+    <link rel="canonical" href="wing.ece.ufl.edu/eel6528/ch6/capture.html" />
+    <link rel="shortcut icon" href="../_static/logo.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="6.3. References and further reading" href="signal_refs.html" />
+    <link rel="prev" title="6.1. TX Pulse Shaping" href="generate.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="None"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Digital Communications with Software Defined Radios
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../ch1/introduction.html">1. Introduction</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch2/prelims.html">2. Some Programming Prelims</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch2/uhd.html">2.1. UHD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch2/multithread.html">2.2. Elementary Multi-threading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch2/prelims_exs.html">2.3. References and further reading</a></li>
+
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch3/filter.html">3. Multi-rate Filtering</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch3/fftw3.html">3.1. FFTW3 Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch3/overlapsave.html">3.2. Overlap Save Algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch3/multirate.html">3.3. Multi-rate Filtering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch3/polyphase.html">3.4. Polyphase Filtering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch3/filter_exs.html">3.5. References and further reading</a></li>
+
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../ch4/part15.html">4. Digest of FCC Regulations Part 15</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch5/usrp.html">5. USRP Tuning and Calibration</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch5/tuning.html">5.1. Frequency Tuning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch5/iq.html">5.2. DC Offset and IQ Imbalance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch5/usrp_refs.html">5.3. References and further reading</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="signal.html">6. Signal Generation and Capture</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="generate.html">6.1. TX Pulse Shaping</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">6.2. RX Signal Capture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="signal_refs.html">6.3. References and further reading</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch7/sync.html">7. Signal Acquisition and Synchronization</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch7/dll.html">7.1. Closed-Loop Symbol Synchronization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch7/acq.html">7.2. Signal Acquisition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch7/signature.html">7.3. Signature Signal Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch7/mseq.html">7.4. Maximal-length Sequences</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch7/zc.html">7.5. Zadoff–Chu Sequences</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch7/sync_refs.html">7.6. References and further reading</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch8/noncoh.html">8. Non-coherent Demodulation</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch8/mlnoncoh.html">8.1. Maximum Likelihood Non-coherent Demodulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch8/ask.html">8.2. <span class="math notranslate nohighlight">\(M\)</span>-ary Amplitude Shift Keying (<span class="math notranslate nohighlight">\(M\)</span>-ASK)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch8/dpsk.html">8.3. <span class="math notranslate nohighlight">\(M\)</span>-ary Differential Phase Shift Keying (<span class="math notranslate nohighlight">\(M\)</span>-DPSK)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch8/noncoh_usrp.html">8.4. USRP Implementation</a></li>
+
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch9/carrier.html">9. Carrier Synchronization</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch9/mlest.html">9.1. Basic Model</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../ch9/dd_pll.html">9.3. Decision-directed Phase-locked Loop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch9/ndd_pll.html">9.4. Non-decision-directed Phase-locked Loop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch9/carrier_refs.html">9.5. References and further reading</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../ch10/coh.html">10. Coherent Demodulation</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch11/arq.html">11. Automatic Repeat Request</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch11/crc.html">11.1. Cyclic Redundancy Check Codes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch11/protocols.html">11.2. Simple ARQ Protocols</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch11/duplex.html">11.3. Duplex Transmission using USRPs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch11/arq_exs.html">11.4. References and further reading</a></li>
+
+</ul>
+</li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/ch6/capture.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>RX Signal Capture</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#carrier-sensing-energy-detector">6.2.1. Carrier Sensing / Energy Detector</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#matched-filter-energy-detector">6.2.2. Matched Filter Energy Detector</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#automatic-gain-control">6.2.3. Automatic Gain Control</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="rx-signal-capture">
+<span id="sec-capture"></span><h1><span class="section-number">6.2. </span>RX Signal Capture<a class="headerlink" href="#rx-signal-capture" title="Permalink to this headline">#</a></h1>
+<section id="carrier-sensing-energy-detector">
+<h2><span class="section-number">6.2.1. </span>Carrier Sensing / Energy Detector<a class="headerlink" href="#carrier-sensing-energy-detector" title="Permalink to this headline">#</a></h2>
+<ul>
+<li><p>We are primarily interested in implementing a packet-switched
+communication system here. We do not transmit contInuously in a
+typical packet-switched system. Moreover, transmission doesn’t
+necessarily occur in regular intervals.</p></li>
+<li><p>As a result, the RX needs to determine if and when the
+transmission of a packet occurs by observing the RX signal. This
+functionality of the RX is commonly referred to as <strong>carrier
+sensing</strong>.</p></li>
+<li><p>Carrier sensing is often implemented using a simple energy/power
+detector. The block diagram below shows a typical energy detector in
+the complex baseband:</p>
+<a class="reference internal image-reference" href="../_images/rssi.png"><img alt="Energy detector (receive signal strength indicator)" class="align-center" src="../_images/rssi.png" style="width: 800px;" /></a>
+<p>The lowpass filter (LPF) is to remove out-of-band noise
+and interference (more discussion about it below). This simple
+energy detector is often also called a <strong>receive signal
+strength indicator (RSSI)</strong>.</p>
+</li>
+<li><p>Practically, the energy detector may be digitally implemented in the
+baseband or in IF stage, or in RF stage with analog circuitry.</p></li>
+<li><p>The choice of the detection threshold can be determined analytically
+based on a suitable channel model (with known parameters) and
+detection criterion. For example, one may use the Neyman-Pearson
+criterion to choose the optimal threshold that maximizes the
+detection probability while maintaining a small false alarm
+probability under the additive white Gaussian noise
+channel model. Practically, the threshold is often chosen based on
+experimentation and measurement.</p></li>
+<li><p>In some battery-limited systems (e.g. in sensor networks), the RX
+may turn on the rest of its RX circuitry only when the energy
+detector fires.</p></li>
+<li><p><strong><u>USRP implementation:</u></strong></p>
+<ul>
+<li><p>The SBX/CBX daughterboard doesn’t provide a RSSI interface that
+is accessible by UHD. Thus, the only option is to implement a
+software-based energy detector using the receive samples
+supplied by the USRP at the host computer. Clearly, that means
+we cannot use such a carrier sensing implementation to turn on
+the USRP RX only when the energy detector fires. The RX has to
+be always on for our energy detector to work!</p></li>
+<li><p>We may only use such an energy detector to determine whether the
+RX signal samples correspond to the transmission of a packet or
+to just noise. Nevertheless, this may still be a significant
+function because we may skip all computationally taxing RX
+processing steps when the RX samples contain just noise.</p></li>
+<li><p>The energy detector suggested in Lab 2 is an example of a simple
+software-based energy detector using a first-order IIR filter as
+the LPF in the diagram above. Let the input to the energy
+detector be <span class="math notranslate nohighlight">\(x[n]\)</span> and the output of the RSSI output be
+<span class="math notranslate nohighlight">\(y[n]\)</span>. Then, we obtain <span class="math notranslate nohighlight">\(y[n]\)</span> according to the following
+difference equation that implement the IIR filter:</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+      y[n] = \alpha y[n-1] + (1-\alpha) \cdot |x[n]|^2
+      \end{equation*}\]</div>
+<p>where <span class="math notranslate nohighlight">\(0\leq \alpha &lt; 1\)</span> is the smoothing parameter of the IIR
+filter.</p>
+</li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="matched-filter-energy-detector">
+<h2><span class="section-number">6.2.2. </span>Matched Filter Energy Detector<a class="headerlink" href="#matched-filter-energy-detector" title="Permalink to this headline">#</a></h2>
+<ul>
+<li><p>If the TX signal to be captured is a linearly modulated signal</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+  x(t) = \sum_{n = -\infty}^{\infty} b[n] p(t-nT),
+  \end{equation*}\]</div>
+<p>in the complex baseband, and the channel is an additive white
+Gaussian noise channel, a better carrier sensing structure is as
+below:</p>
+<a class="reference internal image-reference" href="../_images/mf.png"><img alt="Matched filter energy detector" class="align-center" src="../_images/mf.png" style="width: 800px;" /></a>
+<ul class="simple">
+<li><p>The filter with impulse response <span class="math notranslate nohighlight">\(p^*(-t)\)</span> is known as the matched
+filter (MF). While the impulse response <span class="math notranslate nohighlight">\(p^*(-t)\)</span> is non-causal,
+the MF can be made causal easily by adding a proper delay to its
+impulse response. Since <span class="math notranslate nohighlight">\(p(t)\)</span> is the TX pulse shape (e.g., the
+RCC pulse), the MF is typically a LPF.</p></li>
+<li><p>Note that the MF detector and the energy detector above differ in
+that the positions of the (absolute) squarer and the filter are
+swapped. While the MF detector gives better detection performance,
+the difference in performance between the MF detector and the
+energy detector is small when the SNR is high.</p></li>
+<li><p>The energy detector requires a LPF working in the real
+domain. However, the MF detector requires the filter to work in
+the complex domain.</p></li>
+</ul>
+</li>
+<li><p>The optimal detector structure above can be derived from a
+simple binary hypothesis testing formulation under the
+Neyman-Pearson criterion:</p>
+<ul>
+<li><p>For a simple development, assume only one symbol is sent. Then
+the RX signal is</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+    r(t) = b[0] p(t) e^{j\theta} + n(t)
+    \end{equation*}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\theta\)</span> is uniformly distributed over <span class="math notranslate nohighlight">\([-\pi,\pi]\)</span> modeling
+the unknown carrier phase and <span class="math notranslate nohighlight">\(n(t)\)</span> is the complex-valued AWGN
+process that models thermal noise.</p>
+</li>
+<li><p>It is well known <span id="id1">[<a class="reference internal" href="signal_refs.html#id14" title="S. M. Kay. Fundamentals of Statistical Signal Processing, Volume II: Detection Theory. Prentice Hall, 1998. ISBN 978-0-135-04135-2.">3</a>]</span> that the likelihood ratio test (LRT) is
+the optimal Neyman-Pearson detector. It is also not too hard to
+show that the LRT is equivalent to comparing the following
+statistic</p>
+<div class="math notranslate nohighlight" id="equation-e-lrt">
+<span class="eqno">(6.8)<a class="headerlink" href="#equation-e-lrt" title="Permalink to this equation">#</a></span>\[\begin{equation} 
+ \left| \int_{-\infty}^{\infty} r(t) p^*(t) dt \right|^2 
+ = \left| r(t) * p^*(-t) \big|_{t = 0} \right|^2
+\end{equation}\]</div>
+<p>to an optimally chosen threshold <span class="math notranslate nohighlight">\(\gamma\)</span> in accordance with the
+false alarm constraint. This shows that the MF detector
+generates the decision statistic that is optimal in the Neyman-Pearson
+sense when a single symbol is sent.</p>
+</li>
+</ul>
+</li>
+<li><p>The hypothesis testing formulation above does not take into account
+the facts that the arrival time of the signal is unknown and that
+the linearly modulated TX signal always contains more than one
+symbol.</p>
+<ul class="simple">
+<li><p>The arrival time can be modeled as a deterministic unknown over a
+possible range.  Then the “estimator-detector” approach
+<span id="id2">[<a class="reference internal" href="signal_refs.html#id14" title="S. M. Kay. Fundamentals of Statistical Signal Processing, Volume II: Detection Theory. Prentice Hall, 1998. ISBN 978-0-135-04135-2.">3</a>]</span> may be employed to obtain the generalized LRT,
+which in the case is simply to compare the maximum absolute
+squared value of MF output to a decision threshold over the
+possible time range.</p></li>
+<li><p>Multi-symbol transmission can be handled by considering a model
+that contains multiple random symbols. However, the resulting LRT
+may be too complicated for practical implementation.</p></li>
+<li><p>A slightly suboptimal approach to jointly address the two model
+oversights above is one shown in the figure where the MF output
+is continuously compared to a decision threshold to decide whether
+and when the detector should fire.</p></li>
+</ul>
+</li>
+<li><p>It is also quite clear by the Schwarz inequality that the MF also
+maximizes the</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+  \text{Output SNR} \triangleq \frac{ \left|
+  \int_{-\infty}^{\infty} p(t) h(-t) dt
+  \right|^2}{E\left[\left| \int_{-\infty}^{\infty} n(t) h(-t) dt \right|^2\right]}
+  \end{equation*}\]</div>
+<p>over all filter <span class="math notranslate nohighlight">\(h(t)\)</span>.</p>
+</li>
+<li><p><strong><u>USRP implementation:</u></strong></p>
+<ul class="simple">
+<li><p>The MF can be easily implemented in the host computer.
+Nevertheless, we will see later that the MF energy detector is
+somewhat redundant since a similar structure will be used for
+signal acquisition and synchronization.</p></li>
+<li><p>A common practical approach is to employ the energy detector with
+a simple LPF, such as the first-order IIR filter discussed above,
+and a relatively loose detection threshold to achieve an almost
+perfect detection probability and let the subsequent acquisition
+stage (which uses the MF) rid out false alarms.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="automatic-gain-control">
+<h2><span class="section-number">6.2.3. </span>Automatic Gain Control<a class="headerlink" href="#automatic-gain-control" title="Permalink to this headline">#</a></h2>
+<ul>
+<li><p>In many application scenarios, the distance between the TX and RX
+may vary from time to time. The RX signal level may not be
+constant. Other channel phenomena, such as shadowing, may also
+affect the RX signal level.</p></li>
+<li><p>In the direct-conversion and superheterodyne architectures, the RX
+signal is sampled respectively at IF and baseband by ADCs for
+further processing. In practice, ADCs have finite resolution. Hence
+if the RX signal level is too low, quantization noise will be very
+significant. On the other hand, if the signal level is too high,
+clipping that leads to nonlinear distortions, will occur at the
+ADCs.</p></li>
+<li><p>To avoid these problems, the RX signal should be
+amplified/attenuated, before feeding into the input of the ADC, to a
+level that matches the full dynamic of the ADC in order to minimize
+the effects of quantization noise and clipping.</p></li>
+<li><p>The RX functionality that maintains the RX signal level to the full
+dynamic range of the ADC is called <strong>automatic gain control (AGC)</strong>.</p></li>
+<li><p>The diagram below illustrates a typical closed-loop baseband AGC for
+a direct-conversion RX:</p>
+<a class="reference internal image-reference" href="../_images/agc.png"><img alt="Automatic gain control" class="align-center" src="../_images/agc.png" style="width: 800px;" /></a>
+<ul class="simple">
+<li><p>Although not drawn as such, the RF frontend should be interpreted
+as a quadrature one.</p></li>
+</ul>
+</li>
+<li><p>Note that the AGC loop only switches on when carrier is sensed
+by the energy detector. This is to make sure that the detection
+threshold used by the energy detector can properly detect the
+carrier.</p></li>
+<li><p>The closed-loop time constant of the AGC needs to be much smaller
+than the packet length so that the AGC loop settles quickly at the
+beginning of the packet before the reception (and hence processing)
+of the packet payload. In practice, a preamble is often added to the
+beginning of a packet to allow the AGC loop time to settle.</p></li>
+<li><p>AGC can also be implemented at RF in analog circuitry, or digitally
+at IF, or a combination of some or all at baseband, IF, and RF.</p></li>
+<li><p><strong><u>USRP implementation:</u></strong></p>
+<ul class="simple">
+<li><p>Although the SBX/CBX daughterboard has a variable gain amplifier
+in its RX chain, the data sample transfer latency from the USRP to
+the host makes the closed-loop time constant of the AGC large
+(typically in the order of ms). Hence, the closed-loop, per packet
+AGC discussed above may only be implemented in the FGPA on the
+N210 motherboard, unless the large time constant of the host-based
+implementation can be tolerated.</p></li>
+<li><p>Luckily, the ADCs in the USRP N200/N210 motherboard has a
+resolution of 14 bits. This resolution gives sufficiently small
+quantization errors for many typical application scenarios, even
+no closed-loop AGC is performed.</p></li>
+<li><p>Nevertheless, we often still want to implement a software “AGC” in
+the host based on the RX signal samples from the USRP. The main
+job of such an AGC is to automatically scale the signal to a
+desired level for later processing. Since we often process blocks
+of RX samples at the host computer, we may simply apply the
+requirement normalization in an open-loop manner on each block of
+RX samples.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./ch6"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="generate.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><span class="section-number">6.1. </span>TX Pulse Shaping</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="signal_refs.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">6.3. </span>References and further reading</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#carrier-sensing-energy-detector">6.2.1. Carrier Sensing / Energy Detector</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#matched-filter-energy-detector">6.2.2. Matched Filter Energy Detector</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#automatic-gain-control">6.2.3. Automatic Gain Control</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Tan F. Wong
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

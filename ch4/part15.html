@@ -1,0 +1,629 @@
+
+
+<!DOCTYPE html>
+
+
+<html >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>4. Digest of FCC Regulations Part 15 &#8212; Digital Communications with SDRs</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'ch4/part15';</script>
+    <link rel="canonical" href="wing.ece.ufl.edu/eel6528/ch4/part15.html" />
+    <link rel="shortcut icon" href="../_static/logo.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="5. USRP Tuning and Calibration" href="../ch5/usrp.html" />
+    <link rel="prev" title="3.6.6. Makefile for building test_fft and test_filters" href="../ch3/Makefile_fft_filters.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="None"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Digital Communications with Software Defined Radios
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../ch1/introduction.html">1. Introduction</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch2/prelims.html">2. Some Programming Prelims</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch2/uhd.html">2.1. UHD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch2/multithread.html">2.2. Elementary Multi-threading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch2/prelims_exs.html">2.3. References and further reading</a></li>
+
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch3/filter.html">3. Multi-rate Filtering</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch3/fftw3.html">3.1. FFTW3 Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch3/overlapsave.html">3.2. Overlap Save Algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch3/multirate.html">3.3. Multi-rate Filtering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch3/polyphase.html">3.4. Polyphase Filtering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch3/filter_exs.html">3.5. References and further reading</a></li>
+
+</ul>
+</li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">4. Digest of FCC Regulations Part 15</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch5/usrp.html">5. USRP Tuning and Calibration</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch5/tuning.html">5.1. Frequency Tuning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch5/iq.html">5.2. DC Offset and IQ Imbalance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch5/usrp_refs.html">5.3. References and further reading</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch6/signal.html">6. Signal Generation and Capture</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch6/generate.html">6.1. TX Pulse Shaping</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch6/capture.html">6.2. RX Signal Capture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch6/signal_refs.html">6.3. References and further reading</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch7/sync.html">7. Signal Acquisition and Synchronization</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch7/dll.html">7.1. Closed-Loop Symbol Synchronization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch7/acq.html">7.2. Signal Acquisition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch7/signature.html">7.3. Signature Signal Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch7/mseq.html">7.4. Maximal-length Sequences</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch7/zc.html">7.5. Zadoff–Chu Sequences</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch7/sync_refs.html">7.6. References and further reading</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch8/noncoh.html">8. Non-coherent Demodulation</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch8/mlnoncoh.html">8.1. Maximum Likelihood Non-coherent Demodulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch8/ask.html">8.2. <span class="math notranslate nohighlight">\(M\)</span>-ary Amplitude Shift Keying (<span class="math notranslate nohighlight">\(M\)</span>-ASK)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch8/dpsk.html">8.3. <span class="math notranslate nohighlight">\(M\)</span>-ary Differential Phase Shift Keying (<span class="math notranslate nohighlight">\(M\)</span>-DPSK)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch8/noncoh_usrp.html">8.4. USRP Implementation</a></li>
+
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch9/carrier.html">9. Carrier Synchronization</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch9/mlest.html">9.1. Basic Model</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../ch9/dd_pll.html">9.3. Decision-directed Phase-locked Loop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch9/ndd_pll.html">9.4. Non-decision-directed Phase-locked Loop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch9/carrier_refs.html">9.5. References and further reading</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../ch10/coh.html">10. Coherent Demodulation</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch11/arq.html">11. Automatic Repeat Request</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch11/crc.html">11.1. Cyclic Redundancy Check Codes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch11/protocols.html">11.2. Simple ARQ Protocols</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch11/duplex.html">11.3. Duplex Transmission using USRPs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch11/arq_exs.html">11.4. References and further reading</a></li>
+
+</ul>
+</li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/ch4/part15.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Digest of FCC Regulations Part 15</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#general-regulations">4.1. General Regulations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#industrial-scientific-and-medical-bands">4.2. Industrial, Scientific, and Medical bands</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#frequency-hopping">4.2.1. Frequency hopping</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#digital-modulation">4.2.2. Digital modulation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#antenna-gain">4.2.3. Antenna gain</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#out-of-band-radiation">4.2.4. Out-of-band radiation</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="digest-of-fcc-regulations-part-15">
+<h1><span class="section-number">4. </span>Digest of FCC Regulations Part 15<a class="headerlink" href="#digest-of-fcc-regulations-part-15" title="Permalink to this headline">#</a></h1>
+<section id="general-regulations">
+<h2><span class="section-number">4.1. </span>General Regulations<a class="headerlink" href="#general-regulations" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://ecfr.federalregister.gov/current/title-47/chapter-I/subchapter-A/part-15">FCC Regulations Part 15</a>
+“sets out the regulations under which an intentional, unintentional,
+or incidental radiator may be operated without an individual license.”
+We will perform experiments using the USRP radios within the purview of
+Part 15.</p></li>
+<li><p>The following sections in Part 15 are most relevant to us:</p>
+<ul>
+<li><p><a class="reference external" href="https://ecfr.federalregister.gov/current/title-47/chapter-I/subchapter-A/part-15/subpart-A?toc=1">Subpart A</a>: General</p>
+<ul>
+<li><p><a class="reference external" href="https://ecfr.federalregister.gov/current/title-47/chapter-I/subchapter-A/part-15/subpart-A/section-15.5">Section 15.5</a>: General conditions of operation</p></li>
+<li><p><a class="reference external" href="https://ecfr.federalregister.gov/current/title-47/chapter-I/subchapter-A/part-15/subpart-A/section-15.23">Section 15.23</a>: Home-built devices</p></li>
+</ul>
+</li>
+<li><p><a class="reference external" href="https://ecfr.federalregister.gov/current/title-47/chapter-I/subchapter-A/part-15/subpart-C?toc=1">Subpart C</a>: Intentional Radiators</p>
+<ul>
+<li><p><a class="reference external" href="https://ecfr.federalregister.gov/current/title-47/chapter-I/subchapter-A/part-15/subpart-C/section-15.205">Section 15.205</a>: Restricted bands of operation</p></li>
+<li><p><a class="reference external" href="https://ecfr.federalregister.gov/current/title-47/chapter-I/subchapter-A/part-15/subpart-C/section-15.209">Section 15.209</a>: Radiated emission limits; general requirements</p></li>
+<li><p><a class="reference external" href="https://ecfr.federalregister.gov/current/title-47/chapter-I/subchapter-A/part-15/subpart-C/subject-group-ECFRf45d172319b1f81/section-15.245">Section 15.245</a>: Operation within the bands 902-928 MHz, 2435-2465 MHz, 5785-5815 MHz, 10500-10550 MHz, and 24075-24175 MHz.</p></li>
+<li><p><a class="reference external" href="https://ecfr.federalregister.gov/current/title-47/chapter-I/subchapter-A/part-15/subpart-C/subject-group-ECFRf45d172319b1f81/section-15.247">Section 15.247</a>: Operation within the bands 902–928 MHz, 2400–2483.5 MHz, and 5725–5850 MHz.</p></li>
+<li><p><a class="reference external" href="https://ecfr.federalregister.gov/current/title-47/chapter-I/subchapter-A/part-15/subpart-C/subject-group-ECFRf45d172319b1f81/section-15.249">Section 15.249</a>: Operation within the bands 902–928 MHz, 2400–2483.5 MHz, 5725–5875 MHZ, and 24.0–24.25 GHz.</p></li>
+</ul>
+</li>
+<li><p><a class="reference external" href="https://ecfr.federalregister.gov/current/title-47/chapter-I/subchapter-A/part-15/subpart-E?toc=1">Subpart E</a>: Unlicensed National Information Infrastructure Devices</p></li>
+</ul>
+</li>
+<li><p>Other sections that we won’t use but you may want to take a look at:</p>
+<ul>
+<li><p><a class="reference external" href="https://ecfr.federalregister.gov/current/title-47/chapter-I/subchapter-A/part-15/subpart-F?toc=1">Subpart F</a>: Ultra-Wideband Operation</p></li>
+<li><p><a class="reference external" href="https://ecfr.federalregister.gov/current/title-47/chapter-I/subchapter-A/part-15/subpart-G?toc=1">Subpart G</a>: Access Broadband Over Power Line (Access BPL)</p></li>
+<li><p><a class="reference external" href="https://ecfr.federalregister.gov/current/title-47/chapter-I/subchapter-A/part-15/subpart-H?toc=1">Subpart H</a>: (TV) White Space Devices</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="industrial-scientific-and-medical-bands">
+<h2><span class="section-number">4.2. </span>Industrial, Scientific, and Medical bands<a class="headerlink" href="#industrial-scientific-and-medical-bands" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>We will conduct our radio experiments in the 902-928 MHz, 2400-2483.5 MHz, and 5725-5850 MHz Industrial, Scientific, and Medical (ISM) bands.</p></li>
+<li><p>Note that the SBX daughterboards can operate in the 902-928 MHz and 2400-2483.5 MHz bands, while the CBX daughterboards can operate in the 2400-2483.5 MHz and 5725-5850 MHz bands.</p></li>
+<li><p><a class="reference external" href="https://ecfr.federalregister.gov/current/title-47/chapter-I/subchapter-A/part-15/subpart-C/subject-group-ECFRf45d172319b1f81/section-15.245">Section 15.245</a>,  <a class="reference external" href="https://ecfr.federalregister.gov/current/title-47/chapter-I/subchapter-A/part-15/subpart-C/subject-group-ECFRf45d172319b1f81/section-15.247">Section 15.247</a>, and <a class="reference external" href="https://ecfr.federalregister.gov/current/title-47/chapter-I/subchapter-A/part-15/subpart-C/subject-group-ECFRf45d172319b1f81/section-15.249">Section 15.249</a> allow low-power, non-licensed transmission in these bands. Section 15.247 concerns us the most because it mainly specifies the restrictions for communication signals.</p></li>
+<li><p>Below is a summary of transmission allowed by  <a class="reference external" href="https://ecfr.federalregister.gov/current/title-47/chapter-I/subchapter-A/part-15/subpart-C/subject-group-ECFRf45d172319b1f81/section-15.247">Section 15.247</a> (some of the wordings below are direct quotes from the FCC sections above):</p></li>
+</ul>
+<section id="frequency-hopping">
+<h3><span class="section-number">4.2.1. </span>Frequency hopping<a class="headerlink" href="#frequency-hopping" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p>Any two hopping channel carrier frequencies must be separated by at least the maximum between 25 kHz and the 20 dB bandwidth of the hopping channel.</p></li>
+<li><p>The system must hop to pseudo-random channel frequencies at the system hopping rate. Each frequency must be used equally on the average by each transmitter.</p></li>
+<li><p>It is not required to employ all available hopping channels during each transmission, provided all other requirements are satisfied.</p></li>
+<li><p>The incorporation of intelligence within a frequency hopping system that permits the system to recognize other users within the spectrum band so that it individually and independently chooses and adapts its hopsets to avoid hopping on occupied channels is permitted. The coordination of frequency hopping systems in any other manner for the express purpose of avoiding the simultaneous occupancy of individual hopping frequencies by multiple transmitters is not permitted.</p></li>
+<li><p><strong>902-928 MHz band:</strong></p>
+<ul>
+<li><p>If the 20 dB bandwidth of the hopping channel is less than 250 kHz, the system shall use at least 50 hopping frequencies and the average time of occupancy on any frequency shall not be greater than 0.4 seconds within a 20 second period. The maximum peak conducted output power shall not exceed 1 W.</p></li>
+<li><p>If the 20 dB bandwidth of the hopping channel is 250 kHz or greater, the system shall use at least 25 hopping frequencies and the average time of occupancy on any frequency shall not be greater than 0.4 seconds within a 10 second period. The maximum peak conducted output power shall not exceed 0.25 W.</p></li>
+<li><p>The maximum allowed 20 dB bandwidth of the hopping channel is 500 kHz.</p></li>
+<li><p>The maximum peak conducted (for use with TX antennas of less than 6 dBi gain) output power may be 0.25 W if 25-49 hopping channels are used, or 1 W if <span class="math notranslate nohighlight">\(\geq\)</span> 50 hopping channels are used.</p></li>
+</ul>
+</li>
+<li><p><strong>2400-2483.5 MHz band:</strong></p>
+<ul>
+<li><p>There should be at least 15 channels. The average time of occupancy on any channel shall not be greater than 0.4 seconds within a period of 0.4 seconds multiplied by the number of hopping channels employed.</p></li>
+<li><p>The system may avoid or suppress transmissions on a particular hopping frequency provided that a minimum of 15 channels are used.</p></li>
+<li><p>If at least 75 non-overlapping hopping channels are used, the maximum peak conducted output power may be 1 W. Otherwise it may be 125mW.</p></li>
+<li><p>If the system’s output power is no greater than 125 mW,  any two hopping channel carrier frequencies may be separated by the maximum between 25 kHz and <span class="math notranslate nohighlight">\(\frac{2}{3}\)</span>  of the 20 dB bandwidth of the hopping channel.</p></li>
+</ul>
+</li>
+<li><p><strong>5725-5850 MHz band:</strong></p>
+<ul>
+<li><p>At least 75 hopping frequencies must be used.</p></li>
+<li><p>The maximum 20 dB bandwidth of the hopping channel is 1 MHz.</p></li>
+<li><p>The average time of occupancy on any frequency shall not be greater than 0.4 seconds within a 30 second period.</p></li>
+<li><p>The maximum peak conducted output power may be 1 W.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="digital-modulation">
+<h3><span class="section-number">4.2.2. </span>Digital modulation<a class="headerlink" href="#digital-modulation" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p>The minimum 6 dB bandwidth must be at least 500 kHz.</p></li>
+<li><p>The maximum peak conducted output power or the maximum conducted output power shall not exceed 1 W. Maximum Conducted Output Power is defined as the total transmit power delivered to all antennas and antenna elements averaged across all symbols in the signaling alphabet when the transmitter is operating at its maximum power control level. The average must not include any time intervals during which the transmitter is off or is transmitting at a reduced power level. If multiple modes of operation are possible (e.g., alternative modulation methods), the maximum conducted output power is the highest total transmit power occurring in any mode.</p></li>
+<li><p>The power spectral density conducted to the antenna shall not be greater than 8 dBm in any 3 kHz band during any time interval of continuous transmission.</p></li>
+<li><p>Devices using digital modulation techniques in the 5725-5850 MHz bands are specified under <a class="reference external" href="https://ecfr.federalregister.gov/current/title-47/chapter-I/subchapter-A/part-15/subpart-F?toc=1">Subpart E</a>.</p></li>
+</ul>
+</section>
+<section id="antenna-gain">
+<h3><span class="section-number">4.2.3. </span>Antenna gain<a class="headerlink" href="#antenna-gain" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p>The conducted output power limit above is based on the use of antennas with directional gains that do not exceed 6 dBi.</p></li>
+<li><p>If transmitting antennas of directional gain greater than 6 dBi are used, the conducted output power shall be reduced below the stated values by the amount in dB that the directional gain of the antenna exceeds 6 dBi.</p></li>
+<li><p>Other further restrictions may also apply. See <a class="reference external" href="https://ecfr.federalregister.gov/current/title-47/chapter-I/subchapter-A/part-15/subpart-C/subject-group-ECFRf45d172319b1f81/section-15.247">Section 15.247(c)</a> for details.</p></li>
+</ul>
+</section>
+<section id="out-of-band-radiation">
+<h3><span class="section-number">4.2.4. </span>Out-of-band radiation<a class="headerlink" href="#out-of-band-radiation" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p>In any 100 kHz bandwidth outside the frequency band in which the system is operating, the radio frequency power that is produced by the intentional radiator must be at least 20 dB below that in the 100 kHz bandwidth within the band that contains the highest level of the desired power, provided the transmitter demonstrates compliance with the peak conducted power limits.</p></li>
+<li><p>If the transmitter complies with the conducted power limits based on the use of RMS averaging over a time interval, the attenuation required shall be 30 dB.</p></li>
+<li><p>Attenuation below the general limits specified in Section 15.209 is not required.</p></li>
+<li><p>Radiated emissions which fall in the restricted bands, as defined in Section 15.205, must comply with the radiated emission limits specified in <a class="reference external" href="https://ecfr.federalregister.gov/current/title-47/chapter-I/subchapter-A/part-15/subpart-C/section-15.209">Section 15.209</a>.</p></li>
+</ul>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./ch4"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../ch3/Makefile_fft_filters.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><span class="section-number">3.6.6. </span><code class="docutils literal notranslate"><span class="pre">Makefile</span></code> for building <code class="docutils literal notranslate"><span class="pre">test_fft</span></code> and <code class="docutils literal notranslate"><span class="pre">test_filters</span></code></p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../ch5/usrp.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">5. </span>USRP Tuning and Calibration</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#general-regulations">4.1. General Regulations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#industrial-scientific-and-medical-bands">4.2. Industrial, Scientific, and Medical bands</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#frequency-hopping">4.2.1. Frequency hopping</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#digital-modulation">4.2.2. Digital modulation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#antenna-gain">4.2.3. Antenna gain</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#out-of-band-radiation">4.2.4. Out-of-band radiation</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Tan F. Wong
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

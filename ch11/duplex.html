@@ -1,0 +1,673 @@
+
+
+<!DOCTYPE html>
+
+
+<html >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>11.3. Duplex Transmission using USRPs &#8212; Digital Communications with SDRs</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'ch11/duplex';</script>
+    <link rel="canonical" href="wing.ece.ufl.edu/eel6528/ch11/duplex.html" />
+    <link rel="shortcut icon" href="../_static/logo.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="11.4. References and further reading" href="arq_exs.html" />
+    <link rel="prev" title="11.2. Simple ARQ Protocols" href="protocols.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="None"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Digital Communications with Software Defined Radios
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../ch1/introduction.html">1. Introduction</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch2/prelims.html">2. Some Programming Prelims</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch2/uhd.html">2.1. UHD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch2/multithread.html">2.2. Elementary Multi-threading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch2/prelims_exs.html">2.3. References and further reading</a></li>
+
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch3/filter.html">3. Multi-rate Filtering</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch3/fftw3.html">3.1. FFTW3 Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch3/overlapsave.html">3.2. Overlap Save Algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch3/multirate.html">3.3. Multi-rate Filtering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch3/polyphase.html">3.4. Polyphase Filtering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch3/filter_exs.html">3.5. References and further reading</a></li>
+
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../ch4/part15.html">4. Digest of FCC Regulations Part 15</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch5/usrp.html">5. USRP Tuning and Calibration</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch5/tuning.html">5.1. Frequency Tuning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch5/iq.html">5.2. DC Offset and IQ Imbalance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch5/usrp_refs.html">5.3. References and further reading</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch6/signal.html">6. Signal Generation and Capture</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch6/generate.html">6.1. TX Pulse Shaping</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch6/capture.html">6.2. RX Signal Capture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch6/signal_refs.html">6.3. References and further reading</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch7/sync.html">7. Signal Acquisition and Synchronization</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch7/dll.html">7.1. Closed-Loop Symbol Synchronization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch7/acq.html">7.2. Signal Acquisition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch7/signature.html">7.3. Signature Signal Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch7/mseq.html">7.4. Maximal-length Sequences</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch7/zc.html">7.5. Zadoff–Chu Sequences</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch7/sync_refs.html">7.6. References and further reading</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch8/noncoh.html">8. Non-coherent Demodulation</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch8/mlnoncoh.html">8.1. Maximum Likelihood Non-coherent Demodulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch8/ask.html">8.2. <span class="math notranslate nohighlight">\(M\)</span>-ary Amplitude Shift Keying (<span class="math notranslate nohighlight">\(M\)</span>-ASK)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch8/dpsk.html">8.3. <span class="math notranslate nohighlight">\(M\)</span>-ary Differential Phase Shift Keying (<span class="math notranslate nohighlight">\(M\)</span>-DPSK)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch8/noncoh_usrp.html">8.4. USRP Implementation</a></li>
+
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch9/carrier.html">9. Carrier Synchronization</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch9/mlest.html">9.1. Basic Model</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../ch9/dd_pll.html">9.3. Decision-directed Phase-locked Loop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch9/ndd_pll.html">9.4. Non-decision-directed Phase-locked Loop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch9/carrier_refs.html">9.5. References and further reading</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../ch10/coh.html">10. Coherent Demodulation</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="arq.html">11. Automatic Repeat Request</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="crc.html">11.1. Cyclic Redundancy Check Codes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="protocols.html">11.2. Simple ARQ Protocols</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">11.3. Duplex Transmission using USRPs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="arq_exs.html">11.4. References and further reading</a></li>
+
+</ul>
+</li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/ch11/duplex.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Duplex Transmission using USRPs</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#frequency-division-duplexing-fdd">11.3.1. Frequency-division duplexing (FDD)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#time-division-duplexing-tdd">11.3.2. Time-division duplexing (TDD)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#stop-and-wait-arq-for-tdd-without-synchronized-clocks">11.3.2.1. Stop-and-wait ARQ for TDD without synchronized clocks</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="duplex-transmission-using-usrps">
+<h1><span class="section-number">11.3. </span>Duplex Transmission using USRPs<a class="headerlink" href="#duplex-transmission-using-usrps" title="Permalink to this headline">#</a></h1>
+<ul class="simple">
+<li><p>As discussed above, a feedback channel from the sink radio back to
+the source radio is needed in order to support ARQ. That means each
+radio needs to be able to both transmit and receive signals.</p></li>
+<li><p>Since each SBX/CBX daughterboard has two independent RF chains (one
+for TX and one for RX), our USRP radios may support full-duplex
+operation. That is, each radio can transmit and receive at the same
+time.</p></li>
+<li><p>However, the TX and RX antennas of a USRP radio are often closely
+placed together. Thus the signal transmitted by the TX chain of the
+USRP will be picked up by the USRP’s own RX chain in addition to the
+intended RX signal, causing a very strong self interference. The
+signal power of this self interference could be tenths of dB above
+that of the intended RX signal.</p></li>
+<li><p>This extremely strong self interference, if cannot be filtered out
+before the ADC, often saturates the ADC in the RX chain, resulting
+in a strong nonlinear additive interference term in the digitized RX
+signal samples at the ADC output. It is usually difficult to remove
+this nonlinear additive interference from the RX signal samples,
+even if the signal transmitted by the USRP causing the interference
+is known.</p></li>
+<li><p>One may attenuate the analog signal in the RX chain before the ADC
+enough that the attenuated signal falls within the dynamic range of
+the ADC. However, doing so will also attenuate the intended RX
+signal so much that quantization errors of the ADC becomes too
+significant, even if one can remove the known self interference from
+the RX signal.</p></li>
+<li><p>If one is to perform cancellation of the self interference in the RX
+chain, that must be done in the analog domain before the
+ADC. Unfortunately, our USRP radios are not equipped with the
+analogu circuitry to perform self interference cancellation.</p></li>
+<li><p>In all, while full-duplex operations in the same frequency band
+using our USRP radios is theoretically possible, it is practically
+hard to do so. Therefore, we may opt for either one of the following
+more practical approaches:</p></li>
+</ul>
+<section id="frequency-division-duplexing-fdd">
+<h2><span class="section-number">11.3.1. </span>Frequency-division duplexing (FDD)<a class="headerlink" href="#frequency-division-duplexing-fdd" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>In FDD, the forward and feedback channels occupy different frequency
+bands. Self interference in full-duplex operations is removed by
+analog filtering.</p></li>
+<li><p>Recall that in the RX chain of the SBX/CBX daughterboard has a
+fixed 40 MHz analog lowpass filter before the ADC in each of the I &amp;
+Q paths. To employ this analog filter to remove self interference,
+the center frequencies of the forward and feedback bands need to be
+separated by more than 40 MHz plus the larger of the bandwidths of
+the forward and feedback signals. The band separation often needs to
+be larger due to strong sidelobs that may also present in the self
+interference signal due to amplifier nonlinearities.</p></li>
+<li><p>If the above frequency band separation requirement is satisfied,
+full-duplex operations can be supported and hence the ARQ protocols
+described above can be directly implemented:</p>
+<ul>
+<li><p>At the source (and similarly the sink), both transmit and receive
+objects (and functions) need to be instantiated and ran
+asynchronously on separated threads.</p></li>
+<li><p>The only communication needed between the transmit and receive
+threads are the values of <span class="math notranslate nohighlight">\(S\)</span> (<span class="math notranslate nohighlight">\(S_{\max}\)</span> and <span class="math notranslate nohighlight">\(S_{\min}\)</span> in
+go-back-<span class="math notranslate nohighlight">\(n\)</span> and selective-repeat ARQ) and <span class="math notranslate nohighlight">\(R\)</span>. This can be simply
+achieved for instance at the source by making <span class="math notranslate nohighlight">\(S\)</span> an atomic class
+variable in the transmit object and <span class="math notranslate nohighlight">\(R\)</span> an atomic class variable
+in the receive object, providing thread-safe access to these class
+variables.</p></li>
+</ul>
+</li>
+<li><p>The timeout required in the ARQ protocols should be set according to
+the specific protocol accounting for the signal generation and
+processing time at the host computer, the host load condition, the
+latency involved in sending samples back and forth between the USRP
+and host, the processing time in the FPGA in the USRP radio,
+transmission time as well as any buffering delays. Usually practical
+timeout values have to be fine-tuned experimentally.</p></li>
+<li><p>Timers may be easily implemented using the C++
+<a class="reference external" href="http://www.cplusplus.com/reference/chrono/steady_clock/"><code class="docutils literal notranslate"><span class="pre">std::chrono::steady_clock</span></code></a>
+class.</p></li>
+<li><p>To minimize processing latency in the host computer, the threads
+that implement critical transmit and receive functions should be set
+to have the highest priority.</p></li>
+</ul>
+</section>
+<section id="time-division-duplexing-tdd">
+<h2><span class="section-number">11.3.2. </span>Time-division duplexing (TDD)<a class="headerlink" href="#time-division-duplexing-tdd" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>In TDD, transmissions over the forward and feedback channels occur
+in different non-overlapping time slots over the same frequency
+band. Usually additional guard time is added between adjacent time
+slots to allow for a maximum physical propagation delay.</p></li>
+<li><p>Since a radio never transmits and receives simultaneously in TDD, it
+only needs to support half-duplex operations. With our USRP radios,
+the independent TX and RX chains help to avoid any delay involved in
+switching between TX and RX chains.</p></li>
+<li><p>If synchronized clock sources (e.g. GPS clocks) are available to
+both the source and sink, the time slots can be synchronized and
+scheduled for use by forward and feedback transmissions.</p></li>
+<li><p>If no synchronized clock sources are available (as in our case), TDD
+is still possible based on time slots induced by the ARQ
+protocol. For example, the following modified version of the
+stop-and-wait ARQ protocol can be used in a TDD system without
+synchronized clock sources:</p></li>
+</ul>
+<section id="stop-and-wait-arq-for-tdd-without-synchronized-clocks">
+<h3><span class="section-number">11.3.2.1. </span>Stop-and-wait ARQ for TDD without synchronized clocks<a class="headerlink" href="#stop-and-wait-arq-for-tdd-without-synchronized-clocks" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p><strong><u>Source</u>:</strong></p>
+<ol class="arabic simple">
+<li><p>Fetch a new data payload from the higher layer if there is one
+available. Otherwise, wait until a new payload is available.</p></li>
+<li><p>Use <span class="math notranslate nohighlight">\(S\)</span> as the packet number to construct a data packet from the
+payload, and send the constructed data packet to the sink.</p></li>
+<li><p>Wait for an ACK packet to arrive from the sink. If an error-free
+ACK packet carrying an <span class="math notranslate nohighlight">\(R &gt; S\)</span> is received before timeout,
+increment <span class="math notranslate nohighlight">\(S\)</span> and go back to step 1 to transmit a new data
+packet. If no such ACK packet is received before timeout, go back
+to step 2 to retransmit the current data packet.</p></li>
+</ol>
+</li>
+<li><p><strong><u>Sink</u>:</strong></p>
+<ol class="arabic simple">
+<li><p>Wait until a data packet arrives from the source.</p></li>
+<li><p>If an error-free packet containing an <span class="math notranslate nohighlight">\(S = R\)</span> is received from
+the source, release the previously stored payload (if exists) to
+the higher layer, store the data payload of the received packet,
+increment <span class="math notranslate nohighlight">\(R\)</span> and immediately send an ACK packet carrying the
+request number <span class="math notranslate nohighlight">\(R\)</span> back to source.</p></li>
+<li><p>Go back to step 1.</p></li>
+</ol>
+</li>
+<li><p>Note that this protocol establishes a master-slave relationship
+between the source and sink. The source acts as the master to control
+transmission timings of both the forward and feedback channels. The
+sink acts the slave responding to the transmission events initiated by
+the source.</p></li>
+<li><p>Additional communication between the threads running the transmit
+and receive objects is needed to implement this protocol. For
+example:</p>
+<ul>
+<li><p>At the source, after the transmit object sends a data packet, it
+can send a signal to the receive object to tell it to start
+receiving an ACK packet from the sink. Note that because of the
+difference in transmission rates over the Gigabit Ethernet to and
+from the USRP, an additional delay may be needed before the
+transmit object sends the signal to the receive object.</p></li>
+<li><p>At the sink, the receive object may directly call the <code class="docutils literal notranslate"><span class="pre">send</span></code>
+method of the transmit object to send an ACK packet when the
+protocol calls for such an action. Again, additional delay may be
+needed after the <code class="docutils literal notranslate"><span class="pre">send</span></code> method returns before the receive object
+start processing the samples received from the USRP. This delay
+should implemented by dropping samples from the USRP that
+correspond to the ACK packet that it transmits.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./ch11"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="protocols.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><span class="section-number">11.2. </span>Simple ARQ Protocols</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="arq_exs.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">11.4. </span>References and further reading</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#frequency-division-duplexing-fdd">11.3.1. Frequency-division duplexing (FDD)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#time-division-duplexing-tdd">11.3.2. Time-division duplexing (TDD)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#stop-and-wait-arq-for-tdd-without-synchronized-clocks">11.3.2.1. Stop-and-wait ARQ for TDD without synchronized clocks</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Tan F. Wong
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,651 @@
+
+
+<!DOCTYPE html>
+
+
+<html >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>9.3. Decision-directed Phase-locked Loop &#8212; Digital Communications with SDRs</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'ch9/dd_pll';</script>
+    <link rel="canonical" href="wing.ece.ufl.edu/eel6528/ch9/dd_pll.html" />
+    <link rel="shortcut icon" href="../_static/logo.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="9.4. Non-decision-directed Phase-locked Loop" href="ndd_pll.html" />
+    <link rel="prev" title="9.1. Basic Model" href="mlest.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="None"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Digital Communications with Software Defined Radios
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../ch1/introduction.html">1. Introduction</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch2/prelims.html">2. Some Programming Prelims</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch2/uhd.html">2.1. UHD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch2/multithread.html">2.2. Elementary Multi-threading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch2/prelims_exs.html">2.3. References and further reading</a></li>
+
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch3/filter.html">3. Multi-rate Filtering</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch3/fftw3.html">3.1. FFTW3 Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch3/overlapsave.html">3.2. Overlap Save Algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch3/multirate.html">3.3. Multi-rate Filtering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch3/polyphase.html">3.4. Polyphase Filtering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch3/filter_exs.html">3.5. References and further reading</a></li>
+
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../ch4/part15.html">4. Digest of FCC Regulations Part 15</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch5/usrp.html">5. USRP Tuning and Calibration</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch5/tuning.html">5.1. Frequency Tuning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch5/iq.html">5.2. DC Offset and IQ Imbalance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch5/usrp_refs.html">5.3. References and further reading</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch6/signal.html">6. Signal Generation and Capture</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch6/generate.html">6.1. TX Pulse Shaping</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch6/capture.html">6.2. RX Signal Capture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch6/signal_refs.html">6.3. References and further reading</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch7/sync.html">7. Signal Acquisition and Synchronization</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch7/dll.html">7.1. Closed-Loop Symbol Synchronization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch7/acq.html">7.2. Signal Acquisition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch7/signature.html">7.3. Signature Signal Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch7/mseq.html">7.4. Maximal-length Sequences</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch7/zc.html">7.5. Zadoff–Chu Sequences</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch7/sync_refs.html">7.6. References and further reading</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch8/noncoh.html">8. Non-coherent Demodulation</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch8/mlnoncoh.html">8.1. Maximum Likelihood Non-coherent Demodulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch8/ask.html">8.2. <span class="math notranslate nohighlight">\(M\)</span>-ary Amplitude Shift Keying (<span class="math notranslate nohighlight">\(M\)</span>-ASK)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch8/dpsk.html">8.3. <span class="math notranslate nohighlight">\(M\)</span>-ary Differential Phase Shift Keying (<span class="math notranslate nohighlight">\(M\)</span>-DPSK)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch8/noncoh_usrp.html">8.4. USRP Implementation</a></li>
+
+</ul>
+</li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="carrier.html">9. Carrier Synchronization</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="mlest.html">9.1. Basic Model</a></li>
+
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">9.3. Decision-directed Phase-locked Loop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ndd_pll.html">9.4. Non-decision-directed Phase-locked Loop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="carrier_refs.html">9.5. References and further reading</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../ch10/coh.html">10. Coherent Demodulation</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch11/arq.html">11. Automatic Repeat Request</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch11/crc.html">11.1. Cyclic Redundancy Check Codes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch11/protocols.html">11.2. Simple ARQ Protocols</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch11/duplex.html">11.3. Duplex Transmission using USRPs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch11/arq_exs.html">11.4. References and further reading</a></li>
+
+</ul>
+</li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/ch9/dd_pll.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Decision-directed Phase-locked Loop</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#usrp-implementation">9.3.1. USRP implementation</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="decision-directed-phase-locked-loop">
+<h1><span class="section-number">9.3. </span>Decision-directed Phase-locked Loop<a class="headerlink" href="#decision-directed-phase-locked-loop" title="Permalink to this headline">#</a></h1>
+<ul>
+<li><p>For continuous transmission or long packets, the carrier frequency
+offset may vary. As a result, we need to track changes on <span class="math notranslate nohighlight">\(\omega_o\)</span>
+and <span class="math notranslate nohighlight">\(\theta\)</span>.</p></li>
+<li><p>Let <span class="math notranslate nohighlight">\(\phi(t) \triangleq \omega_o t + \theta\)</span> be the phase function
+that incorporates both the carrier frequency and phase
+offsets. Rewrite the joint ML estimation of <span class="math notranslate nohighlight">\((\omega_o, \theta)\)</span> in
+terms of tracking <span class="math notranslate nohighlight">\(\phi(t)\)</span>. Setting the derivative of the decision
+statistic in <a class="reference internal" href="mlest.html#equation-e-dd-ml">(9.1)</a> w.r.t. <span class="math notranslate nohighlight">\(\phi(t)\)</span> to <span class="math notranslate nohighlight">\(0\)</span> gives the
+following necessary condition for the ML estimator <span class="math notranslate nohighlight">\(\hat\phi(t)\)</span>:</p>
+<div class="math notranslate nohighlight" id="equation-e-pll">
+<span class="eqno">(9.5)<a class="headerlink" href="#equation-e-pll" title="Permalink to this equation">#</a></span>\[\begin{equation}
+\text{Re} \left\{ -j \int_{-\infty}^{\infty} r(t) x^*(t) e^{-j\hat \phi(t)} dt 
+\right\} = 0.
+\end{equation}\]</div>
+</li>
+<li><p>We may use the following PLL to solve for <span class="math notranslate nohighlight">\(\hat\phi(t)\)</span> in <a class="reference internal" href="#equation-e-pll">(9.5)</a>:</p>
+<a class="reference internal image-reference" href="../_images/dd_pll.png"><img alt="Basic phase-locked loop" class="align-center" src="../_images/dd_pll.png" style="width: 800px;" /></a>
+</li>
+<li><p>The integration in <a class="reference internal" href="#equation-e-pll">(9.5)</a> is implemented by the loop filter
+shown in the PLL above. The loop filter is a narrow-bandwidth
+lowpass filter with transfer function <span class="math notranslate nohighlight">\(H(s)\)</span>.</p></li>
+<li><p>The voltage-controlled oscillator (VCO) generates the LO carrier
+<span class="math notranslate nohighlight">\(e^{-j \left(\hat\phi(t) + \frac{\pi}{2} \right)}\)</span>. The
+instantaneous frequency of the VCO is <span class="math notranslate nohighlight">\(\frac{d \hat\phi(t)}{dt} = c
+e(t)\)</span> where <span class="math notranslate nohighlight">\(c\)</span> is a constant and <span class="math notranslate nohighlight">\(e(t)\)</span> is the input to the VCO. In
+the Laplace domain, we have <span class="math notranslate nohighlight">\(s\hat\Phi(s) = c E(s)\)</span>, where the
+upper-case symbols are the Laplace transforms of the signals denoted
+by the corresponding lower-case symbols.</p></li>
+<li><p>To investigate the operation of the PLL and the proper choice of
+<span class="math notranslate nohighlight">\(H(s)\)</span>, let us ignore the presence of the AWGN and assume <span class="math notranslate nohighlight">\(r(t) =
+x(t) e^{j\phi(t)}\)</span>. Under this assumption, the input signal of the
+loop filter is thus <span class="math notranslate nohighlight">\(|x(t)|^2 e^{j \left( \phi_e(t) - \frac{\pi}{2}
+\right)}\)</span>, where <span class="math notranslate nohighlight">\(\phi_e (t) \triangleq \phi(t) - \hat\phi(t)\)</span> is
+the phase error signal.</p></li>
+<li><p>Suppose that the bandwidth of the phase error signal <span class="math notranslate nohighlight">\(\phi_e(t)\)</span> is
+much smaller than that of <span class="math notranslate nohighlight">\(x(t)\)</span> and that the loop filter is to have
+a bandwidth similar to that of <span class="math notranslate nohighlight">\(\phi_e(t)\)</span>. Then the output of the
+loop filter is approximately <span class="math notranslate nohighlight">\(A_x h(t) * e^{j \left( \phi_e(t) -
+\frac{\pi}{2} \right)}\)</span>, where <span class="math notranslate nohighlight">\(A_x = \int_{-\infty}^{\infty}
+|x(t)|^2 dt\)</span> is the dc component of <span class="math notranslate nohighlight">\(|x(t)|^2\)</span>. Let’s restrict the
+impulse response <span class="math notranslate nohighlight">\(h(t)\)</span> of the loop filter to be real-valued, and
+assume that <span class="math notranslate nohighlight">\(|\phi_e(t)|\)</span> is small. Hence the input signal applied
+to the VCO is</p>
+<div class="math notranslate nohighlight" id="equation-e-error">
+<span class="eqno">(9.6)<a class="headerlink" href="#equation-e-error" title="Permalink to this equation">#</a></span>\[\begin{equation} 
+e(t) \approx A_x h(t) * \sin \phi_e(t) \approx A_x h(t) * \phi_e(t) 
+\end{equation}\]</div>
+<p>where the second approximation, which linearizes the problem,
+results from the fact that <span class="math notranslate nohighlight">\(\sin x \approx x\)</span> if <span class="math notranslate nohighlight">\(|x| \ll 1\)</span>. In the
+Laplace domain, <a class="reference internal" href="#equation-e-error">(9.6)</a> becomes <span class="math notranslate nohighlight">\(E(s) = A_x H(s)
+\Phi_e(s)\)</span>.</p>
+</li>
+<li><p>Putting <span class="math notranslate nohighlight">\(E(s) = A_x H(s) \Phi_e(s)\)</span> and <span class="math notranslate nohighlight">\(\hat\Phi(s) = \Phi(s) -
+\Phi_e(s)\)</span> into <span class="math notranslate nohighlight">\(s\hat\Phi(s) = c E(s)\)</span>, we obtain</p>
+<div class="math notranslate nohighlight" id="equation-e-phi-e-loop">
+<span class="eqno">(9.7)<a class="headerlink" href="#equation-e-phi-e-loop" title="Permalink to this equation">#</a></span>\[\begin{equation}
+s\hat{\Phi}(s) = cA_xH(s) \Phi_e(s), 
+\end{equation}\]</div>
+<p>or equivalently</p>
+<div class="math notranslate nohighlight" id="equation-e-phi-e">
+<span class="eqno">(9.8)<a class="headerlink" href="#equation-e-phi-e" title="Permalink to this equation">#</a></span>\[\begin{equation}
+\Phi_e(s) = \frac{s \Phi(s)}{s+cA_xH(s)} 
+= \frac{\frac{\omega_o}{s} + \theta}{s+cA_xH(s)} .
+\end{equation}\]</div>
+</li>
+<li><p><strong>First-order loop</strong>: Select <span class="math notranslate nohighlight">\(H(s) = 1\)</span> in the passband. Applying
+the final value theorem to <a class="reference internal" href="#equation-e-phi-e">(9.8)</a>, we get</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+  \lim_{t \rightarrow \infty} \phi_e(t) 
+  = \lim_{s \rightarrow 0} s\Phi_e(s) 
+  = \frac{\omega_o}{cA_x}.
+  \end{equation*}\]</div>
+<p>Thus, the PLL is able to track the carrier frequency offset but has
+a phase error of <span class="math notranslate nohighlight">\(\frac{\omega_o}{cA_x}\)</span> at steady state after it
+settles.</p>
+</li>
+<li><p><strong>Second-order loop</strong>: Select <span class="math notranslate nohighlight">\(H(s) = 1+ \frac{a}{s}\)</span> in the
+passband.  Applying the final value theorem to <a class="reference internal" href="#equation-e-phi-e">(9.8)</a>, we
+get</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+  \lim_{t \rightarrow \infty} \phi_e(t) 
+  = \lim_{s \rightarrow 0} s\Phi_e(s) 
+  = 0.
+  \end{equation*}\]</div>
+<p>Thus, the PLL is able to track the both carrier frequency and phase
+offsets at steady state.</p>
+</li>
+</ul>
+<section id="usrp-implementation">
+<h2><span class="section-number">9.3.1. </span>USRP implementation<a class="headerlink" href="#usrp-implementation" title="Permalink to this headline">#</a></h2>
+<ul>
+<li><p>Multiplying both sides of <a class="reference internal" href="#equation-e-phi-e-loop">(9.7)</a> by <span class="math notranslate nohighlight">\(s\)</span> and employing
+the second-order loop <span class="math notranslate nohighlight">\(H(s)\)</span>, we get the following time-domain
+differential equation equivalent to <a class="reference internal" href="#equation-e-phi-e-loop">(9.7)</a>:</p>
+<div class="math notranslate nohighlight" id="equation-e-dd-loop">
+<span class="eqno">(9.9)<a class="headerlink" href="#equation-e-dd-loop" title="Permalink to this equation">#</a></span>\[\begin{equation}
+\frac{d}{dt} \left(\frac{d\hat\phi(t)}{dt} \right) 
+= cA_x \frac{d\phi_e(t)}{dt} + caA_x \phi_e(t) 
+\end{equation}\]</div>
+<p>in the passband of <span class="math notranslate nohighlight">\(H(s)\)</span>.</p>
+</li>
+<li><p>If the signals are sampled at the symbol rate <span class="math notranslate nohighlight">\(\frac{1}{T}\)</span> and
+derivatives are approximated by the corresponding differences, we
+can solve <a class="reference internal" href="#equation-e-dd-loop">(9.9)</a> by the following iterative algorithm in
+discrete time:</p>
+<div class="math notranslate nohighlight" id="equation-e-dd-alg1">
+<span class="eqno">(9.10)<a class="headerlink" href="#equation-e-dd-alg1" title="Permalink to this equation">#</a></span>\[\begin{split}\begin{align}
+\phi[n] &amp;= \angle ( \hat r[n]) \\
+\phi_e[n] &amp;= \phi[n] - \hat\phi[n] \\
+\dot\phi[n] &amp;= \dot\phi[n-1] + \mu ( \phi_e[n] - \phi_e[n-1]) + \nu \phi_e[n] \\
+\hat\phi[n+1] &amp;= \hat \phi[n] + \dot\phi[n]
+\end{align}\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mu\)</span> and <span class="math notranslate nohighlight">\(\nu\)</span> are small positive constants chosen to
+implement the narrowband lowpass property of <span class="math notranslate nohighlight">\(H(s)\)</span>. Note that
+<span class="math notranslate nohighlight">\(\phi[n] = \angle ( \hat r[n])\)</span> is the angle of the (decision-)
+pilot-corrected MF output sampled at the symbol rate.</p>
+</li>
+<li><p>Note that the iterative algorithm in <a class="reference internal" href="#equation-e-dd-alg1">(9.10)</a> is
+unstable. We may add the stabilizing constant <span class="math notranslate nohighlight">\(\lambda\)</span> (slightly
+smaller than 1) to the algorithm as below:</p>
+<div class="math notranslate nohighlight" id="equation-e-dd-alg2">
+<span class="eqno">(9.11)<a class="headerlink" href="#equation-e-dd-alg2" title="Permalink to this equation">#</a></span>\[\begin{split}\begin{align}
+\phi[n] &amp;= \angle ( \hat r[n]) \\
+\phi_e[n] &amp;= \phi[n] - \hat\phi[n] \\
+\dot\phi[n]
+&amp;= \lambda \dot\phi[n-1] + \mu ( \phi_e[n] - \phi_e[n-1]) + \nu
+\phi_e[n] \\ 
+\hat\phi[n+1] &amp;= \lambda \hat \phi[n] + \dot\phi[n].
+\end{align}\end{split}\]</div>
+<p>Or we may limit the range of <span class="math notranslate nohighlight">\(\dot\phi[n]\)</span> in <a class="reference internal" href="#equation-e-dd-alg1">(9.10)</a> to
+the maximum range of possible (normalized) frequency offset by
+noting that <span class="math notranslate nohighlight">\(\dot\phi[n] = T \frac{d\hat\phi(t)}{dt}
+\big|_{t=nT}\)</span>.</p>
+</li>
+<li><p>After the PL settles, we may correct the frequency and phase offsets
+by multiplying the MF output <span class="math notranslate nohighlight">\(\tilde r[n]\)</span> with <span class="math notranslate nohighlight">\(e^{-j\hat\phi[n]}\)</span>.</p></li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./ch9"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="mlest.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><span class="section-number">9.1. </span>Basic Model</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="ndd_pll.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">9.4. </span>Non-decision-directed Phase-locked Loop</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#usrp-implementation">9.3.1. USRP implementation</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Tan F. Wong
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

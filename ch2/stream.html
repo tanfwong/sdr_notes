@@ -1,0 +1,822 @@
+
+
+<!DOCTYPE html>
+
+
+<html >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>2.4.5. stream.hpp &#8212; Digital Communications with SDRs</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'ch2/stream';</script>
+    <link rel="canonical" href="wing.ece.ufl.edu/eel6528/ch2/stream.html" />
+    <link rel="shortcut icon" href="../_static/logo.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="2.4.6. tx_samples_from_file.cpp" href="tx_samples_from_file.html" />
+    <link rel="prev" title="2.4.4. txrx_loopback_to_file.cpp (stream)" href="txrx_stream.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="None"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Digital Communications with Software Defined Radios
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../ch1/introduction.html">1. Introduction</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="prelims.html">2. Some Programming Prelims</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="uhd.html">2.1. UHD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multithread.html">2.2. Elementary Multi-threading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="prelims_exs.html">2.3. References and further reading</a></li>
+
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch3/filter.html">3. Multi-rate Filtering</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch3/fftw3.html">3.1. FFTW3 Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch3/overlapsave.html">3.2. Overlap Save Algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch3/multirate.html">3.3. Multi-rate Filtering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch3/polyphase.html">3.4. Polyphase Filtering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch3/filter_exs.html">3.5. References and further reading</a></li>
+
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../ch4/part15.html">4. Digest of FCC Regulations Part 15</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch5/usrp.html">5. USRP Tuning and Calibration</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch5/tuning.html">5.1. Frequency Tuning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch5/iq.html">5.2. DC Offset and IQ Imbalance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch5/usrp_refs.html">5.3. References and further reading</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch6/signal.html">6. Signal Generation and Capture</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch6/generate.html">6.1. TX Pulse Shaping</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch6/capture.html">6.2. RX Signal Capture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch6/signal_refs.html">6.3. References and further reading</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch7/sync.html">7. Signal Acquisition and Synchronization</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch7/dll.html">7.1. Closed-Loop Symbol Synchronization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch7/acq.html">7.2. Signal Acquisition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch7/signature.html">7.3. Signature Signal Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch7/mseq.html">7.4. Maximal-length Sequences</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch7/zc.html">7.5. Zadoff–Chu Sequences</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch7/sync_refs.html">7.6. References and further reading</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch8/noncoh.html">8. Non-coherent Demodulation</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch8/mlnoncoh.html">8.1. Maximum Likelihood Non-coherent Demodulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch8/ask.html">8.2. <span class="math notranslate nohighlight">\(M\)</span>-ary Amplitude Shift Keying (<span class="math notranslate nohighlight">\(M\)</span>-ASK)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch8/dpsk.html">8.3. <span class="math notranslate nohighlight">\(M\)</span>-ary Differential Phase Shift Keying (<span class="math notranslate nohighlight">\(M\)</span>-DPSK)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch8/noncoh_usrp.html">8.4. USRP Implementation</a></li>
+
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch9/carrier.html">9. Carrier Synchronization</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch9/mlest.html">9.1. Basic Model</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../ch9/dd_pll.html">9.3. Decision-directed Phase-locked Loop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch9/ndd_pll.html">9.4. Non-decision-directed Phase-locked Loop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch9/carrier_refs.html">9.5. References and further reading</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../ch10/coh.html">10. Coherent Demodulation</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch11/arq.html">11. Automatic Repeat Request</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch11/crc.html">11.1. Cyclic Redundancy Check Codes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch11/protocols.html">11.2. Simple ARQ Protocols</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch11/duplex.html">11.3. Duplex Transmission using USRPs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch11/arq_exs.html">11.4. References and further reading</a></li>
+
+</ul>
+</li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/ch2/stream.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>stream.hpp</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#source-code">2.4.5.1. Source code</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="stream-hpp">
+<span id="code-stream"></span><h1><span class="section-number">2.4.5. </span><code class="docutils literal notranslate"><span class="pre">stream.hpp</span></code><a class="headerlink" href="#stream-hpp" title="Permalink to this headline">#</a></h1>
+<section id="source-code">
+<h2><span class="section-number">2.4.5.1. </span>Source code<a class="headerlink" href="#source-code" title="Permalink to this headline">#</a></h2>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="linenos">  1</span><span class="c1">//</span>
+<span class="linenos">  2</span><span class="c1">// Copyright 2011-2013 Ettus Research LLC</span>
+<span class="linenos">  3</span><span class="c1">// Copyright 2018 Ettus Research, a National Instruments Company</span>
+<span class="linenos">  4</span><span class="c1">//</span>
+<span class="linenos">  5</span><span class="c1">// SPDX-License-Identifier: GPL-3.0-or-later</span>
+<span class="linenos">  6</span><span class="c1">//</span>
+<span class="linenos">  7</span>
+<span class="linenos">  8</span><span class="cp">#ifndef INCLUDED_UHD_STREAM_HPP</span>
+<span class="linenos">  9</span><span class="cp">#define INCLUDED_UHD_STREAM_HPP</span>
+<span class="linenos"> 10</span>
+<span class="linenos"> 11</span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;uhd/config.hpp&gt;</span>
+<span class="linenos"> 12</span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;uhd/types/device_addr.hpp&gt;</span>
+<span class="linenos"> 13</span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;uhd/types/metadata.hpp&gt;</span>
+<span class="linenos"> 14</span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;uhd/types/ref_vector.hpp&gt;</span>
+<span class="linenos"> 15</span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;uhd/types/stream_cmd.hpp&gt;</span>
+<span class="linenos"> 16</span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;uhd/utils/noncopyable.hpp&gt;</span>
+<span class="linenos"> 17</span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;boost/shared_ptr.hpp&gt;</span>
+<span class="linenos"> 18</span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;boost/utility.hpp&gt;</span>
+<span class="linenos"> 19</span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string&gt;</span>
+<span class="linenos"> 20</span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;vector&gt;</span>
+<span class="linenos"> 21</span>
+<span class="linenos"> 22</span><span class="k">namespace</span><span class="w"> </span><span class="nn">uhd</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos"> 23</span>
+<span class="linenos"> 24</span><span class="cm">/*!</span>
+<span class="linenos"> 25</span><span class="cm"> * A struct of parameters to construct a streamer.</span>
+<span class="linenos"> 26</span><span class="cm"> *</span>
+<span class="linenos"> 27</span><span class="cm"> * Here is an example of how a stream args object could be used in conjunction</span>
+<span class="linenos"> 28</span><span class="cm"> * with uhd::device::get_rx_stream():</span>
+<span class="linenos"> 29</span><span class="cm"> *</span>
+<span class="linenos"> 30</span><span class="cm"> * \code{.cpp}</span>
+<span class="linenos"> 31</span><span class="cm"> * // 1. Create the stream args object and initialize the data formats to fc32 and sc16:</span>
+<span class="linenos"> 32</span><span class="cm"> * uhd::stream_args_t stream_args(&quot;fc32&quot;, &quot;sc16&quot;);</span>
+<span class="linenos"> 33</span><span class="cm"> * // 2. Set the channel list, we want 3 streamers coming from channels</span>
+<span class="linenos"> 34</span><span class="cm"> * //    0, 1 and 2, in that order:</span>
+<span class="linenos"> 35</span><span class="cm"> * stream_args.channels = {0, 1, 2};</span>
+<span class="linenos"> 36</span><span class="cm"> * // 3. Set optional args:</span>
+<span class="linenos"> 37</span><span class="cm"> * stream_args.args[&quot;spp&quot;] = &quot;200&quot;; // 200 samples per packet</span>
+<span class="linenos"> 38</span><span class="cm"> * // Now use these args to create an rx streamer:</span>
+<span class="linenos"> 39</span><span class="cm"> * // (We assume that usrp is a valid uhd::usrp::multi_usrp)</span>
+<span class="linenos"> 40</span><span class="cm"> * uhd::rx_streamer::sptr rx_stream = usrp-&gt;get_rx_stream(stream_args);</span>
+<span class="linenos"> 41</span><span class="cm"> * // Now, any calls to rx_stream must provide a vector of 3 buffers,</span>
+<span class="linenos"> 42</span><span class="cm"> * // one per channel.</span>
+<span class="linenos"> 43</span><span class="cm"> * \endcode</span>
+<span class="linenos"> 44</span><span class="cm"> *</span>
+<span class="linenos"> 45</span><span class="cm"> * \b Note: Not all combinations of CPU and OTW format have conversion support.</span>
+<span class="linenos"> 46</span><span class="cm"> * You may however write and register your own conversion routines.</span>
+<span class="linenos"> 47</span><span class="cm"> *</span>
+<span class="linenos"> 48</span><span class="cm"> * If you are creating stream args to connect to an RFNoC block, then you might</span>
+<span class="linenos"> 49</span><span class="cm"> * want to specify block ID and port, too:</span>
+<span class="linenos"> 50</span><span class="cm"> * \code{.cpp}</span>
+<span class="linenos"> 51</span><span class="cm"> * stream_args.args[&quot;block_id0&quot;] = &quot;0/Radio_0&quot;;</span>
+<span class="linenos"> 52</span><span class="cm"> * stream_args.args[&quot;block_id1&quot;] = &quot;0/Radio_1&quot;;</span>
+<span class="linenos"> 53</span><span class="cm"> * stream_args.args[&quot;block_id2&quot;] = &quot;0/Radio_1&quot;; // Chan 1 and 2 go to the same radio</span>
+<span class="linenos"> 54</span><span class="cm"> * stream_args.args[&quot;block_port0&quot;] = &quot;0&quot;;</span>
+<span class="linenos"> 55</span><span class="cm"> * stream_args.args[&quot;block_port1&quot;] = &quot;0&quot;;</span>
+<span class="linenos"> 56</span><span class="cm"> * stream_args.args[&quot;block_port2&quot;] = &quot;1&quot;;</span>
+<span class="linenos"> 57</span><span class="cm"> * \endcode</span>
+<span class="linenos"> 58</span><span class="cm"> */</span>
+<span class="linenos"> 59</span><span class="k">struct</span><span class="w"> </span><span class="nc">UHD_API</span><span class="w"> </span><span class="n">stream_args_t</span>
+<span class="linenos"> 60</span><span class="p">{</span>
+<span class="linenos"> 61</span><span class="w">    </span><span class="c1">//! Convenience constructor for streamer args</span>
+<span class="linenos"> 62</span><span class="w">    </span><span class="n">stream_args_t</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">cpu</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">otw</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">)</span>
+<span class="linenos"> 63</span><span class="w">    </span><span class="p">{</span>
+<span class="linenos"> 64</span><span class="w">        </span><span class="n">cpu_format</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cpu</span><span class="p">;</span>
+<span class="linenos"> 65</span><span class="w">        </span><span class="n">otw_format</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">otw</span><span class="p">;</span>
+<span class="linenos"> 66</span><span class="w">    </span><span class="p">}</span>
+<span class="linenos"> 67</span>
+<span class="linenos"> 68</span><span class="w">    </span><span class="cm">/*!</span>
+<span class="linenos"> 69</span><span class="cm">     * The CPU format is a string that describes the format of host memory.</span>
+<span class="linenos"> 70</span><span class="cm">     * Conversions for the following CPU formats have been implemented:</span>
+<span class="linenos"> 71</span><span class="cm">     *  - fc64 - complex&lt;double&gt;</span>
+<span class="linenos"> 72</span><span class="cm">     *  - fc32 - complex&lt;float&gt;</span>
+<span class="linenos"> 73</span><span class="cm">     *  - sc16 - complex&lt;int16_t&gt;</span>
+<span class="linenos"> 74</span><span class="cm">     *  - sc8 - complex&lt;int8_t&gt;</span>
+<span class="linenos"> 75</span><span class="cm">     *</span>
+<span class="linenos"> 76</span><span class="cm">     * The following are not implemented, but are listed to demonstrate naming convention:</span>
+<span class="linenos"> 77</span><span class="cm">     *  - f32 - float</span>
+<span class="linenos"> 78</span><span class="cm">     *  - f64 - double</span>
+<span class="linenos"> 79</span><span class="cm">     *  - s16 - int16_t</span>
+<span class="linenos"> 80</span><span class="cm">     *  - s8 - int8_t</span>
+<span class="linenos"> 81</span><span class="cm">     *</span>
+<span class="linenos"> 82</span><span class="cm">     * The CPU format can be chosen depending on what the application requires.</span>
+<span class="linenos"> 83</span><span class="cm">     */</span>
+<span class="linenos"> 84</span><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">cpu_format</span><span class="p">;</span>
+<span class="linenos"> 85</span>
+<span class="linenos"> 86</span><span class="w">    </span><span class="cm">/*!</span>
+<span class="linenos"> 87</span><span class="cm">     * The OTW format is a string that describes the format over-the-wire.</span>
+<span class="linenos"> 88</span><span class="cm">     * The following over-the-wire formats have been implemented:</span>
+<span class="linenos"> 89</span><span class="cm">     *  - sc16 - Q16 I16</span>
+<span class="linenos"> 90</span><span class="cm">     *  - sc8 - Q8_1 I8_1 Q8_0 I8_0</span>
+<span class="linenos"> 91</span><span class="cm">     *  - sc12 (Only some devices)</span>
+<span class="linenos"> 92</span><span class="cm">     *</span>
+<span class="linenos"> 93</span><span class="cm">     * The following are not implemented, but are listed to demonstrate naming convention:</span>
+<span class="linenos"> 94</span><span class="cm">     *  - s16 - R16_1 R16_0</span>
+<span class="linenos"> 95</span><span class="cm">     *  - s8 - R8_3 R8_2 R8_1 R8_0</span>
+<span class="linenos"> 96</span><span class="cm">     *</span>
+<span class="linenos"> 97</span><span class="cm">     * Setting the OTW (&quot;over-the-wire&quot;) format is, in theory, transparent to the</span>
+<span class="linenos"> 98</span><span class="cm">     * application, but changing this can have some side effects. Using less bits for</span>
+<span class="linenos"> 99</span><span class="cm">     * example (e.g. when going from `otw_format` `sc16` to `sc8`) will reduce the dynamic</span>
+<span class="linenos">100</span><span class="cm">     * range, and increases quantization noise. On the other hand, it reduces the load on</span>
+<span class="linenos">101</span><span class="cm">     * the data link and thus allows more bandwidth (a USRP N210 can work with 25 MHz</span>
+<span class="linenos">102</span><span class="cm">     * bandwidth for 16-Bit complex samples, and 50 MHz for 8-Bit complex samples).</span>
+<span class="linenos">103</span><span class="cm">     */</span>
+<span class="linenos">104</span><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">otw_format</span><span class="p">;</span>
+<span class="linenos">105</span>
+<span class="linenos">106</span><span class="w">    </span><span class="cm">/*!</span>
+<span class="linenos">107</span><span class="cm">     * The args parameter is used to pass arbitrary key/value pairs.</span>
+<span class="linenos">108</span><span class="cm">     * Possible keys used by args (depends on implementation):</span>
+<span class="linenos">109</span><span class="cm">     *</span>
+<span class="linenos">110</span><span class="cm">     * - fullscale: specifies the full-scale amplitude when using floats.</span>
+<span class="linenos">111</span><span class="cm">     * By default, the fullscale amplitude under floating point is 1.0.</span>
+<span class="linenos">112</span><span class="cm">     * Set the &quot;fullscale&quot; to scale the samples in the host to the</span>
+<span class="linenos">113</span><span class="cm">     * expected input range and/or output range of your application.</span>
+<span class="linenos">114</span><span class="cm">     *</span>
+<span class="linenos">115</span><span class="cm">     * - peak: specifies a fractional sample level to calculate scaling with the sc8 wire</span>
+<span class="linenos">116</span><span class="cm">     * format. When using sc8 samples over the wire, the device must scale samples (both</span>
+<span class="linenos">117</span><span class="cm">     * on the host and in the device) to satisfy the dynamic range needs. The peak value</span>
+<span class="linenos">118</span><span class="cm">     * specifies a fraction of the maximum sample level (1.0 = 100%). Set peak to</span>
+<span class="linenos">119</span><span class="cm">     * max_sample_level/full_scale_level to ensure optimum dynamic range.</span>
+<span class="linenos">120</span><span class="cm">     *</span>
+<span class="linenos">121</span><span class="cm">     * - underflow_policy: how the TX DSP should recover from underflow.</span>
+<span class="linenos">122</span><span class="cm">     * Possible options are &quot;next_burst&quot; or &quot;next_packet&quot;.</span>
+<span class="linenos">123</span><span class="cm">     * In the &quot;next_burst&quot; mode, the DSP drops incoming packets until a new burst is</span>
+<span class="linenos">124</span><span class="cm">     * started. In the &quot;next_packet&quot; mode, the DSP starts transmitting again at the next</span>
+<span class="linenos">125</span><span class="cm">     * packet.</span>
+<span class="linenos">126</span><span class="cm">     *</span>
+<span class="linenos">127</span><span class="cm">     * - spp: (samples per packet) controls the size of RX packets.</span>
+<span class="linenos">128</span><span class="cm">     * When not specified, the packets are always maximum frame size.</span>
+<span class="linenos">129</span><span class="cm">     * Users should specify this option to request smaller than default</span>
+<span class="linenos">130</span><span class="cm">     * packets, probably with the intention of reducing packet latency.</span>
+<span class="linenos">131</span><span class="cm">     *</span>
+<span class="linenos">132</span><span class="cm">     * - noclear: Used by tx_dsp_core_200 and rx_dsp_core_200</span>
+<span class="linenos">133</span><span class="cm">     *</span>
+<span class="linenos">134</span><span class="cm">     * The following are not implemented, but are listed for conceptual purposes:</span>
+<span class="linenos">135</span><span class="cm">     * - function: magnitude or phase/magnitude</span>
+<span class="linenos">136</span><span class="cm">     * - units: numeric units like counts or dBm</span>
+<span class="linenos">137</span><span class="cm">     *</span>
+<span class="linenos">138</span><span class="cm">     * Other options are device-specific:</span>
+<span class="linenos">139</span><span class="cm">     * - port, addr: Alternative receiver streamer destination.</span>
+<span class="linenos">140</span><span class="cm">     */</span>
+<span class="linenos">141</span><span class="w">    </span><span class="n">device_addr_t</span><span class="w"> </span><span class="n">args</span><span class="p">;</span>
+<span class="linenos">142</span>
+<span class="linenos">143</span><span class="w">    </span><span class="cm">/*!</span>
+<span class="linenos">144</span><span class="cm">     * The channels is a list of channel numbers.</span>
+<span class="linenos">145</span><span class="cm">     * Leave this blank to default to channel 0 (single-channel application).</span>
+<span class="linenos">146</span><span class="cm">     * Set channels for a multi-channel application.</span>
+<span class="linenos">147</span><span class="cm">     * Channel mapping depends on the front-end selection (see also \ref config_subdev).</span>
+<span class="linenos">148</span><span class="cm">     *</span>
+<span class="linenos">149</span><span class="cm">     * A very simple example is an X300 with two daughterboards and a subdev spec</span>
+<span class="linenos">150</span><span class="cm">     * of `A:0 B:0`. This means the device has two channels available.</span>
+<span class="linenos">151</span><span class="cm">     *</span>
+<span class="linenos">152</span><span class="cm">     * Setting `stream_args.channels = (0, 1)` therefore configures MIMO streaming</span>
+<span class="linenos">153</span><span class="cm">     * from both channels. By switching the channel indexes, `stream_args.channels = (1,</span>
+<span class="linenos">154</span><span class="cm">     * 0)`, the channels are switched and the first channel of the USRP is mapped to the</span>
+<span class="linenos">155</span><span class="cm">     * second channel in the application.</span>
+<span class="linenos">156</span><span class="cm">     *</span>
+<span class="linenos">157</span><span class="cm">     * If only a single channel is used for streaming, `stream_args.channels = (1,)` would</span>
+<span class="linenos">158</span><span class="cm">     * only select a single channel (in this case, the second one). When streaming</span>
+<span class="linenos">159</span><span class="cm">     * a single channel from the B-side radio of a USRP, this is a more versatile solution</span>
+<span class="linenos">160</span><span class="cm">     * than setting the subdev globally to &quot;B:0&quot;.</span>
+<span class="linenos">161</span><span class="cm">     */</span>
+<span class="linenos">162</span><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">size_t</span><span class="o">&gt;</span><span class="w"> </span><span class="n">channels</span><span class="p">;</span>
+<span class="linenos">163</span><span class="p">};</span>
+<span class="linenos">164</span>
+<span class="linenos">165</span><span class="cm">/*!</span>
+<span class="linenos">166</span><span class="cm"> * The RX streamer is the host interface to receiving samples.</span>
+<span class="linenos">167</span><span class="cm"> * It represents the layer between the samples on the host</span>
+<span class="linenos">168</span><span class="cm"> * and samples inside the device&#39;s receive DSP processing.</span>
+<span class="linenos">169</span><span class="cm"> */</span>
+<span class="linenos">170</span><span class="k">class</span><span class="w"> </span><span class="nc">UHD_API</span><span class="w"> </span><span class="n">rx_streamer</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">uhd</span><span class="o">::</span><span class="n">noncopyable</span>
+<span class="linenos">171</span><span class="p">{</span>
+<span class="linenos">172</span><span class="k">public</span><span class="o">:</span>
+<span class="linenos">173</span><span class="w">    </span><span class="k">typedef</span><span class="w"> </span><span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">rx_streamer</span><span class="o">&gt;</span><span class="w"> </span><span class="n">sptr</span><span class="p">;</span>
+<span class="linenos">174</span>
+<span class="linenos">175</span><span class="w">    </span><span class="k">virtual</span><span class="w"> </span><span class="o">~</span><span class="n">rx_streamer</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+<span class="linenos">176</span>
+<span class="linenos">177</span><span class="w">    </span><span class="c1">//! Get the number of channels associated with this streamer</span>
+<span class="linenos">178</span><span class="w">    </span><span class="k">virtual</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="nf">get_num_channels</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="linenos">179</span>
+<span class="linenos">180</span><span class="w">    </span><span class="c1">//! Get the max number of samples per buffer per packet</span>
+<span class="linenos">181</span><span class="w">    </span><span class="k">virtual</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="nf">get_max_num_samps</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="linenos">182</span>
+<span class="linenos">183</span><span class="w">    </span><span class="c1">//! Typedef for a pointer to a single, or a collection of recv buffers</span>
+<span class="linenos">184</span><span class="w">    </span><span class="k">typedef</span><span class="w"> </span><span class="n">ref_vector</span><span class="o">&lt;</span><span class="kt">void</span><span class="o">*&gt;</span><span class="w"> </span><span class="n">buffs_type</span><span class="p">;</span>
+<span class="linenos">185</span>
+<span class="linenos">186</span><span class="w">    </span><span class="cm">/*!</span>
+<span class="linenos">187</span><span class="cm">     * Receive buffers containing samples described by the metadata.</span>
+<span class="linenos">188</span><span class="cm">     *</span>
+<span class="linenos">189</span><span class="cm">     * Receive handles fragmentation as follows:</span>
+<span class="linenos">190</span><span class="cm">     * If the buffer has insufficient space to hold all samples</span>
+<span class="linenos">191</span><span class="cm">     * that were received in a single packet over-the-wire,</span>
+<span class="linenos">192</span><span class="cm">     * then the buffer will be completely filled and the implementation</span>
+<span class="linenos">193</span><span class="cm">     * will hold a pointer into the remaining portion of the packet.</span>
+<span class="linenos">194</span><span class="cm">     * Subsequent calls will load from the remainder of the packet,</span>
+<span class="linenos">195</span><span class="cm">     * and will flag the metadata to show that this is a fragment.</span>
+<span class="linenos">196</span><span class="cm">     * The next call to receive, after the remainder becomes exhausted,</span>
+<span class="linenos">197</span><span class="cm">     * will perform an over-the-wire receive as usual.</span>
+<span class="linenos">198</span><span class="cm">     * See the rx metadata fragment flags and offset fields for details.</span>
+<span class="linenos">199</span><span class="cm">     *</span>
+<span class="linenos">200</span><span class="cm">     * This is a blocking call and will not return until the number</span>
+<span class="linenos">201</span><span class="cm">     * of samples returned have been written into each buffer.</span>
+<span class="linenos">202</span><span class="cm">     * Under a timeout condition, the number of samples returned</span>
+<span class="linenos">203</span><span class="cm">     * may be less than the number of samples specified.</span>
+<span class="linenos">204</span><span class="cm">     *</span>
+<span class="linenos">205</span><span class="cm">     * The one_packet option allows the user to guarantee that</span>
+<span class="linenos">206</span><span class="cm">     * the call will return after a single packet has been processed.</span>
+<span class="linenos">207</span><span class="cm">     * This may be useful to maintain packet boundaries in some cases.</span>
+<span class="linenos">208</span><span class="cm">     *</span>
+<span class="linenos">209</span><span class="cm">     * Note on threading: recv() is *not* thread-safe, to avoid locking</span>
+<span class="linenos">210</span><span class="cm">     * overhead. The application calling recv() is responsible for making</span>
+<span class="linenos">211</span><span class="cm">     * sure that not more than one thread can call recv() on the same streamer</span>
+<span class="linenos">212</span><span class="cm">     * at the same time. If there are multiple streamers, receiving from</span>
+<span class="linenos">213</span><span class="cm">     * different sources, then those may be called from different threads</span>
+<span class="linenos">214</span><span class="cm">     * simultaneously.</span>
+<span class="linenos">215</span><span class="cm">     *</span>
+<span class="linenos">216</span><span class="cm">     * \param buffs a vector of writable memory to fill with samples</span>
+<span class="linenos">217</span><span class="cm">     * \param nsamps_per_buff the size of each buffer in number of samples</span>
+<span class="linenos">218</span><span class="cm">     * \param metadata data to fill describing the buffer</span>
+<span class="linenos">219</span><span class="cm">     * \param timeout the timeout in seconds to wait for a packet</span>
+<span class="linenos">220</span><span class="cm">     * \param one_packet return after the first packet is received</span>
+<span class="linenos">221</span><span class="cm">     * \return the number of samples received or 0 on error</span>
+<span class="linenos">222</span><span class="cm">     */</span>
+<span class="linenos">223</span><span class="w">    </span><span class="k">virtual</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="nf">recv</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">buffs_type</span><span class="o">&amp;</span><span class="w"> </span><span class="n">buffs</span><span class="p">,</span>
+<span class="linenos">224</span><span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">nsamps_per_buff</span><span class="p">,</span>
+<span class="linenos">225</span><span class="w">        </span><span class="n">rx_metadata_t</span><span class="o">&amp;</span><span class="w"> </span><span class="n">metadata</span><span class="p">,</span>
+<span class="linenos">226</span><span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">timeout</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mf">0.1</span><span class="p">,</span>
+<span class="linenos">227</span><span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">one_packet</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="linenos">228</span>
+<span class="linenos">229</span><span class="w">    </span><span class="cm">/*!</span>
+<span class="linenos">230</span><span class="cm">     * Issue a stream command to the usrp device.</span>
+<span class="linenos">231</span><span class="cm">     * This tells the usrp to send samples into the host.</span>
+<span class="linenos">232</span><span class="cm">     * See the documentation for stream_cmd_t for more info.</span>
+<span class="linenos">233</span><span class="cm">     *</span>
+<span class="linenos">234</span><span class="cm">     * With multiple devices, the first stream command in a chain of commands</span>
+<span class="linenos">235</span><span class="cm">     * should have a time spec in the near future and stream_now = false;</span>
+<span class="linenos">236</span><span class="cm">     * to ensure that the packets can be aligned by their time specs.</span>
+<span class="linenos">237</span><span class="cm">     *</span>
+<span class="linenos">238</span><span class="cm">     * \param stream_cmd the stream command to issue</span>
+<span class="linenos">239</span><span class="cm">     */</span>
+<span class="linenos">240</span><span class="w">    </span><span class="k">virtual</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">issue_stream_cmd</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">stream_cmd_t</span><span class="o">&amp;</span><span class="w"> </span><span class="n">stream_cmd</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="linenos">241</span><span class="p">};</span>
+<span class="linenos">242</span>
+<span class="linenos">243</span><span class="cm">/*!</span>
+<span class="linenos">244</span><span class="cm"> * The TX streamer is the host interface to transmitting samples.</span>
+<span class="linenos">245</span><span class="cm"> * It represents the layer between the samples on the host</span>
+<span class="linenos">246</span><span class="cm"> * and samples inside the device&#39;s transmit DSP processing.</span>
+<span class="linenos">247</span><span class="cm"> */</span>
+<span class="linenos">248</span><span class="k">class</span><span class="w"> </span><span class="nc">UHD_API</span><span class="w"> </span><span class="n">tx_streamer</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">uhd</span><span class="o">::</span><span class="n">noncopyable</span>
+<span class="linenos">249</span><span class="p">{</span>
+<span class="linenos">250</span><span class="k">public</span><span class="o">:</span>
+<span class="linenos">251</span><span class="w">    </span><span class="k">typedef</span><span class="w"> </span><span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">tx_streamer</span><span class="o">&gt;</span><span class="w"> </span><span class="n">sptr</span><span class="p">;</span>
+<span class="linenos">252</span>
+<span class="linenos">253</span><span class="w">    </span><span class="k">virtual</span><span class="w"> </span><span class="o">~</span><span class="n">tx_streamer</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+<span class="linenos">254</span>
+<span class="linenos">255</span><span class="w">    </span><span class="c1">//! Get the number of channels associated with this streamer</span>
+<span class="linenos">256</span><span class="w">    </span><span class="k">virtual</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="nf">get_num_channels</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="linenos">257</span>
+<span class="linenos">258</span><span class="w">    </span><span class="c1">//! Get the max number of samples per buffer per packet</span>
+<span class="linenos">259</span><span class="w">    </span><span class="k">virtual</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="nf">get_max_num_samps</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="linenos">260</span>
+<span class="linenos">261</span><span class="w">    </span><span class="c1">//! Typedef for a pointer to a single, or a collection of send buffers</span>
+<span class="linenos">262</span><span class="w">    </span><span class="k">typedef</span><span class="w"> </span><span class="n">ref_vector</span><span class="o">&lt;</span><span class="k">const</span><span class="w"> </span><span class="kt">void</span><span class="o">*&gt;</span><span class="w"> </span><span class="n">buffs_type</span><span class="p">;</span>
+<span class="linenos">263</span>
+<span class="linenos">264</span><span class="w">    </span><span class="cm">/*!</span>
+<span class="linenos">265</span><span class="cm">     * Send buffers containing samples described by the metadata.</span>
+<span class="linenos">266</span><span class="cm">     *</span>
+<span class="linenos">267</span><span class="cm">     * Send handles fragmentation as follows:</span>
+<span class="linenos">268</span><span class="cm">     * If the buffer has more items than the maximum per packet,</span>
+<span class="linenos">269</span><span class="cm">     * the send method will fragment the samples across several packets.</span>
+<span class="linenos">270</span><span class="cm">     * Send will respect the burst flags when fragmenting to ensure</span>
+<span class="linenos">271</span><span class="cm">     * that start of burst can only be set on the first fragment and</span>
+<span class="linenos">272</span><span class="cm">     * that end of burst can only be set on the final fragment.</span>
+<span class="linenos">273</span><span class="cm">     *</span>
+<span class="linenos">274</span><span class="cm">     * This is a blocking call and will not return until the number</span>
+<span class="linenos">275</span><span class="cm">     * of samples returned have been read out of each buffer.</span>
+<span class="linenos">276</span><span class="cm">     * Under a timeout condition, the number of samples returned</span>
+<span class="linenos">277</span><span class="cm">     * may be less than the number of samples specified.</span>
+<span class="linenos">278</span><span class="cm">     *</span>
+<span class="linenos">279</span><span class="cm">     * Note on threading: send() is *not* thread-safe, to avoid locking</span>
+<span class="linenos">280</span><span class="cm">     * overhead. The application calling send() is responsible for making</span>
+<span class="linenos">281</span><span class="cm">     * sure that not more than one thread can call send() on the same streamer</span>
+<span class="linenos">282</span><span class="cm">     * at the same time. If there are multiple streamers, transmitting to</span>
+<span class="linenos">283</span><span class="cm">     * different destinations, then those may be called from different threads</span>
+<span class="linenos">284</span><span class="cm">     * simultaneously.</span>
+<span class="linenos">285</span><span class="cm">     *</span>
+<span class="linenos">286</span><span class="cm">     * \param buffs a vector of read-only memory containing samples</span>
+<span class="linenos">287</span><span class="cm">     * \param nsamps_per_buff the number of samples to send, per buffer</span>
+<span class="linenos">288</span><span class="cm">     * \param metadata data describing the buffer&#39;s contents</span>
+<span class="linenos">289</span><span class="cm">     * \param timeout the timeout in seconds to wait on a packet</span>
+<span class="linenos">290</span><span class="cm">     * \return the number of samples sent</span>
+<span class="linenos">291</span><span class="cm">     */</span>
+<span class="linenos">292</span><span class="w">    </span><span class="k">virtual</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="nf">send</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">buffs_type</span><span class="o">&amp;</span><span class="w"> </span><span class="n">buffs</span><span class="p">,</span>
+<span class="linenos">293</span><span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">nsamps_per_buff</span><span class="p">,</span>
+<span class="linenos">294</span><span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="n">tx_metadata_t</span><span class="o">&amp;</span><span class="w"> </span><span class="n">metadata</span><span class="p">,</span>
+<span class="linenos">295</span><span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">timeout</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="linenos">296</span>
+<span class="linenos">297</span><span class="w">    </span><span class="cm">/*!</span>
+<span class="linenos">298</span><span class="cm">     * Receive and asynchronous message from this TX stream.</span>
+<span class="linenos">299</span><span class="cm">     * \param async_metadata the metadata to be filled in</span>
+<span class="linenos">300</span><span class="cm">     * \param timeout the timeout in seconds to wait for a message</span>
+<span class="linenos">301</span><span class="cm">     * \return true when the async_metadata is valid, false for timeout</span>
+<span class="linenos">302</span><span class="cm">     */</span>
+<span class="linenos">303</span><span class="w">    </span><span class="k">virtual</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="nf">recv_async_msg</span><span class="p">(</span>
+<span class="linenos">304</span><span class="w">        </span><span class="n">async_metadata_t</span><span class="o">&amp;</span><span class="w"> </span><span class="n">async_metadata</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">timeout</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="linenos">305</span><span class="p">};</span>
+<span class="linenos">306</span>
+<span class="linenos">307</span><span class="p">}</span><span class="w"> </span><span class="c1">// namespace uhd</span>
+<span class="linenos">308</span>
+<span class="linenos">309</span><span class="cp">#endif </span><span class="cm">/* INCLUDED_UHD_STREAM_HPP */</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./ch2"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="txrx_stream.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><span class="section-number">2.4.4. </span><code class="docutils literal notranslate"><span class="pre">txrx_loopback_to_file.cpp</span></code> (stream)</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="tx_samples_from_file.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">2.4.6. </span><code class="docutils literal notranslate"><span class="pre">tx_samples_from_file.cpp</span></code></p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#source-code">2.4.5.1. Source code</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Tan F. Wong
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

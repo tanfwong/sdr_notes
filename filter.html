@@ -1,0 +1,527 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>3. Multi-rate Filtering &#8212; Digital Communications with SDRs</title>
+    
+  <link rel="stylesheet" href="_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.3da636dd464baa7582d2.js">
+
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="canonical" href="wing.ece.ufl.edu/eel6528/filter.html" />
+    <link rel="shortcut icon" href="_static/logo.png"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="3.1. FFTW3 Library" href="fftw3.html" />
+    <link rel="prev" title="2.4.15. age_fifo.cpp" href="ch2/age_fifo.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+<!-- Opengraph tags -->
+<meta property="og:url"         content="wing.ece.ufl.edu/eel6528/filter.html" />
+<meta property="og:type"        content="article" />
+<meta property="og:title"       content="Multi-rate Filtering" />
+<meta property="og:description" content="Multi-rate Filtering  Without exception, we need to filter both the TX and RX signals in any communication system. Analog and digital filtering are often requir" />
+<meta property="og:image"       content="wing.ece.ufl.edu/eel6528/_static/logo.png" />
+
+<meta name="twitter:card" content="summary" />
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="index.html">
+  
+  <img src="_static/logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">Digital Communications with SDRs</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="intro.html">
+   EEL6528 Digital Communications with Software Defined Radios
+  </a>
+ </li>
+</ul>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="ch1/introduction.html">
+   1. Introduction
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="ch2/prelims.html">
+   2. Some Programming Prelims
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="ch2/uhd.html">
+     2.1. UHD
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="ch2/multithread.html">
+     2.2. Elementary Multi-threading
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="ch2/prelims_exs.html">
+     2.3. References and further reading
+    </a>
+   </li>
+   <li class="toctree-l2 collapsible-parent">
+    <a class="reference internal" href="ch2/prelims_exs.html#code-examples">
+     2.4. Code Examples
+    </a>
+    <ul class="collapse-ul">
+     <li class="toctree-l3">
+      <a class="reference internal" href="ch2/uhd_safe_main.html">
+       2.4.1.
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         uhd_safe_main.hpp
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ch2/age.html">
+       2.4.2.
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         age.cpp
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ch2/txrx_setup.html">
+       2.4.3.
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         txrx_loopback_to_file.cpp
+        </span>
+       </code>
+       (setup)
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ch2/txrx_stream.html">
+       2.4.4.
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         txrx_loopback_to_file.cpp
+        </span>
+       </code>
+       (stream)
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ch2/stream.html">
+       2.4.5.
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         stream.hpp
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ch2/tx_samples_from_file.html">
+       2.4.6.
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         tx_samples_from_file.cpp
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ch2/txrx_TX.html">
+       2.4.7.
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         txrx_loopback_to_file.cpp
+        </span>
+       </code>
+       (TX)
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ch2/txrx_RX.html">
+       2.4.8.
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         txrx_loopback_to_file.cpp
+        </span>
+       </code>
+       (RX)
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ch2/age_threads.html">
+       2.4.9.
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         age_threads.cpp
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ch2/txrx_thread.html">
+       2.4.10.
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         txrx_loopback_to_file.cpp
+        </span>
+       </code>
+       (thread)
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ch2/age_mutex.html">
+       2.4.11.
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         age_mutex.cpp
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ch2/age_mutex_caller.html">
+       2.4.12.
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         age_mutex_caller.cpp
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ch2/count_atomic.html">
+       2.4.13.
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         count_atomic.cpp
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ch2/queue.html">
+       2.4.14.
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         queue.hpp
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ch2/age_fifo.html">
+       2.4.15.
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         age_fifo.cpp
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+    <i class="fas fa-chevron-down">
+    </i>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 current active collapsible-parent">
+  <a class="current reference internal" href="#">
+   3. Multi-rate Filtering
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="fftw3.html">
+     3.1. FFTW3 Library
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="filter_exs.html">
+     3.2. References and further reading
+    </a>
+   </li>
+   <li class="toctree-l2 collapsible-parent">
+    <a class="reference internal" href="filter_exs.html#code-examples">
+     3.3. Code Examples
+    </a>
+    <ul class="collapse-ul">
+     <li class="toctree-l3">
+      <a class="reference internal" href="fft.html">
+       3.3.1.
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         fft.hpp
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="test_fft.html">
+       3.3.2.
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         test_fft.cpp
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+    <i class="fas fa-chevron-down">
+    </i>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/filter.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+        <!-- Source interaction buttons -->
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="multi-rate-filtering">
+<h1><span class="section-number">3. </span>Multi-rate Filtering<a class="headerlink" href="#multi-rate-filtering" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p>Without exception, we need to filter both the TX and RX signals in
+any communication system. Analog and digital filtering are often
+required in the RF frontend and baseband processor, respectively.</p></li>
+<li><p>For the USRP radios, analog filtering is performed in the
+daughterboards. In the RX chain of the SBX daughterboard, there is
+an analog lowpass filter of 40 MHz bandwidth for the I-/Q-channel,
+before entering the ADC on the motherboard. Similarly, the analog
+I-/Q-signal generated from the DAC on the motherboard is filtered by
+an analog lowpass filter of 40 MHz bandwidth before being mixed up
+to the TX carrier frequency. For the N-210 USRP, digital filtering
+is performed by the DUCs and DDCs implemented in the FPGAs on the
+motherboard.</p></li>
+<li><p>Despite all filtering applied at the USRP, we still often need to
+filter the signal samples in the host computer before sending them
+to the USRP for transmission and/or after receiving them from the
+USRP. Typical examples of such filtering operations include <strong>pulse
+shaping (PS)</strong> for TX and <strong>matched filtering (MF)</strong> for RX.</p></li>
+<li><p>For both PS and MF, the filters involved are typically FIR filters
+with impulse responses of long lengths. Direct time-domain
+implementations of these long FIR filters are generally not
+computationally efficient. Efficiency is critical to us since we may
+need to implement these filters in the host PC simultaneously with
+many other computationally intensive processing
+functions. Therefore, we will opt for frequency-domain
+implementations of the filters with FFT, which will be the main work
+horse of our SDR implementations.</p></li>
+<li><p>In addition, we have mentioned before that there are limitations on
+the choice of sampling rate due to the half-band filters in the DDCs
+implemented in the FPGA of the N210 USRP.
+In order to work with these limitations while finely
+controlling the symbol rate and spectral shape of our communication
+signal, we may
+need to do <strong>multi-rate filtering</strong>, where the input and output rates
+may not be the same. As a result, we may have to do <em>interpolation
+(up-sampling)</em> and <em>decimation (down-sampling)</em> on the signal samples.</p></li>
+<li><p><font color="red">I assume that everyone is familiar with the
+various concepts of DFT, FFT, frequency-domain filtering (in
+particular the overlap-save algorithm), interpolation, decimation,
+and polyphase filtering.</font> Hence, our main focus here will be
+on C++ implementations of these techniques. If you need to review
+these concepts, a classical reference is <a class="bibtex reference internal" href="filter_exs.html#oppenheim2010" id="id1">[2]</a> Chapters
+4,8, and 9.</p></li>
+</ul>
+<div class="toctree-wrapper compound">
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="ch2/age_fifo.html" title="previous page"><span class="section-number">2.4.15. </span><code class="docutils literal notranslate"><span class="pre">age_fifo.cpp</span></code></a>
+    <a class='right-next' id="next-link" href="fftw3.html" title="next page"><span class="section-number">3.1. </span>FFTW3 Library</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Tan F. Wong<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="_static/js/index.3da636dd464baa7582d2.js"></script>
+
+
+    
+  </body>
+</html>

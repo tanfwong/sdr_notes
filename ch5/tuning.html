@@ -1,0 +1,646 @@
+
+
+<!DOCTYPE html>
+
+
+<html >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>5.1. Frequency Tuning &#8212; Digital Communications with SDRs</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'ch5/tuning';</script>
+    <link rel="canonical" href="wing.ece.ufl.edu/eel6528/ch5/tuning.html" />
+    <link rel="shortcut icon" href="../_static/logo.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="5.2. DC Offset and IQ Imbalance" href="iq.html" />
+    <link rel="prev" title="5. USRP Tuning and Calibration" href="usrp.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="None"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Digital Communications with Software Defined Radios
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../ch1/introduction.html">1. Introduction</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch2/prelims.html">2. Some Programming Prelims</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch2/uhd.html">2.1. UHD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch2/multithread.html">2.2. Elementary Multi-threading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch2/prelims_exs.html">2.3. References and further reading</a></li>
+
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch3/filter.html">3. Multi-rate Filtering</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch3/fftw3.html">3.1. FFTW3 Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch3/overlapsave.html">3.2. Overlap Save Algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch3/multirate.html">3.3. Multi-rate Filtering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch3/polyphase.html">3.4. Polyphase Filtering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch3/filter_exs.html">3.5. References and further reading</a></li>
+
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../ch4/part15.html">4. Digest of FCC Regulations Part 15</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="usrp.html">5. USRP Tuning and Calibration</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">5.1. Frequency Tuning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="iq.html">5.2. DC Offset and IQ Imbalance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usrp_refs.html">5.3. References and further reading</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch6/signal.html">6. Signal Generation and Capture</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch6/generate.html">6.1. TX Pulse Shaping</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch6/capture.html">6.2. RX Signal Capture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch6/signal_refs.html">6.3. References and further reading</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch7/sync.html">7. Signal Acquisition and Synchronization</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch7/dll.html">7.1. Closed-Loop Symbol Synchronization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch7/acq.html">7.2. Signal Acquisition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch7/signature.html">7.3. Signature Signal Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch7/mseq.html">7.4. Maximal-length Sequences</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch7/zc.html">7.5. Zadoff–Chu Sequences</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch7/sync_refs.html">7.6. References and further reading</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch8/noncoh.html">8. Non-coherent Demodulation</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch8/mlnoncoh.html">8.1. Maximum Likelihood Non-coherent Demodulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch8/ask.html">8.2. <span class="math notranslate nohighlight">\(M\)</span>-ary Amplitude Shift Keying (<span class="math notranslate nohighlight">\(M\)</span>-ASK)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch8/dpsk.html">8.3. <span class="math notranslate nohighlight">\(M\)</span>-ary Differential Phase Shift Keying (<span class="math notranslate nohighlight">\(M\)</span>-DPSK)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch8/noncoh_usrp.html">8.4. USRP Implementation</a></li>
+
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch9/carrier.html">9. Carrier Synchronization</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch9/mlest.html">9.1. Basic Model</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../ch9/dd_pll.html">9.3. Decision-directed Phase-locked Loop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch9/ndd_pll.html">9.4. Non-decision-directed Phase-locked Loop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch9/carrier_refs.html">9.5. References and further reading</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../ch10/coh.html">10. Coherent Demodulation</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch11/arq.html">11. Automatic Repeat Request</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch11/crc.html">11.1. Cyclic Redundancy Check Codes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch11/protocols.html">11.2. Simple ARQ Protocols</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch11/duplex.html">11.3. Duplex Transmission using USRPs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch11/arq_exs.html">11.4. References and further reading</a></li>
+
+</ul>
+</li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/ch5/tuning.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Frequency Tuning</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#automatic-direct-conversion-tuning">5.1.1. Automatic “direct-conversion” tuning</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#automatic-low-if-tuning">5.1.2. Automatic low-IF tuning</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#manual-tuning">5.1.3. Manual tuning</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="frequency-tuning">
+<span id="sec-tuning"></span><h1><span class="section-number">5.1. </span>Frequency Tuning<a class="headerlink" href="#frequency-tuning" title="Permalink to this headline">#</a></h1>
+<ul>
+<li><p>The following diagram from Ettus shows the radio architecture of
+the N210 USRP with the SBX/CBX daughterboard:</p>
+<a class="reference internal image-reference" href="../_images/2920_simplified_system_diagram.gif"><img alt="Radio architecture of N210 with SBX/CBX daughterboard" class="align-center" src="../_images/2920_simplified_system_diagram.gif" style="width: 800px;" /></a>
+<div class="admonition-dig-deeper admonition">
+<p class="admonition-title">Dig deeper </p>
+<p>For specific implementation details, one can refer to the schematics
+of the
+<a class="reference external" href="https://files.ettus.com/schematics/n200/n2xx.pdf">N210 motherboard</a>,
+<a class="reference external" href="https://files.ettus.com/schematics/sbx/SBX.pdf">SBX</a>, and
+<a class="reference external" href="http://files.ettus.com/schematics/cbx/CBX.pdf">CBX</a> daughterboards.</p>
+</div>
+</li>
+<li><p>This architecture allows both direct-conversion and low-IF
+(superheterodyne with a low IF which is digitally implemented)
+transceiver implementations, depending on the frequency tuning
+setting. Three methods of tuning the oscillator frequency are
+supported:</p></li>
+</ul>
+<section id="automatic-direct-conversion-tuning">
+<h2><span class="section-number">5.1.1. </span>Automatic “direct-conversion” tuning<a class="headerlink" href="#automatic-direct-conversion-tuning" title="Permalink to this headline">#</a></h2>
+<ul>
+<li><p>As a matter of fact, this is actually a two-stage tuning process.
+The VCO in the daughterboard is tuned to as close to the target
+frequency as possible. The remaining difference is digitally corrected
+by the <a class="reference external" href="https://en.wikipedia.org/wiki/CORDIC">CORDIC</a> in the FPGA on
+the motherboard.</p></li>
+<li><p>Strictly speaking, this is a low-IF implementation. Nevertheless the
+difference between the target frequency and the actual VCO frequency
+is often small because the VCO, by default using fractional-N
+tuning, has fine frequency steps. The resulting IF is very close to DC. Hence, the
+implementation may be approximated as <em>direct conversion</em>.</p></li>
+<li><p>To employ this method of tuning in UHD, we just need to provide the
+target frequency as an input argument to the class methods
+<code class="docutils literal notranslate"><span class="pre">uhd::usrp::multi_usrp::set_tx_freq()</span></code> and
+<code class="docutils literal notranslate"><span class="pre">uhd::usrp::multi_usrp::set_rx_freq()</span></code>. Or we
+may provide the target frequency as the only input argument to the
+constructor of a <code class="docutils literal notranslate"><span class="pre">uhd::tune_request_t</span></code> class object and
+then pass it to <code class="docutils literal notranslate"><span class="pre">uhd::usrp::multi_usrp::set_tx_freq()</span></code> and
+<code class="docutils literal notranslate"><span class="pre">uhd::usrp::multi_usrp::set_rx_freq()</span></code>:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="kt">double</span><span class="w"> </span><span class="n">target_freq</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">2.412e9</span><span class="p">;</span><span class="w"> </span>
+<span class="n">uhd</span><span class="o">::</span><span class="n">usrp</span><span class="o">::</span><span class="n">multi_usrp</span><span class="o">::</span><span class="n">sptr</span><span class="w"> </span><span class="n">usrp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">uhd</span><span class="o">::</span><span class="n">usrp</span><span class="o">::</span><span class="n">multi_usrp</span><span class="o">::</span><span class="n">make</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">);</span><span class="w"> </span>
+<span class="c1">//Either </span>
+<span class="n">uhd</span><span class="o">::</span><span class="n">tune_result_t</span><span class="w"> </span><span class="n">tx_tune_result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">usrp</span><span class="o">-&gt;</span><span class="n">set_tx_freq</span><span class="p">(</span><span class="n">target_freq</span><span class="p">);</span><span class="w"> </span>
+<span class="n">uhd</span><span class="o">::</span><span class="n">tune_result_t</span><span class="w"> </span><span class="n">rx_tune_result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">usrp</span><span class="o">-&gt;</span><span class="n">set_rx_freq</span><span class="p">(</span><span class="n">target_freq</span><span class="p">);</span><span class="w"> </span>
+<span class="c1">// or</span>
+<span class="n">uhd</span><span class="o">::</span><span class="n">tune_request_t</span><span class="w"> </span><span class="nf">tune_req</span><span class="p">(</span><span class="n">target_freq</span><span class="p">);</span><span class="w"> </span>
+<span class="n">uhd</span><span class="o">::</span><span class="n">tune_result_t</span><span class="w"> </span><span class="n">tx_tune_result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">usrp</span><span class="o">-&gt;</span><span class="n">set_tx_freq</span><span class="p">(</span><span class="n">tune_req</span><span class="p">);</span><span class="w"> </span>
+<span class="n">uhd</span><span class="o">::</span><span class="n">tune_result_t</span><span class="w"> </span><span class="n">rx_tune_result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">usrp</span><span class="o">-&gt;</span><span class="n">set_rx_freq</span><span class="p">(</span><span class="n">tune_req</span><span class="p">);</span>
+</pre></div>
+</div>
+</li>
+<li><p>We may use the class methods <code class="docutils literal notranslate"><span class="pre">uhd::usrp::multi_usrp::get_tx_freq()</span></code>
+and <code class="docutils literal notranslate"><span class="pre">uhd::usrp::multi_usrp::get_rx_freq()</span></code> to query the actual TX and
+RX frequencies that are set to after issuing
+<code class="docutils literal notranslate"><span class="pre">uhd::usrp::multi_usrp::set_tx_freq()</span></code> and
+<code class="docutils literal notranslate"><span class="pre">uhd::usrp::multi_usrp::set_rx_freq()</span></code>, respectively. To obtain
+detailed tuning information, we may query the <code class="docutils literal notranslate"><span class="pre">uhd::tune_result_t</span></code>
+objects returned above by using the pretty print string class method
+<code class="docutils literal notranslate"><span class="pre">uhd::tune_result_t</span> <span class="pre">::to_pp_string()</span></code>:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">tx_tune_result</span><span class="p">.</span><span class="n">to_pp_string</span><span class="p">();</span><span class="w"> </span>
+<span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">rx_tune_result</span><span class="p">.</span><span class="n">to_pp_string</span><span class="p">();</span><span class="w"> </span>
+</pre></div>
+</div>
+<p>or by accessing their members <code class="docutils literal notranslate"><span class="pre">target_dsp_freq</span></code>,
+<code class="docutils literal notranslate"><span class="pre">target_rf_freq</span></code>, <code class="docutils literal notranslate"><span class="pre">actual_dsp_freq</span></code>, and <code class="docutils literal notranslate"><span class="pre">actual_rf_freq</span></code> directly.</p>
+</li>
+</ul>
+</section>
+<section id="automatic-low-if-tuning">
+<h2><span class="section-number">5.1.2. </span>Automatic low-IF tuning<a class="headerlink" href="#automatic-low-if-tuning" title="Permalink to this headline">#</a></h2>
+<ul>
+<li><p>This method is similar to automatic direct-conversion tuning
+discussed above, except that we explicitly specify the IF frequency in
+a second argument to the constructor of the <code class="docutils literal notranslate"><span class="pre">uhd::tune_request_t</span></code>
+object:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">uhd</span><span class="o">::</span><span class="n">tune_request_t</span><span class="w"> </span><span class="nf">tune_req</span><span class="p">(</span><span class="n">target_freq</span><span class="p">,</span><span class="w"> </span><span class="n">IF_freq</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>With this specification, the VCO in the daughterboard will be tuned
+to as close to <code class="docutils literal notranslate"><span class="pre">target_freq</span> <span class="pre">+</span> <span class="pre">IF_freq</span></code> as possible. As a
+result, the RX signal will be mixed down to IF and then sampled. The
+CORDIC in the FPGA then performs IF processing and mixes the IF signal
+down to baseband. The tuning process is simply the opposite on the TX
+side.</p>
+</li>
+<li><p>Since the sampling rate of the ADCs on the N210 motherboard is 100
+MHz, the IF frequency can only ranges from <span class="math notranslate nohighlight">\(-50\)</span> MHz to <span class="math notranslate nohighlight">\(50\)</span> MHz with
+a positive (negative) <code class="docutils literal notranslate"><span class="pre">IF_freq</span></code> corresponding to up- (down-)
+conversion.</p></li>
+<li><p>As in any superheterodyne RX architecture, low-IF tuning suffers
+from the problem of image. The image occurs at <code class="docutils literal notranslate"><span class="pre">target_freq</span> <span class="pre">+</span> <span class="pre">2*IF_freq</span></code>. While neither is the SBX nor CBX daughterboard equipped
+with an image rejection filter before the RF mixer, the complex
+baseband implementation of the IF stage in the FPGA implicitly
+provides image suppression equivalent to the Hartley architecture (see
+<span id="id1">[<a class="reference internal" href="usrp_refs.html#id10" title="B. Razavi. Design considerations for direct-conversion receivers. IEEE Transactions on Circuits and Systems II: Analog and Digital Signal Processing, 44(6):428-435, 1997. doi:10.1109/82.592569.">1</a>]</span>). However, due to the problem of <em>IQ imbalance</em>
+(see <a class="reference internal" href="iq.html#sec-iq"><span class="std std-ref">next section</span></a>), the image suppression ability resulted
+is suboptimal. For example, see the captured RX spectrum below:</p>
+<a class="reference internal image-reference" href="../_images/lo_offset.png"><img alt="Image resulted from IQ imbalance" class="align-center" src="../_images/lo_offset.png" style="width: 800px;" /></a>
+<p>where the <code class="docutils literal notranslate"><span class="pre">target_freq</span></code> and <code class="docutils literal notranslate"><span class="pre">IF_freq</span></code> are set to <span class="math notranslate nohighlight">\(5.720\)</span> GHz and
+<span class="math notranslate nohighlight">\(2\)</span> MHz, respectively. The TX signal centered at <span class="math notranslate nohighlight">\(5.724\)</span> GHz acts as
+an image in this case. Notice that the image is mixed into the IF band
+and then mixed down to the baseband (shown as centered at
+<code class="docutils literal notranslate"><span class="pre">target_freq</span></code>). The equivalent Hartley architecture
+provides about a <span class="math notranslate nohighlight">\(35\)</span> dB image suppression performance. The spike
+shown at <span class="math notranslate nohighlight">\(5.722\)</span> GHz is due to the VCO (LO) leakage (see
+<a class="reference internal" href="iq.html#sec-iq"><span class="std std-ref">next section</span></a>).</p>
+</li>
+</ul>
+</section>
+<section id="manual-tuning">
+<h2><span class="section-number">5.1.3. </span>Manual tuning<a class="headerlink" href="#manual-tuning" title="Permalink to this headline">#</a></h2>
+<ul>
+<li><p>We may also manually specify the target VCO and CORDIC frequencies
+by setting the relevant members in the <code class="docutils literal notranslate"><span class="pre">uhd::tune_request_t</span></code> class
+object to the desired values. There could be a number of possible setting
+combinations and the details can be deduced from the
+<a class="reference external" href="https://files.ettus.com/manual_archive/v3.15.0.0/html/structuhd_1_1tune__request__t.html">UHD manual</a>.
+Below is a typical example that sets the VCO frequency is set to the
+allowable value closest to <code class="docutils literal notranslate"><span class="pre">target_freq+IF_freq</span></code> and send IF signal
+samples back to the host computer, <em>provided the sampling rate is
+set high enough</em>:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">uhd</span><span class="o">::</span><span class="n">tune_request_t</span><span class="w"> </span><span class="nf">rx_tune_req</span><span class="p">();</span><span class="w"> </span>
+<span class="n">rx_tune_req</span><span class="p">.</span><span class="n">rf_freq_policy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">uhd</span><span class="o">::</span><span class="n">tune_request_t</span><span class="o">::</span><span class="n">POLICY_MANUAL</span><span class="p">;</span><span class="w"> </span>
+<span class="n">rx_tune_req</span><span class="p">.</span><span class="n">rf_freq</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">target_freq</span><span class="o">+</span><span class="n">IF_freq</span><span class="p">;</span><span class="w"> </span>
+<span class="n">rx_tune_req</span><span class="p">.</span><span class="n">dsp_freq_policy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">uhd</span><span class="o">::</span><span class="n">tune_request_t</span><span class="o">::</span><span class="n">POLICY_MANUAL</span><span class="p">;</span><span class="w"> </span>
+<span class="n">rx_tune_req</span><span class="p">.</span><span class="n">dsp_freq</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0</span><span class="p">;</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./ch5"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="usrp.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><span class="section-number">5. </span>USRP Tuning and Calibration</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="iq.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">5.2. </span>DC Offset and IQ Imbalance</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#automatic-direct-conversion-tuning">5.1.1. Automatic “direct-conversion” tuning</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#automatic-low-if-tuning">5.1.2. Automatic low-IF tuning</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#manual-tuning">5.1.3. Manual tuning</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Tan F. Wong
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
