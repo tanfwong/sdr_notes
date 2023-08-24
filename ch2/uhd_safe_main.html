@@ -430,14 +430,14 @@ document.write(`
 <span id="code-uhd-safe-main"></span><h1><span class="section-number">2.4.1. </span><code class="docutils literal notranslate"><span class="pre">uhd_safe_main.hpp</span></code><a class="headerlink" href="#uhd-safe-main-hpp" title="Permalink to this headline">#</a></h1>
 <section id="source-code">
 <h2><span class="section-number">2.4.1.1. </span>Source code<a class="headerlink" href="#source-code" title="Permalink to this headline">#</a></h2>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="c1">// Copyright 2010 Ettus Research LLC</span>
-<span class="linenos"> 2</span><span class="c1">// Copyright 2018 Ettus Research, a National Instruments Company</span>
-<span class="linenos"> 3</span><span class="c1">//</span>
-<span class="linenos"> 4</span><span class="c1">// SPDX-License-Identifier: GPL-3.0-or-later</span>
-<span class="linenos"> 5</span><span class="c1">//</span>
-<span class="linenos"> 6</span>
-<span class="linenos"> 7</span><span class="cp">#ifndef INCLUDED_UHD_UTILS_SAFE_MAIN_HPP</span>
-<span class="linenos"> 8</span><span class="cp">#define INCLUDED_UHD_UTILS_SAFE_MAIN_HPP</span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="c1">//</span>
+<span class="linenos"> 2</span><span class="c1">// Copyright 2010 Ettus Research LLC</span>
+<span class="linenos"> 3</span><span class="c1">// Copyright 2018 Ettus Research, a National Instruments Company</span>
+<span class="linenos"> 4</span><span class="c1">//</span>
+<span class="linenos"> 5</span><span class="c1">// SPDX-License-Identifier: GPL-3.0-or-later</span>
+<span class="linenos"> 6</span><span class="c1">//</span>
+<span class="linenos"> 7</span>
+<span class="linenos"> 8</span><span class="cp">#pragma once</span>
 <span class="linenos"> 9</span>
 <span class="linenos">10</span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;uhd/config.hpp&gt;</span>
 <span class="linenos">11</span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
@@ -464,8 +464,6 @@ document.write(`
 <span class="linenos">32</span><span class="cp">        return ~0;                                                \</span>
 <span class="linenos">33</span><span class="cp">    }                                                             \</span>
 <span class="linenos">34</span><span class="cp">    int _main(_argc, _argv)</span>
-<span class="linenos">35</span>
-<span class="linenos">36</span><span class="cp">#endif </span><span class="cm">/* INCLUDED_UHD_UTILS_SAFE_MAIN_HPP */</span>
 </pre></div>
 </div>
 </section>

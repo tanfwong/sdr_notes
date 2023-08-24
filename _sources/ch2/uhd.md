@@ -1,13 +1,18 @@
 (sec:UHD)=
 # UHD
-* UHD is the C++ device driver for USRP radios.
-* It provides APIs to set up, query, and control a USRP radio and to transfer signal samples between the USRP radio and a host computer.
-* The version of UHD that we will use in class (installed on `wing-radio-a` and `wing-radio-b`) is [UHD 3.15.0.0](https://files.ettus.com/manual_archive/v3.15.0.0/html/index.html). Note that it is NOT the lastest stable version of UHD, which can be found [here](https://files.ettus.com/manual/).
+* UHD is the device driver for USRP radios.
+* It provides C++ APIs to set up, query, and control a USRP radio and
+  to transfer signal samples between the USRP radio and a host
+  computer.
+* The version of UHD that we will use in class (installed on `lab-1`
+  and `lab-2`) is [UHD 4.4.0](https://files.ettus.com/manual/).
 
 
 ## UHD_SAFE_MAIN macro and Termination trick
-* [`UHD_SAFE_MAIN`](code:uhd_safe_main) is a macro for `main()` that catches and prints out an exception, in case it is thrown, to `stderr`. It is not necessary, but good, to use it. 
-* In most cases, we want our `main()` and other functions to keep running until we decide otherwise. Thus we need a way to terminate the program. The simplest way to do so is to issue a CTRL-C interrupt. See below for a sample code to catch the CTRL-C interrupt and terminate `main()`.
+* [`UHD_SAFE_MAIN`](code:uhd_safe_main) is a macro for `main()` that
+  catches and prints out an exception, in case it is thrown, to
+  `stderr`. It is not necessary, but good to use the macro. 
+* In many cases, we want our `main()` and other functions to keep running until we decide otherwise. Thus we need a way to terminate the program. The simplest way to do so is to issue a CTRL-C interrupt. See below for a sample code to catch the CTRL-C interrupt and terminate `main()`.
 * <u>Example</u>: 
   ```c++
   #include <uhd/utils/safe_main.hpp>
@@ -34,41 +39,52 @@
 
 
 ## Boost.Program_options Library
-* [Boost](http://www.boost.org/) is a huge collection of C++ libraries that help us do many common application tasks. We will mainly use the Boost libraries for option parsing, printing, and sometimes threading. The version of Boost installed installed on `wing-radio-a` and `wing-radio-b` is [Boost 1.71.0](https://www.boost.org/doc/libs/1_71_0/).
+* [Boost](http://www.boost.org/) is a huge collection of C++ libraries
+  that help us do many common application tasks. We will mainly use
+  the Boost libraries for option parsing, printing, and sometimes
+  threading. The version of Boost installed installed on
+  `lab-1` and `lab-2` is [Boost 1.74.0](https://www.boost.org/doc/libs/1_74_0/).
 * In particular,
-  [Boost.Program_options](https://www.boost.org/doc/libs/1_71_0/doc/html/program_options.html)
+  [Boost.Program_options](https://www.boost.org/doc/libs/1_74_0/doc/html/program_options.html)
   library will come in handy when parsing program options. 
 * <u>Example</u>: [`age.cpp`](code:age)
 
 ## Set up, control, and query USRP
-1. Use the `uhd::usrp::multi_usrp` class method `uhd::usrp::multi_usrp::make()` to construct a USRP object.
+1. Use the `uhd::usrp::multi_usrp` class method
+   `uhd::usrp::multi_usrp::make()` to construct a USRP object.
 2. Use other `uhd::usrp::multi_usrp` class APIs to set and query various USRP parameters. 
-* A full list of `uhd::usrp::multi_usrp` class APIs can be found [here](https://files.ettus.com/manual_archive/v3.15.0.0/html/classuhd_1_1usrp_1_1multi__usrp.html).
+* A full list of `uhd::usrp::multi_usrp` class APIs can be found
+  [here](https://files.ettus.com/manual/classuhd_1_1usrp_1_1multi__usrp.html).
 * <u>Example</u>: [`txrx_loopback_to_file.cpp`](code:txrx_setup)
 
 ## USRP Streams
-* To transmit/receive using a USRP, signal samples need to be
+* To transmit/receive using an N210 USRP, signal samples need to be
   transferred to/from the USRP. This is accomplished 
   via the Gigabit Ethernet connection between the host computer and
   the N210 USRP.
 * Signal samples are encapsulated in Ethernet packets that are
   transferred between the host computer and USRP. This is referred to
   as **streaming**.
-* To do streaming, we need to first construct a **stream** object that facilitates streaming between the host computer and USRP. There are two kinds of stream objects:
-  - A **TX stream** allows the host PC to transmit samples to the
+* To do streaming, we need to first construct a **stream** object that
+  facilitates streaming between the host computer and USRP. There are
+  two kinds of stream objects:
+  - A **TX stream** allows the host computer to transmit samples to the
       USRP, and is constructed using the
       `uhd::usrp::multi_usrp::get_tx_stream()` method, which returns a
       smart pointer to a `uhd::tx_streamer` class object.
-  - An **RX stream** allows the host PC to receive samples from the
+  - A **RX stream** allows the host computer to receive samples from the
       USRP, and is constructed using the
       `uhd::usrp::multi_usrp::get_rx_stream()` method, which returns a
       smart pointer to a `uhd::rx_streamer` class object.
 * Both stream construction methods require an input argument of type
-    `uhd::stream_args_t(const std::string& cpu, const std::string& otw)`, where `cpu` and `otw` represent the different data types of
+    `uhd::stream_args_t(const std::string& cpu, const std::string&
+    otw)`, where `cpu` and `otw` represent the different data types of
     signal samples at the two ends of a stream:
    - **`cpu` specifies the host data type:** Data type of the samples used on the
      host for processing, possible choices are  `fc64`, `fc32`, `sc16`, and `sc8`.
-   - **`otw` specifies USRP over-the-wire data type:** Data type of the samples sent through Ethernet, possible choices are `sc16` and `sc8`
+   - **`otw` specifies USRP over-the-wire data type:** Data type of
+     the samples sent through Ethernet, possible choices are `sc16`
+     and `sc8`
    - `fc64` = `std::complex<double>`, `fc32` = `std::complex<float>`,
      `sc16` = `std::complex<int16_t>`, and `sc8` = `std::complex<int8_t>`.
    - See [`stream.hpp`](code:stream) in the UHD source package for

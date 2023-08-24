@@ -2,16 +2,17 @@
 # `uhd_safe_main.hpp`
 
 ## Source code
-```{code-block}  c++
+```{code-block} c++
 :lineno-start: 1
+
+//
 // Copyright 2010 Ettus Research LLC
 // Copyright 2018 Ettus Research, a National Instruments Company
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 //
 
-#ifndef INCLUDED_UHD_UTILS_SAFE_MAIN_HPP
-#define INCLUDED_UHD_UTILS_SAFE_MAIN_HPP
+#pragma once
 
 #include <uhd/config.hpp>
 #include <iostream>
@@ -38,6 +39,4 @@
         return ~0;                                                \
     }                                                             \
     int _main(_argc, _argv)
-
-#endif /* INCLUDED_UHD_UTILS_SAFE_MAIN_HPP */
 ```

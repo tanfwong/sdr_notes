@@ -434,15 +434,20 @@ document.write(`
   <section class="tex2jax_ignore mathjax_ignore" id="uhd">
 <span id="sec-uhd"></span><h1><span class="section-number">2.1. </span>UHD<a class="headerlink" href="#uhd" title="Permalink to this headline">#</a></h1>
 <ul class="simple">
-<li><p>UHD is the C++ device driver for USRP radios.</p></li>
-<li><p>It provides APIs to set up, query, and control a USRP radio and to transfer signal samples between the USRP radio and a host computer.</p></li>
-<li><p>The version of UHD that we will use in class (installed on <code class="docutils literal notranslate"><span class="pre">wing-radio-a</span></code> and <code class="docutils literal notranslate"><span class="pre">wing-radio-b</span></code>) is <a class="reference external" href="https://files.ettus.com/manual_archive/v3.15.0.0/html/index.html">UHD 3.15.0.0</a>. Note that it is NOT the lastest stable version of UHD, which can be found <a class="reference external" href="https://files.ettus.com/manual/">here</a>.</p></li>
+<li><p>UHD is the device driver for USRP radios.</p></li>
+<li><p>It provides C++ APIs to set up, query, and control a USRP radio and
+to transfer signal samples between the USRP radio and a host
+computer.</p></li>
+<li><p>The version of UHD that we will use in class (installed on <code class="docutils literal notranslate"><span class="pre">lab-1</span></code>
+and <code class="docutils literal notranslate"><span class="pre">lab-2</span></code>) is <a class="reference external" href="https://files.ettus.com/manual/">UHD 4.4.0</a>.</p></li>
 </ul>
 <section id="uhd-safe-main-macro-and-termination-trick">
 <h2><span class="section-number">2.1.1. </span>UHD_SAFE_MAIN macro and Termination trick<a class="headerlink" href="#uhd-safe-main-macro-and-termination-trick" title="Permalink to this headline">#</a></h2>
 <ul>
-<li><p><a class="reference internal" href="uhd_safe_main.html#code-uhd-safe-main"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">UHD_SAFE_MAIN</span></code></span></a> is a macro for <code class="docutils literal notranslate"><span class="pre">main()</span></code> that catches and prints out an exception, in case it is thrown, to <code class="docutils literal notranslate"><span class="pre">stderr</span></code>. It is not necessary, but good, to use it.</p></li>
-<li><p>In most cases, we want our <code class="docutils literal notranslate"><span class="pre">main()</span></code> and other functions to keep running until we decide otherwise. Thus we need a way to terminate the program. The simplest way to do so is to issue a CTRL-C interrupt. See below for a sample code to catch the CTRL-C interrupt and terminate <code class="docutils literal notranslate"><span class="pre">main()</span></code>.</p></li>
+<li><p><a class="reference internal" href="uhd_safe_main.html#code-uhd-safe-main"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">UHD_SAFE_MAIN</span></code></span></a> is a macro for <code class="docutils literal notranslate"><span class="pre">main()</span></code> that
+catches and prints out an exception, in case it is thrown, to
+<code class="docutils literal notranslate"><span class="pre">stderr</span></code>. It is not necessary, but good to use the macro.</p></li>
+<li><p>In many cases, we want our <code class="docutils literal notranslate"><span class="pre">main()</span></code> and other functions to keep running until we decide otherwise. Thus we need a way to terminate the program. The simplest way to do so is to issue a CTRL-C interrupt. See below for a sample code to catch the CTRL-C interrupt and terminate <code class="docutils literal notranslate"><span class="pre">main()</span></code>.</p></li>
 <li><p><u>Example</u>:</p>
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;uhd/utils/safe_main.hpp&gt;</span>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;csignal&gt;</span>
@@ -472,9 +477,13 @@ document.write(`
 <section id="boost-program-options-library">
 <h2><span class="section-number">2.1.2. </span>Boost.Program_options Library<a class="headerlink" href="#boost-program-options-library" title="Permalink to this headline">#</a></h2>
 <ul class="simple">
-<li><p><a class="reference external" href="http://www.boost.org/">Boost</a> is a huge collection of C++ libraries that help us do many common application tasks. We will mainly use the Boost libraries for option parsing, printing, and sometimes threading. The version of Boost installed installed on <code class="docutils literal notranslate"><span class="pre">wing-radio-a</span></code> and <code class="docutils literal notranslate"><span class="pre">wing-radio-b</span></code> is <a class="reference external" href="https://www.boost.org/doc/libs/1_71_0/">Boost 1.71.0</a>.</p></li>
+<li><p><a class="reference external" href="http://www.boost.org/">Boost</a> is a huge collection of C++ libraries
+that help us do many common application tasks. We will mainly use
+the Boost libraries for option parsing, printing, and sometimes
+threading. The version of Boost installed installed on
+<code class="docutils literal notranslate"><span class="pre">lab-1</span></code> and <code class="docutils literal notranslate"><span class="pre">lab-2</span></code> is <a class="reference external" href="https://www.boost.org/doc/libs/1_74_0/">Boost 1.74.0</a>.</p></li>
 <li><p>In particular,
-<a class="reference external" href="https://www.boost.org/doc/libs/1_71_0/doc/html/program_options.html">Boost.Program_options</a>
+<a class="reference external" href="https://www.boost.org/doc/libs/1_74_0/doc/html/program_options.html">Boost.Program_options</a>
 library will come in handy when parsing program options.</p></li>
 <li><p><u>Example</u>: <a class="reference internal" href="age.html#code-age"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">age.cpp</span></code></span></a></p></li>
 </ul>
@@ -482,43 +491,49 @@ library will come in handy when parsing program options.</p></li>
 <section id="set-up-control-and-query-usrp">
 <h2><span class="section-number">2.1.3. </span>Set up, control, and query USRP<a class="headerlink" href="#set-up-control-and-query-usrp" title="Permalink to this headline">#</a></h2>
 <ol class="arabic simple">
-<li><p>Use the <code class="docutils literal notranslate"><span class="pre">uhd::usrp::multi_usrp</span></code> class method <code class="docutils literal notranslate"><span class="pre">uhd::usrp::multi_usrp::make()</span></code> to construct a USRP object.</p></li>
+<li><p>Use the <code class="docutils literal notranslate"><span class="pre">uhd::usrp::multi_usrp</span></code> class method
+<code class="docutils literal notranslate"><span class="pre">uhd::usrp::multi_usrp::make()</span></code> to construct a USRP object.</p></li>
 <li><p>Use other <code class="docutils literal notranslate"><span class="pre">uhd::usrp::multi_usrp</span></code> class APIs to set and query various USRP parameters.</p></li>
 </ol>
 <ul class="simple">
-<li><p>A full list of <code class="docutils literal notranslate"><span class="pre">uhd::usrp::multi_usrp</span></code> class APIs can be found <a class="reference external" href="https://files.ettus.com/manual_archive/v3.15.0.0/html/classuhd_1_1usrp_1_1multi__usrp.html">here</a>.</p></li>
+<li><p>A full list of <code class="docutils literal notranslate"><span class="pre">uhd::usrp::multi_usrp</span></code> class APIs can be found
+<a class="reference external" href="https://files.ettus.com/manual/classuhd_1_1usrp_1_1multi__usrp.html">here</a>.</p></li>
 <li><p><u>Example</u>: <a class="reference internal" href="txrx_setup.html#code-txrx-setup"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">txrx_loopback_to_file.cpp</span></code></span></a></p></li>
 </ul>
 </section>
 <section id="usrp-streams">
 <h2><span class="section-number">2.1.4. </span>USRP Streams<a class="headerlink" href="#usrp-streams" title="Permalink to this headline">#</a></h2>
 <ul class="simple">
-<li><p>To transmit/receive using a USRP, signal samples need to be
+<li><p>To transmit/receive using an N210 USRP, signal samples need to be
 transferred to/from the USRP. This is accomplished
 via the Gigabit Ethernet connection between the host computer and
 the N210 USRP.</p></li>
 <li><p>Signal samples are encapsulated in Ethernet packets that are
 transferred between the host computer and USRP. This is referred to
 as <strong>streaming</strong>.</p></li>
-<li><p>To do streaming, we need to first construct a <strong>stream</strong> object that facilitates streaming between the host computer and USRP. There are two kinds of stream objects:</p>
+<li><p>To do streaming, we need to first construct a <strong>stream</strong> object that
+facilitates streaming between the host computer and USRP. There are
+two kinds of stream objects:</p>
 <ul>
-<li><p>A <strong>TX stream</strong> allows the host PC to transmit samples to the
+<li><p>A <strong>TX stream</strong> allows the host computer to transmit samples to the
 USRP, and is constructed using the
 <code class="docutils literal notranslate"><span class="pre">uhd::usrp::multi_usrp::get_tx_stream()</span></code> method, which returns a
 smart pointer to a <code class="docutils literal notranslate"><span class="pre">uhd::tx_streamer</span></code> class object.</p></li>
-<li><p>An <strong>RX stream</strong> allows the host PC to receive samples from the
+<li><p>A <strong>RX stream</strong> allows the host computer to receive samples from the
 USRP, and is constructed using the
 <code class="docutils literal notranslate"><span class="pre">uhd::usrp::multi_usrp::get_rx_stream()</span></code> method, which returns a
 smart pointer to a <code class="docutils literal notranslate"><span class="pre">uhd::rx_streamer</span></code> class object.</p></li>
 </ul>
 </li>
 <li><p>Both stream construction methods require an input argument of type
-<code class="docutils literal notranslate"><span class="pre">uhd::stream_args_t(const</span> <span class="pre">std::string&amp;</span> <span class="pre">cpu,</span> <span class="pre">const</span> <span class="pre">std::string&amp;</span> <span class="pre">otw)</span></code>, where <code class="docutils literal notranslate"><span class="pre">cpu</span></code> and <code class="docutils literal notranslate"><span class="pre">otw</span></code> represent the different data types of
+<code class="docutils literal notranslate"><span class="pre">uhd::stream_args_t(const</span> <span class="pre">std::string&amp;</span> <span class="pre">cpu,</span> <span class="pre">const</span> <span class="pre">std::string&amp;</span>&#160;&#160; <span class="pre">otw)</span></code>, where <code class="docutils literal notranslate"><span class="pre">cpu</span></code> and <code class="docutils literal notranslate"><span class="pre">otw</span></code> represent the different data types of
 signal samples at the two ends of a stream:</p>
 <ul>
 <li><p><strong><code class="docutils literal notranslate"><span class="pre">cpu</span></code> specifies the host data type:</strong> Data type of the samples used on the
 host for processing, possible choices are  <code class="docutils literal notranslate"><span class="pre">fc64</span></code>, <code class="docutils literal notranslate"><span class="pre">fc32</span></code>, <code class="docutils literal notranslate"><span class="pre">sc16</span></code>, and <code class="docutils literal notranslate"><span class="pre">sc8</span></code>.</p></li>
-<li><p><strong><code class="docutils literal notranslate"><span class="pre">otw</span></code> specifies USRP over-the-wire data type:</strong> Data type of the samples sent through Ethernet, possible choices are <code class="docutils literal notranslate"><span class="pre">sc16</span></code> and <code class="docutils literal notranslate"><span class="pre">sc8</span></code></p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">otw</span></code> specifies USRP over-the-wire data type:</strong> Data type of
+the samples sent through Ethernet, possible choices are <code class="docutils literal notranslate"><span class="pre">sc16</span></code>
+and <code class="docutils literal notranslate"><span class="pre">sc8</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">fc64</span></code> = <code class="docutils literal notranslate"><span class="pre">std::complex&lt;double&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">fc32</span></code> = <code class="docutils literal notranslate"><span class="pre">std::complex&lt;float&gt;</span></code>,
 <code class="docutils literal notranslate"><span class="pre">sc16</span></code> = <code class="docutils literal notranslate"><span class="pre">std::complex&lt;int16_t&gt;</span></code>, and <code class="docutils literal notranslate"><span class="pre">sc8</span></code> = <code class="docutils literal notranslate"><span class="pre">std::complex&lt;int8_t&gt;</span></code>.</p></li>
 <li><p>See <a class="reference internal" href="stream.html#code-stream"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">stream.hpp</span></code></span></a> in the UHD source package for
