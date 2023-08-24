@@ -23,12 +23,13 @@
 #include <boost/algorithm/string.hpp>
 #include <boost/filesystem.hpp>
 #include <boost/format.hpp>
-#include <boost/math/special_functions/round.hpp>
 #include <boost/program_options.hpp>
-#include <boost/thread/thread.hpp>
+#include <cmath>
 #include <csignal>
 #include <fstream>
+#include <functional>
 #include <iostream>
+#include <thread>
 
 namespace po = boost::program_options;
 
@@ -62,7 +63,7 @@ std::string generate_out_filename(
 
 /***********************************************************************
  * transmit_worker function
- * A function to be used as a boost::thread_group thread for transmitting
+ * A function to be used in a thread for transmitting
  **********************************************************************/
 void transmit_worker(std::vector<std::complex<float>> buff,
     wave_table_class wave_table,
@@ -125,17 +126,19 @@ void recv_to_file(uhd::usrp::multi_usrp::sptr usrp,
 
     // Create one ofstream object per channel
     // (use shared_ptr because ofstream is non-copyable)
-    std::vector<boost::shared_ptr<std::ofstream>> outfiles;
+    std::vector<std::shared_ptr<std::ofstream>> outfiles;
     for (size_t i = 0; i < buffs.size(); i++) {
         const std::string this_filename = generate_out_filename(file, buffs.size(), i);
-        outfiles.push_back(boost::shared_ptr<std::ofstream>(
+        outfiles.push_back(std::shared_ptr<std::ofstream>(
             new std::ofstream(this_filename.c_str(), std::ofstream::binary)));
     }
     UHD_ASSERT_THROW(outfiles.size() == buffs.size());
     UHD_ASSERT_THROW(buffs.size() == rx_channel_nums.size());
     bool overflow_message = true;
-    double timeout =
-        settling_time + 0.1f; // expected settling time + padding for first recv
+    // We increase the first timeout to cover for the delay between now + the
+    // command time, plus 500ms of buffer. In the loop, we will then reduce the
+    // timeout for subsequent receives.
+    double timeout = settling_time + 0.5f;
 
     // setup streaming
     uhd::stream_cmd_t stream_cmd((num_requested_samples == 0)
@@ -143,7 +146,7 @@ void recv_to_file(uhd::usrp::multi_usrp::sptr usrp,
                                      : uhd::stream_cmd_t::STREAM_MODE_NUM_SAMPS_AND_DONE);
     stream_cmd.num_samps  = num_requested_samples;
     stream_cmd.stream_now = false;
-    stream_cmd.time_spec  = uhd::time_spec_t(settling_time);
+    stream_cmd.time_spec  = usrp->get_time_now() + uhd::time_spec_t(settling_time);
     rx_stream->issue_stream_cmd(stream_cmd);
 
     while (not stop_signal_called
@@ -152,7 +155,7 @@ void recv_to_file(uhd::usrp::multi_usrp::sptr usrp,
         timeout             = 0.1f; // small timeout for subsequent recv
 
         if (md.error_code == uhd::rx_metadata_t::ERROR_CODE_TIMEOUT) {
-            std::cout << boost::format("Timeout while streaming") << std::endl;
+            std::cout << "Timeout while streaming" << std::endl;
             break;
         }
         if (md.error_code == uhd::rx_metadata_t::ERROR_CODE_OVERFLOW) {
@@ -170,8 +173,7 @@ void recv_to_file(uhd::usrp::multi_usrp::sptr usrp,
             continue;
         }
         if (md.error_code != uhd::rx_metadata_t::ERROR_CODE_NONE) {
-            throw std::runtime_error(
-                str(boost::format("Receiver error %s") % md.strerror()));
+            throw std::runtime_error("Receiver error " + md.strerror());
         }
 
         num_total_samps += num_rx_samps;
@@ -250,7 +252,7 @@ int UHD_SAFE_MAIN(int argc, char* argv[])
 
     // print the help message
     if (vm.count("help")) {
-        std::cout << boost::format("UHD TXRX Loopback to File %s") % desc << std::endl;
+        std::cout << "UHD TXRX Loopback to File " << desc << std::endl;
         return ~0;
     }
 
@@ -297,11 +299,9 @@ int UHD_SAFE_MAIN(int argc, char* argv[])
         tx_usrp->set_clock_source(ref);
         rx_usrp->set_clock_source(ref);
     }
-    
-    std::cout << boost::format("Using TX Device: %s") % tx_usrp->get_pp_string()
-              << std::endl;
-    std::cout << boost::format("Using RX Device: %s") % rx_usrp->get_pp_string()
-              << std::endl;
+
+    std::cout << "Using TX Device: " << tx_usrp->get_pp_string() << std::endl;
+    std::cout << "Using RX Device: " << rx_usrp->get_pp_string() << std::endl;
 
     // set the transmit sample rate
     if (not vm.count("tx-rate")) {
@@ -430,6 +430,11 @@ int UHD_SAFE_MAIN(int argc, char* argv[])
             rx_usrp->set_rx_antenna(rx_ant, channel);
     }
 
+    // Align times in the RX USRP (the TX USRP does not require time-syncing)
+    if (rx_usrp->get_num_mboards() > 1) {
+        rx_usrp->set_time_unknown_pps(uhd::time_spec_t(0.0));
+    }
+
     // for the const wave, set the wave freq for small samples per period
     if (wave_freq == 0 and wave_type == "CONST") {
         wave_freq = tx_usrp->get_tx_rate() / 2;
@@ -445,8 +450,7 @@ int UHD_SAFE_MAIN(int argc, char* argv[])
 
     // pre-compute the waveform values
     const wave_table_class wave_table(wave_type, ampl);
-    const size_t step =
-        boost::math::iround(wave_freq / tx_usrp->get_tx_rate() * wave_table_len);
+    const size_t step = std::lround(wave_freq / tx_usrp->get_tx_rate() * wave_table_len);
     size_t index = 0;
 
     // create a transmit streamer
@@ -533,9 +537,9 @@ int UHD_SAFE_MAIN(int argc, char* argv[])
     tx_usrp->set_time_now(uhd::time_spec_t(0.0));
 
     // start transmit worker thread
-    boost::thread_group transmit_thread;
-    transmit_thread.create_thread(boost::bind(
-        &transmit_worker, buff, wave_table, tx_stream, md, step, index, num_channels));
+    std::thread transmit_thread([&]() {
+        transmit_worker(buff, wave_table, tx_stream, md, step, index, num_channels);
+    });
 
     // recv to file
     if (type == "double")
@@ -550,13 +554,13 @@ int UHD_SAFE_MAIN(int argc, char* argv[])
     else {
         // clean up transmit worker
         stop_signal_called = true;
-        transmit_thread.join_all();
+        transmit_thread.join();
         throw std::runtime_error("Unknown type " + type);
     }
 
     // clean up transmit worker
     stop_signal_called = true;
-    transmit_thread.join_all();
+    transmit_thread.join();
 
     // finished
     std::cout << std::endl << "Done!" << std::endl << std::endl;
