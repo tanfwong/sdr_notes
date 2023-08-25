@@ -1,10 +1,10 @@
 (sec:multithread)=
 # Elementary Multi-threading
 
-* To implement a communication system, we usually need to run
-  functions that send and/or receive signal samples to and/or from the
-  USRP as well as many other processing functions asynchronously and
-  simultaneously.
+* To implement a communication system in software, we often need to
+  run functions that send and/or receive signal samples to and/or from
+  the USRP as well as many other processing functions asynchronously
+  and simultaneously.
 * This can be done by multi-threaded programming, in which different
   functions are implemented in different threads. Exactly how many
   treads to use and which functions should be implemented in which
@@ -24,8 +24,8 @@
   `std::thread` is available in C++11 or after. 
   ```
   ```{admonition} Dig deeper
-  You may also use the more powerful
-  [Boost.Thread](https://www.boost.org/doc/libs/1_71_0/doc/html/thread.html)
+  You may also use the somewhat more powerful
+  [Boost.Thread](https://www.boost.org/doc/libs/1_74_0/doc/html/thread.html)
   library to do multi-threading. 
   ```
 
@@ -49,14 +49,7 @@
   that whenever possible in a thread to vacate CPU resources to other
   running threads.
 * <u>Example</u>: [`age_threads.cpp`](code:age_threads) 
-   ```{admonition} Dig deeper
-    To see a more complicated example using the Boost.Thread library
-   with the
-   [`boost::thread_group`](https://www.boost.org/doc/libs/1_71_0/doc/html/thread/thread_management.html#thread.thread_management.threadgroup)
-   class and
-   [Boost.Bind](https://www.boost.org/doc/libs/1_71_0/libs/bind/doc/html/bind.html)
-   library, check out [`txrx_loopback_to_file.cpp`](code:txrx_thread) 
-   ```
+   
 ## UHD thread priority
 * The priority of the main thread can be set using the
   `uhd::set_thread_priority_safe()` method in `main()`. The same

@@ -438,10 +438,10 @@ document.write(`
   <section class="tex2jax_ignore mathjax_ignore" id="elementary-multi-threading">
 <span id="sec-multithread"></span><h1><span class="section-number">2.2. </span>Elementary Multi-threading<a class="headerlink" href="#elementary-multi-threading" title="Permalink to this headline">#</a></h1>
 <ul>
-<li><p>To implement a communication system, we usually need to run
-functions that send and/or receive signal samples to and/or from the
-USRP as well as many other processing functions asynchronously and
-simultaneously.</p></li>
+<li><p>To implement a communication system in software, we often need to
+run functions that send and/or receive signal samples to and/or from
+the USRP as well as many other processing functions asynchronously
+and simultaneously.</p></li>
 <li><p>This can be done by multi-threaded programming, in which different
 functions are implemented in different threads. Exactly how many
 treads to use and which functions should be implemented in which
@@ -463,15 +463,15 @@ class to create, launch, and manage threads.</p>
 </div>
 <div class="admonition-dig-deeper admonition">
 <p class="admonition-title">Dig deeper</p>
-<p>You may also use the more powerful
-<a class="reference external" href="https://www.boost.org/doc/libs/1_71_0/doc/html/thread.html">Boost.Thread</a>
+<p>You may also use the somewhat more powerful
+<a class="reference external" href="https://www.boost.org/doc/libs/1_74_0/doc/html/thread.html">Boost.Thread</a>
 library to do multi-threading.</p>
 </div>
 </li>
 </ul>
 <section id="create-launch-and-join-threads">
 <h2><span class="section-number">2.2.1. </span>Create, launch, and join threads<a class="headerlink" href="#create-launch-and-join-threads" title="Permalink to this headline">#</a></h2>
-<ul>
+<ul class="simple">
 <li><p>The simplest way to create and launch a thread is to instantiate a
 <code class="docutils literal notranslate"><span class="pre">std::thread</span></code> class object by passing to its constructor a function
 pointer pointing to the function that the thread is to
@@ -490,17 +490,7 @@ functions that access the current thread. For example, calling the
 to pause for a specified amount of time. We should always try to do
 that whenever possible in a thread to vacate CPU resources to other
 running threads.</p></li>
-<li><p><u>Example</u>: <a class="reference internal" href="age_threads.html#code-age-threads"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">age_threads.cpp</span></code></span></a></p>
-<div class="admonition-dig-deeper admonition">
-<p class="admonition-title">Dig deeper</p>
-<p>To see a more complicated example using the Boost.Thread library
-with the
-<a class="reference external" href="https://www.boost.org/doc/libs/1_71_0/doc/html/thread/thread_management.html#thread.thread_management.threadgroup"><code class="docutils literal notranslate"><span class="pre">boost::thread_group</span></code></a>
-class and
-<a class="reference external" href="https://www.boost.org/doc/libs/1_71_0/libs/bind/doc/html/bind.html">Boost.Bind</a>
-library, check out <a class="reference internal" href="txrx_thread.html#code-txrx-thread"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">txrx_loopback_to_file.cpp</span></code></span></a></p>
-</div>
-</li>
+<li><p><u>Example</u>: <a class="reference internal" href="age_threads.html#code-age-threads"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">age_threads.cpp</span></code></span></a></p></li>
 </ul>
 </section>
 <section id="uhd-thread-priority">

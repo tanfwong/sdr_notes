@@ -14,7 +14,6 @@
 1. [`txrx_loopback_to_file.cpp` (TX)](code:txrx_TX)
 1. [`txrx_loopback_to_file.cpp` (RX)](code:txrx_RX)
 1. [`age_threads.cpp`](code:age_threads)
-1. [`txrx_loopback_to_file.cpp` (thread)](code:txrx_thread)
 1. [`age_mutex.cpp`](code:age_mutex)
 1. [`age_mutex_caller.cpp`](code:age_mutex_caller)
 1. [`count_atomic.cpp`](code:count_atomic)

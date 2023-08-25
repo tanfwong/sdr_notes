@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>2.4.12. age_mutex_caller.cpp &#8212; Digital Communications with SDRs</title>
+    <title>2.4.11. age_mutex_caller.cpp &#8212; Digital Communications with SDRs</title>
   
   
   
@@ -64,8 +64,8 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="../_static/logo.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="2.4.13. count_atomic.cpp" href="count_atomic.html" />
-    <link rel="prev" title="2.4.11. age_mutex.cpp" href="age_mutex.html" />
+    <link rel="next" title="2.4.12. count_atomic.cpp" href="count_atomic.html" />
+    <link rel="prev" title="2.4.10. age_mutex.cpp" href="age_mutex.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="None"/>
   </head>
@@ -414,9 +414,9 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#source-code">2.4.12.1. Source code</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#build">2.4.12.2. Build</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#usage-example">2.4.12.3. Usage Example</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#source-code">2.4.11.1. Source code</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#build">2.4.11.2. Build</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#usage-example">2.4.11.3. Usage Example</a></li>
 </ul>
             </nav>
         </div>
@@ -429,9 +429,9 @@ document.write(`
                 <article class="bd-article" role="main">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="age-mutex-caller-cpp">
-<span id="code-age-mutex-caller"></span><h1><span class="section-number">2.4.12. </span><code class="docutils literal notranslate"><span class="pre">age_mutex_caller.cpp</span></code><a class="headerlink" href="#age-mutex-caller-cpp" title="Permalink to this headline">#</a></h1>
+<span id="code-age-mutex-caller"></span><h1><span class="section-number">2.4.11. </span><code class="docutils literal notranslate"><span class="pre">age_mutex_caller.cpp</span></code><a class="headerlink" href="#age-mutex-caller-cpp" title="Permalink to this headline">#</a></h1>
 <section id="source-code">
-<h2><span class="section-number">2.4.12.1. </span>Source code<a class="headerlink" href="#source-code" title="Permalink to this headline">#</a></h2>
+<h2><span class="section-number">2.4.11.1. </span>Source code<a class="headerlink" href="#source-code" title="Permalink to this headline">#</a></h2>
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="linenos">  1</span><span class="c1">// University of Florida EEL6528</span>
 <span class="linenos">  2</span><span class="c1">// Tan F. Wong</span>
 <span class="linenos">  3</span><span class="c1">// Jan 14, 2021</span>
@@ -554,7 +554,7 @@ consecutive calls to the <code class="docutils literal notranslate"><span class=
 </ul>
 </section>
 <section id="build">
-<h2><span class="section-number">2.4.12.2. </span>Build<a class="headerlink" href="#build" title="Permalink to this headline">#</a></h2>
+<h2><span class="section-number">2.4.11.2. </span>Build<a class="headerlink" href="#build" title="Permalink to this headline">#</a></h2>
 <ul>
 <li><p>Need to link the <code class="docutils literal notranslate"><span class="pre">uhd</span></code>, <code class="docutils literal notranslate"><span class="pre">boost_program_options</span></code>, <code class="docutils literal notranslate"><span class="pre">pthread</span></code> libraries when compiling:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">g</span><span class="o">++</span> <span class="n">age_mutex_caller</span><span class="o">.</span><span class="n">cpp</span> <span class="o">-</span><span class="n">o</span> <span class="n">age_mutex_caller</span> <span class="o">-</span><span class="n">luhd</span> <span class="o">-</span><span class="n">lboost_program_options</span> <span class="o">-</span><span class="n">lpthread</span>
@@ -564,7 +564,7 @@ consecutive calls to the <code class="docutils literal notranslate"><span class=
 </ul>
 </section>
 <section id="usage-example">
-<h2><span class="section-number">2.4.12.3. </span>Usage Example<a class="headerlink" href="#usage-example" title="Permalink to this headline">#</a></h2>
+<h2><span class="section-number">2.4.11.3. </span>Usage Example<a class="headerlink" href="#usage-example" title="Permalink to this headline">#</a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ ./age_mutex_caller --nice-print --name=Tom -a 25
 </pre></div>
 </div>
@@ -613,7 +613,7 @@ those obtained running <a class="reference internal" href="age_mutex.html#code-a
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title"><span class="section-number">2.4.11. </span><code class="docutils literal notranslate"><span class="pre">age_mutex.cpp</span></code></p>
+        <p class="prev-next-title"><span class="section-number">2.4.10. </span><code class="docutils literal notranslate"><span class="pre">age_mutex.cpp</span></code></p>
       </div>
     </a>
     <a class="right-next"
@@ -621,7 +621,7 @@ those obtained running <a class="reference internal" href="age_mutex.html#code-a
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><span class="section-number">2.4.13. </span><code class="docutils literal notranslate"><span class="pre">count_atomic.cpp</span></code></p>
+        <p class="prev-next-title"><span class="section-number">2.4.12. </span><code class="docutils literal notranslate"><span class="pre">count_atomic.cpp</span></code></p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -643,9 +643,9 @@ those obtained running <a class="reference internal" href="age_mutex.html#code-a
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#source-code">2.4.12.1. Source code</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#build">2.4.12.2. Build</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#usage-example">2.4.12.3. Usage Example</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#source-code">2.4.11.1. Source code</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#build">2.4.11.2. Build</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#usage-example">2.4.11.3. Usage Example</a></li>
 </ul>
   </nav></div>
 

@@ -4,7 +4,7 @@
 ## Source code
 ```{code-block}  c++
 :lineno-start: 1
-:emphasize-lines: 41-42, 73, 78, 83, 36
+:emphasize-lines: 42, 73, 78, 83, 36, 26, 28, 71, 32
 // University of Florida EEL6528
 // Tan F. Wong
 // Jan 8, 2021
@@ -96,9 +96,9 @@ int UHD_SAFE_MAIN(int argc, char *argv[]) {
 ```
 
 ## Build
-* Need to link the `uhd`, `boost_program_options`, `pthread` libraries when compiling:
+* Need to link the `uhd`, `boost_program_options` libraries when compiling:
   ```
-  g++ age_threads.cpp -o age_threads -luhd -lboost_program_options -lpthread
+  g++ age_threads.cpp -o age_threads -luhd -lboost_program_options
   ```
 ## Usage Example
 ```
