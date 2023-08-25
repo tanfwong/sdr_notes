@@ -526,7 +526,8 @@ smart pointer to a <code class="docutils literal notranslate"><span class="pre">
 </ul>
 </li>
 <li><p>Both stream construction methods require an input argument of type
-<code class="docutils literal notranslate"><span class="pre">uhd::stream_args_t(const</span> <span class="pre">std::string&amp;</span> <span class="pre">cpu,</span> <span class="pre">const</span> <span class="pre">std::string&amp;</span>&#160;&#160; <span class="pre">otw)</span></code>, where <code class="docutils literal notranslate"><span class="pre">cpu</span></code> and <code class="docutils literal notranslate"><span class="pre">otw</span></code> represent the different data types of
+<code class="docutils literal notranslate"><span class="pre">uhd::stream_args_t(const</span> <span class="pre">std::string&amp;</span> <span class="pre">cpu,</span> <span class="pre">const</span> <span class="pre">std::string&amp;</span> <span class="pre">otw)</span></code>,
+where <code class="docutils literal notranslate"><span class="pre">cpu</span></code> and <code class="docutils literal notranslate"><span class="pre">otw</span></code> represent the different data types of
 signal samples at the two ends of a stream:</p>
 <ul>
 <li><p><strong><code class="docutils literal notranslate"><span class="pre">cpu</span></code> specifies the host data type:</strong> Data type of the samples used on the
@@ -551,11 +552,11 @@ objects.</p></li>
 <ul class="simple">
 <li><p>After a TX stream object is constructed, we may use the method
 <code class="docutils literal notranslate"><span class="pre">uhd::tx_streamer::send()</span></code> to transfer signal samples from the host
-to the USRP. See code examples below and <a class="reference internal" href="stream.html#code-stream"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">stream.hpp</span></code></span></a>
-to see all input arguments of <code class="docutils literal notranslate"><span class="pre">uhd::tx_streamer::send()</span></code>. The method
-<code class="docutils literal notranslate"><span class="pre">uhd::tx_streamer::send()</span></code> is a blocking call and will not return
-until the specified number of samples have been read out of from the
-buffer, unless a timeout occurs.</p></li>
+to the USRP. Check the code examples below and
+<a class="reference internal" href="stream.html#code-stream"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">stream.hpp</span></code></span></a> to see all input arguments of
+<code class="docutils literal notranslate"><span class="pre">uhd::tx_streamer::send()</span></code>. The method <code class="docutils literal notranslate"><span class="pre">uhd::tx_streamer::send()</span></code> is
+a blocking call and will not return until the specified number of
+samples have been read out of the buffer, unless a timeout occurs.</p></li>
 <li><p>Note that the samples are encapsulated into Ethernet packets for the
 stream transfer. Each packet can only carry a certain maximum number
 of samples, which is determined by the Ethernet hardware and the
@@ -569,10 +570,10 @@ manually. However, <code class="docutils literal notranslate"><span class="pre">
 that for us. Specifically, it will fragment the samples across
 several packets.  I recommend letting <code class="docutils literal notranslate"><span class="pre">uhd::tx_streamer::send()</span></code>
 handle that.</p></li>
-<li><p>In either case, we need to tell the USRP when the burst starts and
+<li><p>In the manual case, we need to tell the USRP when the burst starts and
 ends. This is done by setting <code class="docutils literal notranslate"><span class="pre">start_of_burst</span></code> and <code class="docutils literal notranslate"><span class="pre">end_of_burst</span></code>
 flags in a metadata structure of type <code class="docutils literal notranslate"><span class="pre">uhd::tx_metadata_t</span></code>
-associated with each call to <code class="docutils literal notranslate"><span class="pre">uhd::tx_streamer::send()</span></code>. See code
+associated with each call to <code class="docutils literal notranslate"><span class="pre">uhd::tx_streamer::send()</span></code>. See the code
 examples below for different ways to set and use these parameters.
 In the case of auto-fragmentation, <code class="docutils literal notranslate"><span class="pre">uhd::tx_streamer::send()</span></code> will
 respect the burst flags when fragmenting to ensure that
@@ -624,14 +625,15 @@ below and <a class="reference internal" href="stream.html#code-stream"><span cla
 of samples to receive and to see all input arguments of
 <code class="docutils literal notranslate"><span class="pre">uhd::rx_streamer::recv()</span></code>.</p></li>
 <li><p>On the other hand, if the buffer has insufficient space (the
-specified number of samples) to hold all samples that were received
-in a single packet from the USRP, then the buffer will be completely
-filled and <code class="docutils literal notranslate"><span class="pre">uhd::rx_streamer::recv()</span></code> will hold a pointer into the
-remaining portion of the packet. Subsequent calls will load from the
-remainder of the packet, and will properly set the <code class="docutils literal notranslate"><span class="pre">start_of_burst</span></code>,
-<code class="docutils literal notranslate"><span class="pre">end_of_burst</span></code>, and <code class="docutils literal notranslate"><span class="pre">fragment_offset</span></code> fields in the returned
-<code class="docutils literal notranslate"><span class="pre">uhd::rx_metadata_t</span></code> structure to show that this is a fragment (see
-<a class="reference external" href="https://files.ettus.com/manual_archive/v3.15.0.0/html/structuhd_1_1rx__metadata__t.html"></a>
+specified number of samples) to hold all samples that are to be
+received in a single packet from the USRP, then the buffer will be
+completely filled and <code class="docutils literal notranslate"><span class="pre">uhd::rx_streamer::recv()</span></code> will hold a pointer
+into the remaining portion of the packet. Subsequent calls will load
+from the remainder of the packet, and will properly set the
+<code class="docutils literal notranslate"><span class="pre">start_of_burst</span></code>, <code class="docutils literal notranslate"><span class="pre">end_of_burst</span></code>, and <code class="docutils literal notranslate"><span class="pre">fragment_offset</span></code> fields in
+the returned <code class="docutils literal notranslate"><span class="pre">uhd::rx_metadata_t</span></code> structure to show that the current
+buffer holds a fragment of a packet (see the explanation
+<a class="reference external" href="https://files.ettus.com/manual/structuhd_1_1rx__metadata__t.html">here</a>
 for details). The next call to receive, after the remainder becomes
 exhausted, will get a new packet from the USRP as usual.</p></li>
 <li><p>There are two different modes of streaming samples from the USRP,
@@ -678,7 +680,7 @@ possible flags of the field are:</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">ERROR_CODE_LATE_COMMAND</span></code>: a stream command was issued in the past</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">ERROR_CODE_BROKEN_CHAIN</span></code>: expected another stream command</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">ERROR_CODE_OVERFLOW</span></code>: an overflow has occurred</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">ERROR_CODE_ALIGNMENT</span></code>: ,ulti-channel alignment failed</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ERROR_CODE_ALIGNMENT</span></code>: multi-channel alignment failed</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">ERROR_CODE_BAD_PACKET</span></code>: the packet could not be parsed</p></li>
 </ul>
 </li>

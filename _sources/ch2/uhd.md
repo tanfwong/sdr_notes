@@ -77,8 +77,8 @@
       `uhd::usrp::multi_usrp::get_rx_stream()` method, which returns a
       smart pointer to a `uhd::rx_streamer` class object.
 * Both stream construction methods require an input argument of type
-    `uhd::stream_args_t(const std::string& cpu, const std::string&
-    otw)`, where `cpu` and `otw` represent the different data types of
+    `uhd::stream_args_t(const std::string& cpu, const std::string& otw)`,
+    where `cpu` and `otw` represent the different data types of
     signal samples at the two ends of a stream:
    - **`cpu` specifies the host data type:** Data type of the samples used on the
      host for processing, possible choices are  `fc64`, `fc32`, `sc16`, and `sc8`.
@@ -97,11 +97,11 @@
 ## TX: Send signal samples to USRP
 * After a TX stream object is constructed, we may use the method
   `uhd::tx_streamer::send()` to transfer signal samples from the host
-  to the USRP. See code examples below and [`stream.hpp`](code:stream)
-  to see all input arguments of `uhd::tx_streamer::send()`. The method
-  `uhd::tx_streamer::send()` is a blocking call and will not return
-  until the specified number of samples have been read out of from the
-  buffer, unless a timeout occurs.
+  to the USRP. Check the code examples below and
+  [`stream.hpp`](code:stream) to see all input arguments of
+  `uhd::tx_streamer::send()`. The method `uhd::tx_streamer::send()` is
+  a blocking call and will not return until the specified number of
+  samples have been read out of the buffer, unless a timeout occurs.
 * Note that the samples are encapsulated into Ethernet packets for the
   stream transfer. Each packet can only carry a certain maximum number
   of samples, which is determined by the Ethernet hardware and the
@@ -115,10 +115,10 @@
   that for us. Specifically, it will fragment the samples across
   several packets.  I recommend letting `uhd::tx_streamer::send()`
   handle that.
-* In either case, we need to tell the USRP when the burst starts and
+* In the manual case, we need to tell the USRP when the burst starts and
   ends. This is done by setting `start_of_burst` and `end_of_burst`
   flags in a metadata structure of type `uhd::tx_metadata_t`
-  associated with each call to `uhd::tx_streamer::send()`. See code
+  associated with each call to `uhd::tx_streamer::send()`. See the code
   examples below for different ways to set and use these parameters.
   In the case of auto-fragmentation, `uhd::tx_streamer::send()` will
   respect the burst flags when fragmenting to ensure that
@@ -167,14 +167,15 @@ stream back to the host.
   of samples to receive and to see all input arguments of
   `uhd::rx_streamer::recv()`. 
 * On the other hand, if the buffer has insufficient space (the
-  specified number of samples) to hold all samples that were received
-  in a single packet from the USRP, then the buffer will be completely
-  filled and `uhd::rx_streamer::recv()` will hold a pointer into the
-  remaining portion of the packet. Subsequent calls will load from the
-  remainder of the packet, and will properly set the `start_of_burst`,
-  `end_of_burst`, and `fragment_offset` fields in the returned
-  `uhd::rx_metadata_t` structure to show that this is a fragment (see
-  [](https://files.ettus.com/manual_archive/v3.15.0.0/html/structuhd_1_1rx__metadata__t.html)
+  specified number of samples) to hold all samples that are to be
+  received in a single packet from the USRP, then the buffer will be
+  completely filled and `uhd::rx_streamer::recv()` will hold a pointer
+  into the remaining portion of the packet. Subsequent calls will load
+  from the remainder of the packet, and will properly set the
+  `start_of_burst`, `end_of_burst`, and `fragment_offset` fields in
+  the returned `uhd::rx_metadata_t` structure to show that the current
+  buffer holds a fragment of a packet (see the explanation
+  [here](https://files.ettus.com/manual/structuhd_1_1rx__metadata__t.html)
   for details). The next call to receive, after the remainder becomes
   exhausted, will get a new packet from the USRP as usual.
 * There are two different modes of streaming samples from the USRP,
@@ -217,7 +218,7 @@ stream back to the host.
   - `ERROR_CODE_LATE_COMMAND`: a stream command was issued in the past
   - `ERROR_CODE_BROKEN_CHAIN`: expected another stream command
   - `ERROR_CODE_OVERFLOW`: an overflow has occurred
-  - `ERROR_CODE_ALIGNMENT`: ,ulti-channel alignment failed
+  - `ERROR_CODE_ALIGNMENT`: multi-channel alignment failed
   - `ERROR_CODE_BAD_PACKET`: the packet could not be parsed
 * One may use the `uhd::rx_metadata_t ::strerror()` method to print out the error.
 * The most common error is an overflow which occurs when the host does

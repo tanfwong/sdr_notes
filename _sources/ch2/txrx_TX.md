@@ -5,7 +5,7 @@
 
 ```{code-block}  c++
 :lineno-start: 1
-:emphasize-lines: 450-461, 529-530, 67-85
+:emphasize-lines: 455-465, 529, 68-86
 //
 // Copyright 2010-2012,2014-2015 Ettus Research LLC
 // Copyright 2018 Ettus Research, a National Instruments Company
