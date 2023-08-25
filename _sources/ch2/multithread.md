@@ -32,7 +32,7 @@
 ## Create, launch, and join threads
 * The simplest way to create and launch a thread is to instantiate a
   `std::thread` class object by passing to its constructor a function
-  pointer pointing to the function that the thread is to
+  reference pointing to the function that the thread is to
   execute. Other input arguments of the function can also be passed to
   the constructor. See the code example below.
 * After a thread is completed, we should **join** the thread back to

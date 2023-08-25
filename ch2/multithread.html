@@ -474,7 +474,7 @@ library to do multi-threading.</p>
 <ul class="simple">
 <li><p>The simplest way to create and launch a thread is to instantiate a
 <code class="docutils literal notranslate"><span class="pre">std::thread</span></code> class object by passing to its constructor a function
-pointer pointing to the function that the thread is to
+reference pointing to the function that the thread is to
 execute. Other input arguments of the function can also be passed to
 the constructor. See the code example below.</p></li>
 <li><p>After a thread is completed, we should <strong>join</strong> the thread back to
