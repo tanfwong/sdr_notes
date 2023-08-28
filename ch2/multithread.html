@@ -571,8 +571,8 @@ synchronization among threads. We will use the <code class="docutils literal not
 construct mutexes.</p>
 <div class="admonition-dig-deeper admonition">
 <p class="admonition-title">Dig deeper </p>
-<p>You may also use the more versatile <code class="docutils literal notranslate"><span class="pre">boost::mutex</span></code> class from the
-<a class="reference external" href="https://www.boost.org/doc/libs/1_71_0/doc/html/thread.html">Boost.Thread</a>
+<p>You may also use the somewhat more versatile <code class="docutils literal notranslate"><span class="pre">boost::mutex</span></code> class from the
+<a class="reference external" href="https://www.boost.org/doc/libs/1_74_0/doc/html/thread.html">Boost.Thread</a>
 library.</p>
 </div>
 </li>
@@ -581,7 +581,7 @@ The following three simple ways are pretty much all needed for most
 of our purposes.</p>
 <div class="admonition-dig-deeper admonition">
 <p class="admonition-title">Dig deeper </p>
-<p>See this <a class="reference external" href="http://www.boost.org/doc/libs/1_71_0/doc/html/thread/synchronization.html">tutorial</a>
+<p>See this <a class="reference external" href="http://www.boost.org/doc/libs/1_74_0/doc/html/thread/synchronization.html">tutorial</a>
 for a short introduction and <span id="id1">[<a class="reference internal" href="prelims_exs.html#id7" title="Anthony Williams. C++ Concurrency in Action. Manning Publications, 2nd. edition, 2019. ISBN 9781617294693. URL: https://www.manning.com/books/c-plus-plus-concurrency-in-action-second-edition.">1</a>]</span> for a more
 detailed treatment.</p>
 </div>
@@ -606,9 +606,9 @@ detailed treatment.</p>
 <p>which will be used in place of <code class="docutils literal notranslate"><span class="pre">std::cout</span></code> in
 <a class="reference internal" href="age_threads.html#code-age-threads"><span class="std std-ref">age_threads.cpp</span></a></p>
 </li>
-<li><p>Suppose that a thread calls <code class="docutils literal notranslate"><span class="pre">SharedPrinter:print()</span></code>. The
-<code class="docutils literal notranslate"><span class="pre">std::mutex::lock()</span></code> method in <code class="docutils literal notranslate"><span class="pre">SharedPrinter:print()</span></code> gives
-ownership of the mutex <code class="docutils literal notranslate"> <span class="pre">SharedPrinter::mtx</span></code> to the thread, and
+<li><p>Suppose that a thread calls <code class="docutils literal notranslate"><span class="pre">SharedPrinter::print()</span></code>. The
+<code class="docutils literal notranslate"><span class="pre">std::mutex::lock()</span></code> method in <code class="docutils literal notranslate"><span class="pre">SharedPrinter::print()</span></code> gives
+ownership of the mutex <code class="docutils literal notranslate"><span class="pre">SharedPrinter::mtx</span></code> to the thread, and
 blocks other threads from accessing the object. After the whole
 message is streamed to <code class="docutils literal notranslate"><span class="pre">std::cout</span></code>, the method
 <code class="docutils literal notranslate"><span class="pre">std::mutex::unlock()</span></code> releases the current thread’s ownership of
@@ -616,7 +616,7 @@ the mutex, allowing other threads to access the <code class="docutils literal no
 object again. As a result, only one thread can stream a message to
 <code class="docutils literal notranslate"><span class="pre">std::cout</span></code> at a time, and no other thread can stream to <code class="docutils literal notranslate"><span class="pre">std::cout</span></code>
 until the current thread finishes streaming its whole message.</p></li>
-<li><p>Note that <code class="docutils literal notranslate"><span class="pre">std::mutex::lock()</span></code> is a blocking call. It will return
+<li><p>Note that <code class="docutils literal notranslate"><span class="pre">std::mutex::lock()</span></code> is a blocking call. It will not return
 until the mutex is unlocked by its current owner and the calling
 thread obtains ownership of the mutex. The method
 <code class="docutils literal notranslate"><span class="pre">std::mutex::try_lock()</span></code> attempts to obtain the mutex’s ownership

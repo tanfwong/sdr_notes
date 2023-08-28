@@ -114,15 +114,15 @@ such an implementation is not **thread-safe**.
   synchronization among threads. We will use the `std::mutex` class to
   construct mutexes. 
   ```{admonition} Dig deeper 
-  You may also use the more versatile `boost::mutex` class from the
-  [Boost.Thread](https://www.boost.org/doc/libs/1_71_0/doc/html/thread.html)
+  You may also use the somewhat more versatile `boost::mutex` class from the
+  [Boost.Thread](https://www.boost.org/doc/libs/1_74_0/doc/html/thread.html)
   library. 
   ```
 * There are many ways to use mutexes for thread synchronization.
    The following three simple ways are pretty much all needed for most
    of our purposes.
   ```{admonition} Dig deeper 
-  See this [tutorial](http://www.boost.org/doc/libs/1_71_0/doc/html/thread/synchronization.html)
+  See this [tutorial](http://www.boost.org/doc/libs/1_74_0/doc/html/thread/synchronization.html)
   for a short introduction and {cite}`williams2019` for a more
   detailed treatment. 
   ```
@@ -142,9 +142,9 @@ such an implementation is not **thread-safe**.
   ```
   which will be used in place of `std::cout` in
   [age_threads.cpp](code:age_threads)
-* Suppose that a thread calls `SharedPrinter:print()`. The
-  `std::mutex::lock()` method in `SharedPrinter:print()` gives
-  ownership of the mutex ` SharedPrinter::mtx` to the thread, and
+* Suppose that a thread calls `SharedPrinter::print()`. The
+  `std::mutex::lock()` method in `SharedPrinter::print()` gives
+  ownership of the mutex `SharedPrinter::mtx` to the thread, and
   blocks other threads from accessing the object. After the whole
   message is streamed to `std::cout`, the method
   `std::mutex::unlock()` releases the current thread's ownership of
@@ -152,7 +152,7 @@ such an implementation is not **thread-safe**.
   object again. As a result, only one thread can stream a message to
   `std::cout` at a time, and no other thread can stream to `std::cout`
   until the current thread finishes streaming its whole message.
-* Note that `std::mutex::lock()` is a blocking call. It will return
+* Note that `std::mutex::lock()` is a blocking call. It will not return
   until the mutex is unlocked by its current owner and the calling
   thread obtains ownership of the mutex. The method
   `std::mutex::try_lock()` attempts to obtain the mutex's ownership
