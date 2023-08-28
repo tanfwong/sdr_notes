@@ -4,7 +4,7 @@
 ## Source code
 ```{code-block}  c++
 :lineno-start: 1
-:emphasize-lines: 75, 88, 39
+:emphasize-lines: 75, 88, 39, 93
 // University of Florida EEL6528
 // Tan F. Wong
 // Jan 17, 2021
@@ -110,7 +110,7 @@ int UHD_SAFE_MAIN(int argc, char *argv[]){
 }
 ```
 * Ten worker threads push messages to the FIFO queue. Each thread
-  pushes one message into the FIF queue each second. Hence, the total
+  pushes one message into the FIFO queue each second. Hence, the total
   arrival rate is 10 messages per second. 
 * The main thread pops messages out of the FIFO queue. The service rate is
   determined by the `sleep_for` time on line 93.

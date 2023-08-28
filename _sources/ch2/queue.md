@@ -4,12 +4,11 @@
 ## Source code
 ```{code-block}  c++
 :lineno-start: 1
-:emphasize-lines: 4-5, 55
 // University of Florida EEL6528
 // Tan F. Wong
 // Jan 17, 2021
-#ifndef QUEUE_H
-#define QUEUE_H
+
+#pragma once
 
 #include <mutex>
 
@@ -59,7 +58,4 @@ template <class T>
 void MutexFIFO<T>::unlock(void) {
     mtx.unlock();
 }
-#endif /* QUEUE_H */
 ```
-* The highlighted lines are to prevent this header file from being
-  included more than one time.

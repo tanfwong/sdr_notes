@@ -433,9 +433,9 @@ document.write(`
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="c1">// University of Florida EEL6528</span>
 <span class="linenos"> 2</span><span class="c1">// Tan F. Wong</span>
 <span class="linenos"> 3</span><span class="c1">// Jan 17, 2021</span>
-<span class="hll"><span class="linenos"> 4</span><span class="cp">#ifndef QUEUE_H</span>
-</span><span class="hll"><span class="linenos"> 5</span><span class="cp">#define QUEUE_H</span>
-</span><span class="linenos"> 6</span>
+<span class="linenos"> 4</span>
+<span class="linenos"> 5</span><span class="cp">#pragma once</span>
+<span class="linenos"> 6</span>
 <span class="linenos"> 7</span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;mutex&gt;</span>
 <span class="linenos"> 8</span>
 <span class="linenos"> 9</span><span class="c1">// Define template for thread-safe FIFO </span>
@@ -484,13 +484,8 @@ document.write(`
 <span class="linenos">52</span><span class="kt">void</span><span class="w"> </span><span class="n">MutexFIFO</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;::</span><span class="n">unlock</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="linenos">53</span><span class="w">    </span><span class="n">mtx</span><span class="p">.</span><span class="n">unlock</span><span class="p">();</span>
 <span class="linenos">54</span><span class="p">}</span>
-<span class="hll"><span class="linenos">55</span><span class="cp">#endif </span><span class="cm">/* QUEUE_H */</span>
-</span></pre></div>
+</pre></div>
 </div>
-<ul class="simple">
-<li><p>The highlighted lines are to prevent this header file from being
-included more than one time.</p></li>
-</ul>
 </section>
 </section>
 

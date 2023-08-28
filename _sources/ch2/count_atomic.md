@@ -4,7 +4,7 @@
 ## Source code
 ```{code-block}  c++
 :lineno-start: 1
-:emphasize-lines: 38, 41, 81
+:emphasize-lines: 36, 38, 41, 81, 86
 // University of Florida EEL6528
 // Tan F. Wong
 // Jan 14, 2021
