@@ -124,9 +124,9 @@ int UHD_SAFE_MAIN(int argc, char *argv[]) {
   consecutive calls to the `SharedPrinter::print()` method.
 
 ## Build
-* Need to link the `uhd`, `boost_program_options`, `pthread` libraries when compiling:
+* Need to link the `uhd`, `boost_program_options` libraries when compiling:
   ```
-  g++ age_mutex_caller.cpp -o age_mutex_caller -luhd -lboost_program_options -lpthread
+  g++ age_mutex_caller.cpp -o age_mutex_caller -luhd -lboost_program_options 
   ```
 ## Usage Example
 ```

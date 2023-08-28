@@ -126,7 +126,7 @@ int UHD_SAFE_MAIN(int argc, char *argv[]) {
 ```
 
 ## Build
-* Need to link the `uhd`, `boost_program_options`, `pthread` libraries when compiling:
+* Need to link the `uhd`, `boost_program_options` libraries when compiling:
   ```
   g++ age_mutex.cpp -o age_mutex -luhd -lboost_program_options 
   ```

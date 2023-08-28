@@ -187,7 +187,7 @@ in place of the explicit calling of `std::mutex::lock()` and
       void print(std::string message) {
         std::cout << message;
       }
-       void lock() {
+      void lock() {
           mtx.lock();
       }
       void unlock() {
@@ -225,7 +225,7 @@ in place of the explicit calling of `std::mutex::lock()` and
   where the class method `SharedPrinter ::print()` is now thread-safe.
 * Note that we have to use `std::recursive_mutex` in this implementation
   to allow for the possibility of the same mutex being locked
-  repeatedly internally and by the caller. 
+  repeatedly, internally and by the caller. 
 * ```{admonition} Experiment
    :class: hint
    1.  Use this new implementation of `SharedPrinter` in
@@ -233,7 +233,7 @@ in place of the explicit calling of `std::mutex::lock()` and
        your modified code to observe the results.
    1. Instead of `std::recursive_mutex` in the implementation of
        `SharedPrinter` above, use `std::mutex` to construct the scoped
-       clock. Compile and test the resulting code. Explain what happens.
+       lock. Compile and test the resulting code. Explain what happens.
        ```{hint}
        If the program hangs, don't panic. You may press CTRL-Z to stop
        it. Then run `ps` to find out its process number and `kill -9

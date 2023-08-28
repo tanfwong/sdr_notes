@@ -654,7 +654,7 @@ releases the mutex, respectively.</p>
 <span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">print</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">message</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">      </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">message</span><span class="p">;</span>
 <span class="w">    </span><span class="p">}</span>
-<span class="w">     </span><span class="kt">void</span><span class="w"> </span><span class="n">lock</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">lock</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
 <span class="w">        </span><span class="n">mtx</span><span class="p">.</span><span class="n">lock</span><span class="p">();</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">unlock</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
@@ -698,7 +698,7 @@ implementation of the <code class="docutils literal notranslate"><span class="pr
 </li>
 <li><p>Note that we have to use <code class="docutils literal notranslate"><span class="pre">std::recursive_mutex</span></code> in this implementation
 to allow for the possibility of the same mutex being locked
-repeatedly internally and by the caller.</p></li>
+repeatedly, internally and by the caller.</p></li>
 <li><div class="hint admonition">
 <p class="admonition-title">Experiment</p>
 <ol class="arabic">
@@ -707,7 +707,7 @@ repeatedly internally and by the caller.</p></li>
 your modified code to observe the results.</p></li>
 <li><p>Instead of <code class="docutils literal notranslate"><span class="pre">std::recursive_mutex</span></code> in the implementation of
 <code class="docutils literal notranslate"><span class="pre">SharedPrinter</span></code> above, use <code class="docutils literal notranslate"><span class="pre">std::mutex</span></code> to construct the scoped
-clock. Compile and test the resulting code. Explain what happens.</p>
+lock. Compile and test the resulting code. Explain what happens.</p>
 <div class="admonition hint">
 <p class="admonition-title">Hint</p>
 <p>If the program hangs, don’t panic. You may press CTRL-Z to stop
