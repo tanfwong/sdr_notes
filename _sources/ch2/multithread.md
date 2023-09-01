@@ -35,13 +35,13 @@
   reference pointing to the function that the thread is to
   execute. Other input arguments of the function can also be passed to
   the constructor. See the code example below.
-* After a thread is completed, we should **join** the thread back to
+* After a thread's job is completed, we should **join** the thread back to
   the main thread for clean termination. This is done by the using
   `std::thread::join()` method, which will block the calling thread
-  until the thread represented by the thread object has completed. To
+  until the thread represented by the thread object has terminated. To
   make sure that a thread can be joined, we may check if the thread is
-  "joinable" using the `std::thread::joinable()` method. A thread is
-  not "joinable" if it has been already joined or detached.
+  *joinable* using the `std::thread::joinable()` method. A thread is
+  not joinable if it has been already joined or detached.
 * One may use the namespace `std::this_thread` to invoke a set of
   functions that access the current thread. For example, calling the
   `std::this_thread::sleep_for()` method will cause the current thread

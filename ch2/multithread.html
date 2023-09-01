@@ -477,13 +477,13 @@ library to do multi-threading.</p>
 reference pointing to the function that the thread is to
 execute. Other input arguments of the function can also be passed to
 the constructor. See the code example below.</p></li>
-<li><p>After a thread is completed, we should <strong>join</strong> the thread back to
+<li><p>After a thread’s job is completed, we should <strong>join</strong> the thread back to
 the main thread for clean termination. This is done by the using
 <code class="docutils literal notranslate"><span class="pre">std::thread::join()</span></code> method, which will block the calling thread
-until the thread represented by the thread object has completed. To
+until the thread represented by the thread object has terminated. To
 make sure that a thread can be joined, we may check if the thread is
-“joinable” using the <code class="docutils literal notranslate"><span class="pre">std::thread::joinable()</span></code> method. A thread is
-not “joinable” if it has been already joined or detached.</p></li>
+<em>joinable</em> using the <code class="docutils literal notranslate"><span class="pre">std::thread::joinable()</span></code> method. A thread is
+not joinable if it has been already joined or detached.</p></li>
 <li><p>One may use the namespace <code class="docutils literal notranslate"><span class="pre">std::this_thread</span></code> to invoke a set of
 functions that access the current thread. For example, calling the
 <code class="docutils literal notranslate"><span class="pre">std::this_thread::sleep_for()</span></code> method will cause the current thread
