@@ -1,7 +1,7 @@
 # Multi-rate Filtering
 
 * Without exception, we need to filter both the TX and RX signals in
-  any communication system. Analog and digital filtering are often
+  any communication system. Analog and digital filters are often
   required in the RF frontend and baseband processor, respectively.
 * For the USRP radios, analog filtering is performed in the
   daughterboards. In the RX chain of the SBX daughterboard, there is
@@ -9,7 +9,7 @@
   before entering the ADC on the motherboard. Similarly, the analog
   I-/Q-signal generated from the DAC on the motherboard is filtered by
   an analog lowpass filter of 40 MHz bandwidth before being mixed up
-  to the TX carrier frequency. For the N-210 USRP, digital filtering
+  to the TX carrier frequency. For the N210 USRP, digital filtering
   is performed by the DUCs and DDCs implemented in the FPGAs on the
   motherboard.
 * Despite all filtering applied at the USRP, we still often need to
@@ -23,7 +23,7 @@
   computationally efficient. Efficiency is critical to us since we may
   need to implement these filters in the host PC simultaneously with
   many other computationally intensive processing
-  functions. Therefore, we will opt for frequency-domain
+  functions. Therefore, we may need to opt for frequency-domain
   implementations of the filters with FFT, which will be the main work
   horse of our SDR implementations.
 * In addition, we have mentioned before that there are limitations on
