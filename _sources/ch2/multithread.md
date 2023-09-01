@@ -106,8 +106,8 @@ such an implementation is not **thread-safe**.
   `uhd::rx_streamer::recv()` is thread-safe.**
   ```
 * In order to make [age_threads.cpp](code:age_threads) work in the way
-  as we want it to, we need to provide a form of synchronization among
-  all the threads that a thread can get exclusive access to
+  that we want it to, we need to provide a form of synchronization among
+  all the threads such that a thread can get exclusive access to
   `std::cout`, blocking other threads from using `std::cout` before
   the thread is done streaming its whole message to `std::cout`.
 * **Mutexes** provide a basic mechanism for achieving this form of

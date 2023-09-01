@@ -562,8 +562,8 @@ different threads garbled together.</p>
 </div>
 </li>
 <li><p>In order to make <a class="reference internal" href="age_threads.html#code-age-threads"><span class="std std-ref">age_threads.cpp</span></a> work in the way
-as we want it to, we need to provide a form of synchronization among
-all the threads that a thread can get exclusive access to
+that we want it to, we need to provide a form of synchronization among
+all the threads such that a thread can get exclusive access to
 <code class="docutils literal notranslate"><span class="pre">std::cout</span></code>, blocking other threads from using <code class="docutils literal notranslate"><span class="pre">std::cout</span></code> before
 the thread is done streaming its whole message to <code class="docutils literal notranslate"><span class="pre">std::cout</span></code>.</p></li>
 <li><p><strong>Mutexes</strong> provide a basic mechanism for achieving this form of
