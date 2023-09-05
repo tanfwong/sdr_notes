@@ -425,26 +425,27 @@ document.write(`
 <a class="reference internal image-reference" href="../_images/multirate.jpg"><img alt="Multi-rate filter" class="align-center" src="../_images/multirate.jpg" style="width: 800px;" /></a>
 <ol class="arabic simple">
 <li><p>The input signal <span class="math notranslate nohighlight">\(x[n]\)</span> is first up-sampled by a factor of <span class="math notranslate nohighlight">\(U\)</span>.</p></li>
-<li><p>The up-sampled signal <span class="math notranslate nohighlight">\(x^U[n]\)</span> is then passed through a filter with
-transfer function <span class="math notranslate nohighlight">\(H(z)\)</span>, running at <span class="math notranslate nohighlight">\(U\)</span> times the input rate.</p></li>
-<li><p>Finally the filter output <span class="math notranslate nohighlight">\(y^U[n]\)</span> is down-sampled by a factor of <span class="math notranslate nohighlight">\(D\)</span> to
-obtain <span class="math notranslate nohighlight">\(y[n]\)</span>.
-The overall rate of <span class="math notranslate nohighlight">\(y[n]\)</span> is <span class="math notranslate nohighlight">\(\frac{U}{D}\)</span> times that of <span class="math notranslate nohighlight">\(x[n]\)</span>.</p></li>
+<li><p>The up-sampled signal <span class="math notranslate nohighlight">\(x^U[n]\)</span> is then passed through a filter
+with transfer function <span class="math notranslate nohighlight">\(H(z)\)</span>, running at <span class="math notranslate nohighlight">\(U\)</span> times the input
+rate.</p></li>
+<li><p>Finally the filter output <span class="math notranslate nohighlight">\(y^U[n]\)</span> is down-sampled by a factor of
+<span class="math notranslate nohighlight">\(D\)</span> to obtain <span class="math notranslate nohighlight">\(y[n]\)</span>.  The overall rate of <span class="math notranslate nohighlight">\(y[n]\)</span> is
+<span class="math notranslate nohighlight">\(\frac{U}{D}\)</span> times that of <span class="math notranslate nohighlight">\(x[n]\)</span>.</p></li>
 </ol>
 </li>
 <li><p>Note that the filter <span class="math notranslate nohighlight">\(H(z)\)</span> (also let <span class="math notranslate nohighlight">\(h[n]\)</span> denote its impulse
 response for later reference) should provide interpolation and
 anti-aliasing filtering operations respectively for the up-sampling
-and down-sampling steps above. Ideally, <span class="math notranslate nohighlight">\(H(z)\)</span> should be lowpass with
-the (normalized) cutoff frequency set at <span class="math notranslate nohighlight">\(\min\left( \frac{1}{2U},
-\frac{1}{2D} \right)\)</span>.</p></li>
-<li><p>Practically we approximate the ideal lowpass cutoff by a relatively
+and down-sampling steps above. Ideally, <span class="math notranslate nohighlight">\(H(z)\)</span> should be lowpass
+with the (normalized) cutoff frequency set at <span class="math notranslate nohighlight">\(\min\left(
+\frac{1}{2U}, \frac{1}{2D} \right)\)</span>.</p></li>
+<li><p>Practically, we approximate the ideal lowpass cutoff by a relatively
 long FIR filter for <span class="math notranslate nohighlight">\(H(z)\)</span>. This has significant complexity impacts
 on our multi-rate filter implementation. Not only does the filter
 have to operate at <span class="math notranslate nohighlight">\(U\)</span> times the input rate, but it also needs to
 have a long impulse response. This makes the frequency-domain
-filtering implementation with overlap-save discussed previously
-more important.</p></li>
+filtering implementation with overlap-save discussed previously more
+important.</p></li>
 <li><p>It is also easy to work out the computational complexity of directly
 implementing the multi-rate filter above by doing time-domain
 convolution and by using the overlap-save algorithm in the frequency
@@ -455,28 +456,28 @@ below. Since the exact length of <span class="math notranslate nohighlight">\(y[
 <span class="math notranslate nohighlight">\(\left\lfloor\frac{NU+L-1}{D} \right\rfloor\)</span>, we may simply say
 <span class="math notranslate nohighlight">\(y[n]\)</span> has a length of <span class="math notranslate nohighlight">\(\mathcal{O}\left(\frac{NU}{D}\right)\)</span>.</p>
 <ul class="simple">
-<li><p>For time-domain convolution, <span class="math notranslate nohighlight">\(L\)</span> (complex) multiplications
-are required to calculate each output sample. So the total number
-of multiplications needed to compute the whole <span class="math notranslate nohighlight">\(y[n]\)</span> is
+<li><p>For time-domain convolution, <span class="math notranslate nohighlight">\(L\)</span> (complex) multiplications are
+required to calculate each output sample. So the total number of
+multiplications needed to compute the whole <span class="math notranslate nohighlight">\(y[n]\)</span> is
 <span class="math notranslate nohighlight">\(\mathcal{O}\left(\frac{LNU}{D}\right)\)</span>. As a result, to
 calculate the whole <span class="math notranslate nohighlight">\(y[n]\)</span>, the number of multiplications needed
 per input sample is <span class="math notranslate nohighlight">\(\mathcal{O}\left(\frac{UL}{D}\right)\)</span>.</p></li>
-<li><p>For the overlap-save algorithm, choose <span class="math notranslate nohighlight">\(L \ll 2^m\)</span>, where
-<span class="math notranslate nohighlight">\(2^m\)</span> is the FFT size. Each block of <span class="math notranslate nohighlight">\(M=2^m-L+1\)</span> input samples
-to <span class="math notranslate nohighlight">\(H(z)\)</span> corresponds to a block of <span class="math notranslate nohighlight">\(\mathcal{O}\left(\frac{M}{U}
-\right)\)</span> samples of <span class="math notranslate nohighlight">\(x[n]\)</span>. We need <span class="math notranslate nohighlight">\(\mathcal{O}\left(m 2^m
-\right)\)</span> multiplications to calculate the output of filter <span class="math notranslate nohighlight">\(H(z)\)</span>
-for each input block. Hence the number of multiplications needed
-per input sample to calculate the whole <span class="math notranslate nohighlight">\(y[n]\)</span> is
-<span class="math notranslate nohighlight">\(\mathcal{O}\left(mU\right)\)</span>.</p></li>
+<li><p>For the freqyency-domain implementation of the overlap-save
+algorithm, choose the FFT size <span class="math notranslate nohighlight">\(2^m \gg L\)</span>. Each block of
+<span class="math notranslate nohighlight">\(M=2^m-L+1\)</span> input samples to <span class="math notranslate nohighlight">\(H(z)\)</span> corresponds to a block of
+<span class="math notranslate nohighlight">\(\mathcal{O}\left(\frac{M}{U} \right)\)</span> samples of <span class="math notranslate nohighlight">\(x[n]\)</span>. We need
+<span class="math notranslate nohighlight">\(\mathcal{O}\left(m 2^m \right)\)</span> multiplications to calculate the
+output of filter <span class="math notranslate nohighlight">\(H(z)\)</span> for each input block. Hence, the number of
+multiplications needed per input sample to calculate the whole
+<span class="math notranslate nohighlight">\(y[n]\)</span> is <span class="math notranslate nohighlight">\(\mathcal{O}\left(mU\right)\)</span>.</p></li>
 </ul>
 <p>In conclusion, as long as we can choose <span class="math notranslate nohighlight">\(m\)</span> such that <span class="math notranslate nohighlight">\(mD \ll L \ll
 2^m\)</span>, we can get significant advantage in computational complexity
-by using the overlap-save algorithm in lieu of time-domain
-convolution.</p>
+by using the frequency-domain overlap-save algorithm in lieu of
+time-domain convolution.</p>
 </li>
 <li><p>The class <code class="docutils literal notranslate"><span class="pre">FilterOverlapAdd</span></code> in <a class="reference internal" href="filters_cpp.html#code-filters-cpp"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">filters.cpp</span></code></span></a>
-provides an example direct multi-rate implementation of the
+provides an example for a direct multi-rate implementation of the
 overlap-save algorithm. To use the multi-rate implementation:</p>
 <ol class="arabic">
 <li><p>Instantiate a <code class="docutils literal notranslate"><span class="pre">FilterOverlapSave</span></code> object using the multi-rate constructor:</p>
@@ -495,11 +496,10 @@ length <code class="docutils literal notranslate"><span class="pre">L</span></co
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">multirate_filter</span><span class="p">.</span><span class="n">set_head</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span><span class="w">  </span><span class="c1">// reset=true</span>
 </pre></div>
 </div>
-<p>if filter the first sequence of samples in a continuous flow of
+<p>if filtering the first input block in a continuous flow of
 samples. Otherwise, copy the tail <span class="math notranslate nohighlight">\(L-1\)</span> samples from the previous
-filter input to the head <span class="math notranslate nohighlight">\(L-1\)</span> of current filter input to set
-up the correct boundary condition for
-continuous filtering:</p>
+input block to the head <span class="math notranslate nohighlight">\(L-1\)</span> of current input block to set
+up the correct boundary condition for continuous filtering:</p>
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">multirate_filter</span><span class="p">.</span><span class="n">set_head</span><span class="p">();</span><span class="w"> </span><span class="c1">// reset=false by default</span>
 </pre></div>
 </div>
@@ -508,9 +508,10 @@ continuous filtering:</p>
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">multirate_filter</span><span class="p">.</span><span class="n">filter</span><span class="p">(</span><span class="n">in</span><span class="p">,</span><span class="w"> </span><span class="n">out</span><span class="p">);</span><span class="w"> </span>
 </pre></div>
 </div>
-<p>where <code class="docutils literal notranslate"><span class="pre">in</span></code>=pointer to filter input array of length <code class="docutils literal notranslate"><span class="pre">in_len</span></code>,
-and <code class="docutils literal notranslate"><span class="pre">out</span></code>=pointer to filter output array. The length of <code class="docutils literal notranslate"><span class="pre">out</span></code>
-can be obtained by calling <code class="docutils literal notranslate"><span class="pre">multirate_filter.out_len()</span></code>.</p>
+<p>where
+<code class="docutils literal notranslate"><span class="pre">in</span></code>=pointer to filter input array of length <code class="docutils literal notranslate"><span class="pre">in_len</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">out</span></code>=pointer to filter output array. The length of <code class="docutils literal notranslate"><span class="pre">out</span></code> can
+be obtained by calling <code class="docutils literal notranslate"><span class="pre">multirate_filter.out_len()</span></code>.</p>
 </li>
 </ol>
 </li>

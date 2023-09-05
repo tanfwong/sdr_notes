@@ -441,27 +441,28 @@ algorithm described below works even when <span class="math notranslate nohighli
 <h2><span class="section-number">3.4.1. </span>Polyphase structure<a class="headerlink" href="#polyphase-structure" title="Permalink to this headline">#</a></h2>
 <ul>
 <li><p>As shown in <span id="id1">[<a class="reference internal" href="filter_exs.html#id8" title="A. V. Oppenheim and R. W. Shafer. Discrete-time Signal Processing. Prentice Hall, 3rd. edition, 2010. ISBN 978-0-13-198842-2.">1</a>]</span> Section 4.7.4, the multi-rate
-filter in the <a class="reference internal" href="multirate.html#sec-multirate"><span class="std std-ref">previous section</span></a> is equivalent to the
+filter in <a class="reference internal" href="multirate.html#sec-multirate"><span class="std std-numref">Section 3.3</span></a> is equivalent to the
 <strong>polyphase</strong> structure below:</p>
-<a class="reference internal image-reference" href="../_images/polyphase.png"><img alt="Polyphase implementation of multi-rate filter" class="align-center" src="../_images/polyphase.png" style="width: 800px;" /></a>
+<a class="reference internal image-reference" href="../_images/polyphase.jpg"><img alt="Polyphase implementation of multi-rate filter" class="align-center" src="../_images/polyphase.jpg" style="width: 800px;" /></a>
 <p>where, for <span class="math notranslate nohighlight">\(p=0,1, \ldots, U-1\)</span>, the impulse response <span class="math notranslate nohighlight">\(e_p[n]\)</span> of
 the filter <span class="math notranslate nohighlight">\(E_p(z)\)</span> (which runs at the same rate as <span class="math notranslate nohighlight">\(x[n]\)</span>) is
 given by <span class="math notranslate nohighlight">\(e_p[n] = h[Un+p]\)</span>, where <span class="math notranslate nohighlight">\(h[n]\)</span> is the impulse response fo
 the filter in the up-sampled domain and its length is <span class="math notranslate nohighlight">\(L\)</span> as
-discussed in the <a class="reference internal" href="multirate.html#sec-multirate"><span class="std std-ref">previous section</span></a>.</p>
+discussed in <a class="reference internal" href="multirate.html#sec-multirate"><span class="std std-numref">Section 3.3</span></a>.</p>
 </li>
 <li><p>It is also quite easy to see that the above polyphase structure can
-be redrawn in the following form which is more conducive to
+be redrawn in the following form, which is more conducive to
 implementation:</p>
-<a class="reference internal image-reference" href="../_images/polyphase_imp.png"><img alt="Impoved polyphase implementation of multi-rate filter" class="align-center" src="../_images/polyphase_imp.png" style="width: 800px;" /></a>
+<a class="reference internal image-reference" href="../_images/polyphase_imp.jpg"><img alt="Impoved polyphase implementation of multi-rate filter" class="align-center" src="../_images/polyphase_imp.jpg" style="width: 800px;" /></a>
 <p>where <span class="math notranslate nohighlight">\(\%\)</span> is the remainder operator. Note that the circular switch
 (MUX) runs in the counter-clockwise direction at <span class="math notranslate nohighlight">\(U\)</span> times the
 rate of the down-samplers.</p>
 </li>
 <li><p>Again, as shown in <span id="id2">[<a class="reference internal" href="filter_exs.html#id8" title="A. V. Oppenheim and R. W. Shafer. Discrete-time Signal Processing. Prentice Hall, 3rd. edition, 2010. ISBN 978-0-13-198842-2.">1</a>]</span> Section 4.7.4, the <span class="math notranslate nohighlight">\(p\)</span>th
-branch above involving polyphase filter <span class="math notranslate nohighlight">\(E_{pD\%U}(z)\)</span> can itself be
+branch above involving polyphase filter <span class="math notranslate nohighlight">\(z^{\left\lfloor
+\frac{pD}{U} \right\rfloor} E_{pD\%U}(z)\)</span> can itself be
 equivalent to the following polyphase structure:</p>
-<a class="reference internal image-reference" href="../_images/polyphase_branch.png"><img alt="Polyphase implementation of a branch" class="align-center" src="../_images/polyphase_branch.png" style="width: 800px;" /></a>
+<a class="reference internal image-reference" href="../_images/polyphase_branch.jpg"><img alt="Polyphase implementation of a branch" class="align-center" src="../_images/polyphase_branch.jpg" style="width: 800px;" /></a>
 <p>where, for <span class="math notranslate nohighlight">\(q=0,1, \ldots, D-1\)</span>, the impulse response
 <span class="math notranslate nohighlight">\(f_{p,q}[n]\)</span> of the filter <span class="math notranslate nohighlight">\(F_{p,q}(z)\)</span> (which runs at <span class="math notranslate nohighlight">\(\frac{1}{D}\)</span> times
 the rate of <span class="math notranslate nohighlight">\(x[n]\)</span>) is given by</p>
@@ -472,14 +473,15 @@ the rate of <span class="math notranslate nohighlight">\(x[n]\)</span>) is given
   &amp; = h\left[ UDn + Uq + U \left\lfloor \frac{pD}{U} \right\rfloor + pD\%U \right] \\
   &amp; = h[UDn+Dp+Uq].
   \end{align*}\]</div>
-<p>Note that some of impulse responses <span class="math notranslate nohighlight">\(f_{p,q}[n]\)</span>’s may be non-causal.
+<p>Note that some of impulse responses <span class="math notranslate nohighlight">\(f_{p,q}[n]\)</span>’s may be
+<strong>non-causal</strong>.
 Also, it is easy to check that the length of each <span class="math notranslate nohighlight">\(f_{p,q}[n]\)</span> is at
 most <span class="math notranslate nohighlight">\(\left\lceil \frac{L}{UD} \right\rceil+1\)</span></p>
 </li>
 <li><p>Putting the polyphase implementations of all branches back to the
-beginning polyphase structure, we obtain the following overall
+second polyphase structure, we obtain the following overall
 polyphase implementation of the multi-rate filter:</p>
-<a class="reference internal image-reference" href="../_images/polyphase_overall.png"><img alt="Overall polyphase implementation of multi-rate filter" class="align-center" src="../_images/polyphase_overall.png" style="width: 1200px;" /></a>
+<a class="reference internal image-reference" href="../_images/polyphase_overall.jpg"><img alt="Overall polyphase implementation of multi-rate filter" class="align-center" src="../_images/polyphase_overall.jpg" style="width: 1200px;" /></a>
 <p>where the circular DEMUX runs in the clockwise direction at the rate
 of <span class="math notranslate nohighlight">\(x[n]\)</span> and the circular MUX runs in the counter-clockwise direction
 at <span class="math notranslate nohighlight">\(U\)</span> times the rate of the polyphase filter outputs.</p>

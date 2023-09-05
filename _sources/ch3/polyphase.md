@@ -7,9 +7,9 @@
 
 ## Polyphase structure
 * As shown in {cite}`oppenheim2010` Section 4.7.4, the multi-rate
-  filter in the [previous section](sec:multirate) is equivalent to the
+  filter in {numref}`sec:multirate` is equivalent to the
   **polyphase** structure below:
-  ```{image} ../figures/polyphase.png
+  ```{image} ../figures/polyphase.jpg
   :alt: Polyphase implementation of multi-rate filter
   :width: 800px
   :align: center
@@ -18,12 +18,12 @@
   the filter $E_p(z)$ (which runs at the same rate as $x[n]$) is
   given by $e_p[n] = h[Un+p]$, where $h[n]$ is the impulse response fo
   the filter in the up-sampled domain and its length is $L$ as
-  discussed in the [previous section](sec:multirate).
+  discussed in {numref}`sec:multirate`.
 
 * It is also quite easy to see that the above polyphase structure can
-  be redrawn in the following form which is more conducive to
+  be redrawn in the following form, which is more conducive to
   implementation:
-  ```{image} ../figures/polyphase_imp.png
+  ```{image} ../figures/polyphase_imp.jpg
   :alt: Impoved polyphase implementation of multi-rate filter
   :width: 800px
   :align: center
@@ -33,9 +33,10 @@
   rate of the down-samplers.
 
 * Again, as shown in {cite}`oppenheim2010` Section 4.7.4, the $p$th
-  branch above involving polyphase filter $E_{pD\%U}(z)$ can itself be
+  branch above involving polyphase filter $z^{\left\lfloor
+  \frac{pD}{U} \right\rfloor} E_{pD\%U}(z)$ can itself be
   equivalent to the following polyphase structure:
-  ```{image} ../figures/polyphase_branch.png
+  ```{image} ../figures/polyphase_branch.jpg
   :alt: Polyphase implementation of a branch
   :width: 800px
   :align: center
@@ -49,14 +50,15 @@
   & = h\left[ UDn + Uq + U \left\lfloor \frac{pD}{U} \right\rfloor + pD\%U \right] \\
   & = h[UDn+Dp+Uq].
   \end{align*}
-  Note that some of impulse responses $f_{p,q}[n]$'s may be non-causal.
+  Note that some of impulse responses $f_{p,q}[n]$'s may be
+  **non-causal**.
   Also, it is easy to check that the length of each $f_{p,q}[n]$ is at
   most $\left\lceil \frac{L}{UD} \right\rceil+1$
 
 * Putting the polyphase implementations of all branches back to the
-  beginning polyphase structure, we obtain the following overall
+  second polyphase structure, we obtain the following overall
   polyphase implementation of the multi-rate filter:
-  ```{image} ../figures/polyphase_overall.png
+  ```{image} ../figures/polyphase_overall.jpg
   :alt: Overall polyphase implementation of multi-rate filter
   :width: 1200px
   :align: center
