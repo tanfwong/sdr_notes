@@ -64,9 +64,7 @@ int UHD_SAFE_MAIN(int argc, char *argv[]){
     int delay1 = 2;
     h1[delay1] = 1.0;
 
-    // Filter2 and 3 are the same lowpass filter (not for upsample and
-    // then downsample
-    // Define filter2's impulse response
+    // Filter2 and 3 are the same lowpass filter 
     // This filter design doesn't work too well when D is not a power of 2
     int maxUD = (U>D)?U:D;
     int h2_len = h1_len*U;
@@ -126,7 +124,6 @@ int UHD_SAFE_MAIN(int argc, char *argv[]){
     unsigned count = 0;
     unsigned long icont = 0;
     while (not stop_signal_called) {
-    //while (count < 2) {
         for (int i=0; i<in_len; i++) {
             // complex-valued sinusoid input 
             in[i] = std::complex<float>(cos(2*M_PI*(i+icont)*freq), sin(2*M_PI*(i+icont)*freq));
@@ -223,11 +220,11 @@ the overlap-save algorithm. The impulse response of `filter1` is
 chosen to delay the input samples by 2 so that we can easily verify if
 the single-rate filter implementation in `FilterOverlapSave` is
 correct or not.
-* `filter2` and `filter3` implements direct multi-rate
+* `filter2` and `filter3` implement direct multi-rate
 frequency-domain filtering using the overlap-save algorithm. The
 interpolation and decimation rates of `filter2` and `filter3` are
-reversed. The filter impulse response is chosen for interpolation and
-anti-aliasing purposes, The filter design only works well when the
+reversed. The filter impulse responses are chosen for interpolation and
+anti-aliasing purposes, resepctively. The filter design only works well when the
 single-rate filter length parameter `h_len` is set to some power of 2.
 Because `filter3` aims to reverse the action of `filter2`, we can
 easily verify if the multi-rate filter implementation in
@@ -239,7 +236,7 @@ easily verify if the multi-rate filter implementation in
   a delay of $U$ samples at its output. Recall that `filter5` flips
   the up- and down-sampling factors of `filter4`. Hence, the
   $U$-sample delay of `filter4` is converted to $D$ samples by
-  `filter5`, which adds another delay of $D$ samples at its own
+  `filter5`, which adds another delay of $D$ samples to its own
   output. Thus, the overall delay at the cascade of the two filters
   are $2D$ samples at `filter5`'s output.
 

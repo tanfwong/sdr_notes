@@ -50,8 +50,10 @@
   & = h\left[ UDn + Uq + U \left\lfloor \frac{pD}{U} \right\rfloor + pD\%U \right] \\
   & = h[UDn+Dp+Uq].
   \end{align*}
+  ```{caution}
   Note that some of impulse responses $f_{p,q}[n]$'s may be
-  **non-causal**.
+  non-causal.
+  ```
   Also, it is easy to check that the length of each $f_{p,q}[n]$ is at
   most $\left\lceil \frac{L}{UD} \right\rceil+1$
 
@@ -68,12 +70,12 @@
   at $U$ times the rate of the polyphase filter outputs.
 
 ## Time-domain polyphase implementation
-* Clearly the polyphase structure is more suitable for parallel
-implementation. In addition, we can also get computational complexity
-advantage using the polyphase structure. Let's start by considering
-the computational complexity when each filter in the polyphase
-structure above is implemented by doing direct time-domain (linear)
-convolution.
+* Clearly, the polyphase structure is more suitable for parallel
+  implementation. In addition, we can also get computational
+  complexity advantage using the polyphase structure. Let's start by
+  considering the computational complexity when each filter in the
+  polyphase structure above is implemented by doing direct time-domain
+  (linear) convolution.
 * Let $N$ and $L$ denote the lengths of $x[n]$ and $h[n]$,
   respectively. 
   ```{caution}
@@ -81,38 +83,39 @@ convolution.
   $h[n]$ is $U$ times that of $x[n]$ because of up-sampling.
   ```
   As before, we will assume $NU \gg L \gg UD$.
-* We have already worked out [previously](sec:multirate) that the number of
-multiplications needed per input sample in the direct multi-rate
-time-domain implementation is $\mathcal{O}\left(\frac{UL}{D} \right)$.
-* For the polyphase time-domain implementation, the length of each
-polyphase filter $F_{p,q}(z)$ is
-$\mathcal{O}\left(\frac{L}{UD}\right)$. Since the length of the input
-to each such filter is $\mathcal{O}\left(\frac{N}{D} \right)$, the
-length of the output from each such filter is
-$\mathcal{O}\left(\frac{N}{D}\right)$. To calculate each such output
-sample, we need to do $\mathcal{O}\left(\frac{L}{UD}\right)$
-multiplications. Remember that there are $UD$ such polyphase filters.
-Hence the total number of multiplications needed to compute the whole
-$y[n]$ is $\mathcal{O}\left(\frac{NL}{D}\right)$, and hence the number
-of multiplications needed per input sample is
-$\mathcal{O}\left(\frac{L}{D}\right)$.
-* In summary, the polyphase time-domain implementation saves by a
-factor of $U$ in computational complexity, compared with the direct
-multi-rate time-domain implementation.
+* We have already worked out in {numref}`sec:multirate` that the
+  number of multiplications needed per input sample in the direct
+  multi-rate time-domain implementation is
+  $\mathcal{O}\left(\frac{UL}{D} \right)$.
+* For the time-domain polyphase implementation, the length of each
+  polyphase filter $F_{p,q}(z)$ is
+  $\mathcal{O}\left(\frac{L}{UD}\right)$. Since the length of the
+  input to each such filter is $\mathcal{O}\left(\frac{N}{D} \right)$,
+  the length of the output from each such filter is
+  $\mathcal{O}\left(\frac{N}{D}\right)$. To calculate each such output
+  sample, we need to do $\mathcal{O}\left(\frac{L}{UD}\right)$
+  multiplications. Remember that there are $UD$ such polyphase
+  filters.  Hence, the total number of multiplications needed to
+  compute the whole $y[n]$ is $\mathcal{O}\left(\frac{NL}{D}\right)$,
+  and hence the number of multiplications needed per input sample is
+  $\mathcal{O}\left(\frac{L}{D}\right)$.
+* In summary, the time-domain polyphase implementation saves by a
+  factor of $U$ in computational complexity, compared with the direct
+  time-domain multi-rate implementation.
 
 ## Frequency-domain polyphase implementation
-* Polyphase frequency-domain filtering is a bit trickier. Consider a
-  frequency-domain implementation of the overall polyphase structure 
-  shown above, based on the overlap-save algorithm. As in our
-  [previous discussion](sec:osa), we divide the batch of samples of
-  the input signal $x[n]$ into overlapping blocks of length $D\, 2^m$,
-  where $2^m$ is the FFT size. Similar to our [previous discussion](sec:osa), 
-  the last $DM$ output samples of the inverse FFT give valid linear
-  convolution results that we will "save" for each block. Also as
-  before, the amount of overlap between adjacent input blocks is then
-  $D(2^m-M)$. The choices of $m$ and $M$ will be determined later. 
-* Now, consider a block of $D2^m$samples of the input signal
-  $x[n]$. Then we may obtain the multi-rate filtered samples of the
+* Frequency-domain polyphase filtering is a bit trickier. Consider a
+  frequency-domain implementation of the overall polyphase structure
+  shown above, based on the overlap-save algorithm. As discussed in
+  {numref}`sec:osa`, we divide the batch of samples of the input signal
+  $x[n]$ into overlapping blocks of length $D\, 2^m$, where $2^m$ is
+  the FFT size. Similar to {numref}`sec:osa`, the last $DM$ output
+  samples of the inverse FFT give valid linear convolution results
+  that we will "save" for each block. Also as before, the amount of
+  overlap between adjacent input blocks is then $D(2^m-M)$. The
+  choices of $m$ and $M$ will be determined later.
+* Now, consider a block of $D\,2^m$ samples of the input signal
+  $x[n]$. We may obtain the multi-rate filtered samples of the
   output signal $y[n]$ for this block by implementing the following steps:
   1. Demultiplex ($\downarrow\! D$) $x[n] $ into $x_q[n] = x[nD-q]$ for $q=0,1,\ldots,D-1$.
   1. For $q=0,1,\ldots,D-1$, calculate the $2^m$-point FFT $X_k^{(q)}$ of $x_q[n]$.
@@ -155,19 +158,19 @@ multi-rate time-domain implementation.
   the frequency-domain polyphase implementation over using the
   time-domain polyphase implementation.**
 
-* Comparison this frequency-domain polyphase implementation with the
-  direct frequency-domain multi-rate implementation discussed
-  [previously](sec:multirate) is trickier since the choices of the the
-  FFT sizes in the two implementations are different. Let the FFT size
-  used in the direct multi-rate implementation be $2^{m'}$. Recall that
-  from our [previous discussion](sec:multirate) we should choose $m'D
-  \ll L\ll 2^{m'}$ and the number of multiplications needed per input
-  sample is $\mathcal{O}(m' U)$. On the other hand, we choose (see
-  above) the FFT size $2^m$ used the polyphase implementation to satisfy
-  $m \ll \frac{L}{UD} \ll 2^m$. In order to see whether the
-  frequency-domain polyphase implementation gives any 
-  advantage in computational complexity, we must relate the choices of
-  $m$ and $m'$:
+* Comparing this frequency-domain polyphase implementation with the
+  direct frequency-domain multi-rate implementation discussed in
+  {numref}`sec:multirate` is trickier since the choices of the the FFT
+  sizes in the two implementations are different. Let the FFT size
+  used in the direct multi-rate implementation be $2^{m'}$. Recall
+  that from the discussion in {numref}`sec:multirate` we should choose
+  $m'D \ll L\ll 2^{m'}$ and the number of multiplications needed per
+  input sample is $\mathcal{O}(m' U)$. On the other hand, we choose
+  (see above) the FFT size $2^m$ in the polyphase implementation to
+  satisfy $m \ll \frac{L}{UD} \ll 2^m$. In order to see whether the
+  frequency-domain polyphase implementation gives any advantage in
+  computational complexity, we must relate the choices of $m$ and
+  $m'$:
   - One may choose $m' = \frac{\max(U,D)}{D} \cdot m$ to get similar
     computational complexity advantages over time-domain calculation in
     both the direct multi-rate and polyphase implementations. Thus,

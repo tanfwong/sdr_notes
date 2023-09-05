@@ -473,9 +473,12 @@ the rate of <span class="math notranslate nohighlight">\(x[n]\)</span>) is given
   &amp; = h\left[ UDn + Uq + U \left\lfloor \frac{pD}{U} \right\rfloor + pD\%U \right] \\
   &amp; = h[UDn+Dp+Uq].
   \end{align*}\]</div>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
 <p>Note that some of impulse responses <span class="math notranslate nohighlight">\(f_{p,q}[n]\)</span>’s may be
-<strong>non-causal</strong>.
-Also, it is easy to check that the length of each <span class="math notranslate nohighlight">\(f_{p,q}[n]\)</span> is at
+non-causal.</p>
+</div>
+<p>Also, it is easy to check that the length of each <span class="math notranslate nohighlight">\(f_{p,q}[n]\)</span> is at
 most <span class="math notranslate nohighlight">\(\left\lceil \frac{L}{UD} \right\rceil+1\)</span></p>
 </li>
 <li><p>Putting the polyphase implementations of all branches back to the
@@ -491,12 +494,12 @@ at <span class="math notranslate nohighlight">\(U\)</span> times the rate of the
 <section id="time-domain-polyphase-implementation">
 <h2><span class="section-number">3.4.2. </span>Time-domain polyphase implementation<a class="headerlink" href="#time-domain-polyphase-implementation" title="Permalink to this headline">#</a></h2>
 <ul>
-<li><p>Clearly the polyphase structure is more suitable for parallel
-implementation. In addition, we can also get computational complexity
-advantage using the polyphase structure. Let’s start by considering
-the computational complexity when each filter in the polyphase
-structure above is implemented by doing direct time-domain (linear)
-convolution.</p></li>
+<li><p>Clearly, the polyphase structure is more suitable for parallel
+implementation. In addition, we can also get computational
+complexity advantage using the polyphase structure. Let’s start by
+considering the computational complexity when each filter in the
+polyphase structure above is implemented by doing direct time-domain
+(linear) convolution.</p></li>
 <li><p>Let <span class="math notranslate nohighlight">\(N\)</span> and <span class="math notranslate nohighlight">\(L\)</span> denote the lengths of <span class="math notranslate nohighlight">\(x[n]\)</span> and <span class="math notranslate nohighlight">\(h[n]\)</span>,
 respectively.</p>
 <div class="admonition caution">
@@ -506,41 +509,42 @@ respectively.</p>
 </div>
 <p>As before, we will assume <span class="math notranslate nohighlight">\(NU \gg L \gg UD\)</span>.</p>
 </li>
-<li><p>We have already worked out <a class="reference internal" href="multirate.html#sec-multirate"><span class="std std-ref">previously</span></a> that the number of
-multiplications needed per input sample in the direct multi-rate
-time-domain implementation is <span class="math notranslate nohighlight">\(\mathcal{O}\left(\frac{UL}{D} \right)\)</span>.</p></li>
-<li><p>For the polyphase time-domain implementation, the length of each
+<li><p>We have already worked out in <a class="reference internal" href="multirate.html#sec-multirate"><span class="std std-numref">Section 3.3</span></a> that the
+number of multiplications needed per input sample in the direct
+multi-rate time-domain implementation is
+<span class="math notranslate nohighlight">\(\mathcal{O}\left(\frac{UL}{D} \right)\)</span>.</p></li>
+<li><p>For the time-domain polyphase implementation, the length of each
 polyphase filter <span class="math notranslate nohighlight">\(F_{p,q}(z)\)</span> is
-<span class="math notranslate nohighlight">\(\mathcal{O}\left(\frac{L}{UD}\right)\)</span>. Since the length of the input
-to each such filter is <span class="math notranslate nohighlight">\(\mathcal{O}\left(\frac{N}{D} \right)\)</span>, the
-length of the output from each such filter is
+<span class="math notranslate nohighlight">\(\mathcal{O}\left(\frac{L}{UD}\right)\)</span>. Since the length of the
+input to each such filter is <span class="math notranslate nohighlight">\(\mathcal{O}\left(\frac{N}{D} \right)\)</span>,
+the length of the output from each such filter is
 <span class="math notranslate nohighlight">\(\mathcal{O}\left(\frac{N}{D}\right)\)</span>. To calculate each such output
 sample, we need to do <span class="math notranslate nohighlight">\(\mathcal{O}\left(\frac{L}{UD}\right)\)</span>
-multiplications. Remember that there are <span class="math notranslate nohighlight">\(UD\)</span> such polyphase filters.
-Hence the total number of multiplications needed to compute the whole
-<span class="math notranslate nohighlight">\(y[n]\)</span> is <span class="math notranslate nohighlight">\(\mathcal{O}\left(\frac{NL}{D}\right)\)</span>, and hence the number
-of multiplications needed per input sample is
+multiplications. Remember that there are <span class="math notranslate nohighlight">\(UD\)</span> such polyphase
+filters.  Hence, the total number of multiplications needed to
+compute the whole <span class="math notranslate nohighlight">\(y[n]\)</span> is <span class="math notranslate nohighlight">\(\mathcal{O}\left(\frac{NL}{D}\right)\)</span>,
+and hence the number of multiplications needed per input sample is
 <span class="math notranslate nohighlight">\(\mathcal{O}\left(\frac{L}{D}\right)\)</span>.</p></li>
-<li><p>In summary, the polyphase time-domain implementation saves by a
+<li><p>In summary, the time-domain polyphase implementation saves by a
 factor of <span class="math notranslate nohighlight">\(U\)</span> in computational complexity, compared with the direct
-multi-rate time-domain implementation.</p></li>
+time-domain multi-rate implementation.</p></li>
 </ul>
 </section>
 <section id="frequency-domain-polyphase-implementation">
 <h2><span class="section-number">3.4.3. </span>Frequency-domain polyphase implementation<a class="headerlink" href="#frequency-domain-polyphase-implementation" title="Permalink to this headline">#</a></h2>
 <ul>
-<li><p>Polyphase frequency-domain filtering is a bit trickier. Consider a
+<li><p>Frequency-domain polyphase filtering is a bit trickier. Consider a
 frequency-domain implementation of the overall polyphase structure
-shown above, based on the overlap-save algorithm. As in our
-<a class="reference internal" href="overlapsave.html#sec-osa"><span class="std std-ref">previous discussion</span></a>, we divide the batch of samples of
-the input signal <span class="math notranslate nohighlight">\(x[n]\)</span> into overlapping blocks of length <span class="math notranslate nohighlight">\(D\, 2^m\)</span>,
-where <span class="math notranslate nohighlight">\(2^m\)</span> is the FFT size. Similar to our <a class="reference internal" href="overlapsave.html#sec-osa"><span class="std std-ref">previous discussion</span></a>,
-the last <span class="math notranslate nohighlight">\(DM\)</span> output samples of the inverse FFT give valid linear
-convolution results that we will “save” for each block. Also as
-before, the amount of overlap between adjacent input blocks is then
-<span class="math notranslate nohighlight">\(D(2^m-M)\)</span>. The choices of <span class="math notranslate nohighlight">\(m\)</span> and <span class="math notranslate nohighlight">\(M\)</span> will be determined later.</p></li>
-<li><p>Now, consider a block of <span class="math notranslate nohighlight">\(D2^m\)</span>samples of the input signal
-<span class="math notranslate nohighlight">\(x[n]\)</span>. Then we may obtain the multi-rate filtered samples of the
+shown above, based on the overlap-save algorithm. As discussed in
+<a class="reference internal" href="overlapsave.html#sec-osa"><span class="std std-numref">Section 3.2</span></a>, we divide the batch of samples of the input signal
+<span class="math notranslate nohighlight">\(x[n]\)</span> into overlapping blocks of length <span class="math notranslate nohighlight">\(D\, 2^m\)</span>, where <span class="math notranslate nohighlight">\(2^m\)</span> is
+the FFT size. Similar to <a class="reference internal" href="overlapsave.html#sec-osa"><span class="std std-numref">Section 3.2</span></a>, the last <span class="math notranslate nohighlight">\(DM\)</span> output
+samples of the inverse FFT give valid linear convolution results
+that we will “save” for each block. Also as before, the amount of
+overlap between adjacent input blocks is then <span class="math notranslate nohighlight">\(D(2^m-M)\)</span>. The
+choices of <span class="math notranslate nohighlight">\(m\)</span> and <span class="math notranslate nohighlight">\(M\)</span> will be determined later.</p></li>
+<li><p>Now, consider a block of <span class="math notranslate nohighlight">\(D\,2^m\)</span> samples of the input signal
+<span class="math notranslate nohighlight">\(x[n]\)</span>. We may obtain the multi-rate filtered samples of the
 output signal <span class="math notranslate nohighlight">\(y[n]\)</span> for this block by implementing the following steps:</p>
 <ol class="arabic">
 <li><p>Demultiplex (<span class="math notranslate nohighlight">\(\downarrow\! D\)</span>) <span class="math notranslate nohighlight">\(x[n] \)</span> into <span class="math notranslate nohighlight">\(x_q[n] = x[nD-q]\)</span> for <span class="math notranslate nohighlight">\(q=0,1,\ldots,D-1\)</span>.</p></li>
@@ -586,19 +590,19 @@ computational complexity using
 the frequency-domain polyphase implementation over using the
 time-domain polyphase implementation.</strong></p>
 </li>
-<li><p>Comparison this frequency-domain polyphase implementation with the
-direct frequency-domain multi-rate implementation discussed
-<a class="reference internal" href="multirate.html#sec-multirate"><span class="std std-ref">previously</span></a> is trickier since the choices of the the
-FFT sizes in the two implementations are different. Let the FFT size
-used in the direct multi-rate implementation be <span class="math notranslate nohighlight">\(2^{m'}\)</span>. Recall that
-from our <a class="reference internal" href="multirate.html#sec-multirate"><span class="std std-ref">previous discussion</span></a> we should choose <span class="math notranslate nohighlight">\(m'D
-\ll L\ll 2^{m'}\)</span> and the number of multiplications needed per input
-sample is <span class="math notranslate nohighlight">\(\mathcal{O}(m' U)\)</span>. On the other hand, we choose (see
-above) the FFT size <span class="math notranslate nohighlight">\(2^m\)</span> used the polyphase implementation to satisfy
-<span class="math notranslate nohighlight">\(m \ll \frac{L}{UD} \ll 2^m\)</span>. In order to see whether the
-frequency-domain polyphase implementation gives any
-advantage in computational complexity, we must relate the choices of
-<span class="math notranslate nohighlight">\(m\)</span> and <span class="math notranslate nohighlight">\(m'\)</span>:</p>
+<li><p>Comparing this frequency-domain polyphase implementation with the
+direct frequency-domain multi-rate implementation discussed in
+<a class="reference internal" href="multirate.html#sec-multirate"><span class="std std-numref">Section 3.3</span></a> is trickier since the choices of the the FFT
+sizes in the two implementations are different. Let the FFT size
+used in the direct multi-rate implementation be <span class="math notranslate nohighlight">\(2^{m'}\)</span>. Recall
+that from the discussion in <a class="reference internal" href="multirate.html#sec-multirate"><span class="std std-numref">Section 3.3</span></a> we should choose
+<span class="math notranslate nohighlight">\(m'D \ll L\ll 2^{m'}\)</span> and the number of multiplications needed per
+input sample is <span class="math notranslate nohighlight">\(\mathcal{O}(m' U)\)</span>. On the other hand, we choose
+(see above) the FFT size <span class="math notranslate nohighlight">\(2^m\)</span> in the polyphase implementation to
+satisfy <span class="math notranslate nohighlight">\(m \ll \frac{L}{UD} \ll 2^m\)</span>. In order to see whether the
+frequency-domain polyphase implementation gives any advantage in
+computational complexity, we must relate the choices of <span class="math notranslate nohighlight">\(m\)</span> and
+<span class="math notranslate nohighlight">\(m'\)</span>:</p>
 <ul class="simple">
 <li><p>One may choose <span class="math notranslate nohighlight">\(m' = \frac{\max(U,D)}{D} \cdot m\)</span> to get similar
 computational complexity advantages over time-domain calculation in

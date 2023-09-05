@@ -11,7 +11,7 @@
 
 CXX = g++
 CPPFLAGS = -O3 -DUSE_VOLK 
-LDFLAGS = -lfftw3f -lfftw3f_threads -lvolk -luhd -lboost_program_options -lpthread 
+LDFLAGS = -lfftw3f -lfftw3f_threads -lvolk -luhd -lboost_program_options 
 OBJDIR := build
 
 common_hdrs = fft.hpp filters.hpp

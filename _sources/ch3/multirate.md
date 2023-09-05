@@ -55,9 +55,10 @@
   by using the frequency-domain overlap-save algorithm in lieu of
   time-domain convolution.
     
-* The class `FilterOverlapAdd` in [`filters.cpp`](code:filters_cpp) 
-   provides an example for a direct multi-rate implementation of the
-   overlap-save algorithm. To use the multi-rate implementation:
+* The class `FilterOverlapAdd` in [`filters.cpp`](code:filters_cpp)
+   provides an example for a direct multi-rate frequency-domain
+   implementation of the overlap-save algorithm. To use the multi-rate
+   implementation:
    1. Instantiate a `FilterOverlapSave` object using the multi-rate constructor:
       ```c++
       // Construct single-rate OverlapSave filter object
