@@ -4,7 +4,7 @@
 ## Source code
 ```{code-block}  c++
 :lineno-start: 1
-:emphasize-lines: 51, 54, 72, 76, 107
+:emphasize-lines: 50, 53, 71, 75, 106
 // University of Florida EEL6528
 // Tan F. Wong
 // Jan 18, 2021
@@ -14,7 +14,6 @@
 #include <uhd/utils/thread.hpp>
 #include <csignal>
 #include <chrono>
-#include <thread>
 #include "fft.hpp"
 
 namespace po = boost::program_options;
@@ -121,21 +120,21 @@ int UHD_SAFE_MAIN(int argc, char *argv[]){
   calculations.
 
 ## Build
-* Need to link the `uhd`, `boost_program_options`, `pthread`, `fftw3f`
+* Need to link the `uhd`, `boost_program_options`, `fftw3f`,
   and `fftw3f_threads` libraries when compiling.
 * Can define the compiler flag `USE_VOLK` to use the `volk` library (see [`fft.hpp`](code:fft)).
   ```
-  g++ test_fft.cpp -o test_fft -luhd -lboost_program_options -lpthread -lfftw3f -lfftw3f_threads -DUSE_VOLK -lvolk 
+  g++ test_fft.cpp -o test_fft -luhd -lboost_program_options -lfftw3f -lfftw3f_threads -DUSE_VOLK -lvolk 
   ```
 
 ## Tests
   ```{admonition} Experiment
   :class: hint
   1. Use the default values of `fftsize` and `nblocks`. Run the
-      program using increasing number of threads, starting from one
+      program with increasing numbers of threads, starting from one
       thread, to see how much speed advantage you can obtain.
   1. Redo 1. with different values of `fftsize` and `nblocks` to see
       the effects of the parameters on the speed.
-  1. Recompile witout defining the `USE_VOLK` flag. Run the program
-      again to see how much, or if, reduction in speed results.
+  1. Recompile without defining the `USE_VOLK` flag. Run the program
+      again to see how much reduction in speed results.
   ```
