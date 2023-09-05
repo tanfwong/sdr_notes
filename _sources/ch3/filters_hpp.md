@@ -9,8 +9,8 @@
 // Tan F. Wong
 // Feb 2, 2021
 
-#ifndef FILTERS_H
-#define FILTERS_H
+#pragma once
+
 #include "fft.hpp"
 
 // Overlap-save filter class
@@ -63,5 +63,4 @@ class FilterPolyphase {
     int nxD; // length of down-sampled signals
     std::complex<float>* F; // FFTs of impulse responses of polyphase filters
 };
-#endif //FILTERS_H
 ```

@@ -772,8 +772,8 @@ document.write(`
 integer such that <span class="math notranslate nohighlight">\(2^m \geq 8 L\)</span> in <code class="docutils literal notranslate"><span class="pre">FilterOverlapSave</span></code> (<span class="math notranslate nohighlight">\(2^m \geq
  8 L_p\)</span> in <code class="docutils literal notranslate"><span class="pre">FilterPolyphase</span></code>), and set the FFT size to be
 <span class="math notranslate nohighlight">\(2^m\)</span>. This selection makes sure that the condition that <span class="math notranslate nohighlight">\(2^m \gg
- L\)</span> (<span class="math notranslate nohighlight">\(2^m \gg L_p)\)</span>. If <span class="math notranslate nohighlight">\(L\)</span> (<span class="math notranslate nohighlight">\(L_p\)</span>) is longer enough, say <span class="math notranslate nohighlight">\(L (\)</span>L_p<span class="math notranslate nohighlight">\()
- \geq 32\)</span>, we also have <span class="math notranslate nohighlight">\(L \gg mD\)</span> (<span class="math notranslate nohighlight">\(L_p \gg m)\)</span>.</p></li>
+ L\)</span> (<span class="math notranslate nohighlight">\(2^m \gg L_p)\)</span>. If <span class="math notranslate nohighlight">\(L\)</span> (<span class="math notranslate nohighlight">\(L_p\)</span>) is long enough, say <span class="math notranslate nohighlight">\(L\)</span> (<span class="math notranslate nohighlight">\(L_p\)</span>)
+<span class="math notranslate nohighlight">\(\geq 32\)</span>, we also have <span class="math notranslate nohighlight">\(L \gg mD\)</span> (<span class="math notranslate nohighlight">\(L_p \gg m\)</span>).</p></li>
 <li><p>Since the <code class="docutils literal notranslate"><span class="pre">fft</span></code> class is used, it is nice to run the method
 <code class="docutils literal notranslate"><span class="pre">fft:cleanup()</span></code> before <code class="docutils literal notranslate"><span class="pre">main()</span></code> exits when using the filter classes.</p></li>
 <li><p><u>Usage example</u>: <a class="reference internal" href="test_filters.html#code-test-filters"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">test_filters.cpp</span></code></span></a></p></li>
@@ -784,7 +784,8 @@ integer such that <span class="math notranslate nohighlight">\(2^m \geq 8 L\)</s
 <li><p>Study the source code for <code class="docutils literal notranslate"><span class="pre">FilterOverlapSave</span></code> and <code class="docutils literal notranslate"><span class="pre">FilterPolyphase</span></code>.</p></li>
 <li><p>While I have tried to use the FFTW3 interfaces very efficiently and VOLK,
 the other operations required in the frequency-domain filtering
-implementations are not exactly optimized. Try to work on develop
+implementations are not exactly optimized. Try to work on
+developing
 your own implementation to see if you can beat mine:</p>
 <ul class="simple">
 <li><p>For example, one may be able to do a better job in structuring the

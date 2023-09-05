@@ -2,17 +2,17 @@
 # Overlap Save Algorithm
 
 * In order to implement filtering operations in the frequency domain
-using FFT, the FFT size must be at least as large as the output length
-so that circular convolution implemented by FFT becomes linear
-convolution. This requirement is not practical since the input length
-is usually very large leading to an excessive FFT size. The common
-approach is to divide the input sequence into blocks and perform
-frequency-domain filtering on each block.
+  using FFT, the FFT size must be at least as large as the output
+  length so that circular convolution implemented by FFT becomes
+  linear convolution. This requirement is often not practical since
+  the input length is usually very large leading to an excessive FFT
+  size. A common solution is to divide the input signal into blocks
+  and perform frequency-domain filtering on each block in sequence.
 * There are two main approaches, namely the *overlap-add*
-and *overlap-save* algorithms, to do block-wise frequency-domain
-filter. Here, we focus on the **overlap-save algorithm** because it
-fits the batch FFTW3 implementation of FFT in [`fft.hpp`](code:fft)
-better.
+  and *overlap-save* algorithms, to do block-wise frequency-domain
+  filtering. Here, we focus on the **overlap-save algorithm** because it
+  fits the batch FFTW3 implementation of FFT in [`fft.hpp`](code:fft)
+  better.
 * Let $L$ be the length of the filter's impulse response. Pick an FFT
   size $2^m \geq L$. Then performing frequency-domain filtering on a
   block of $2^m$ samples does circular convolution between the input
@@ -21,7 +21,7 @@ better.
   while the last $M = 2^m-L+1$ samples in the output block are "clean"
   in the sense that they are the same as those given out by linear
   convolution. Hence, by overlapping consecutive blocks of $2^m$ samples
-  by $L-1$ and then concatenating the last $M$ samples of each
+  by $L-1$ samples and then concatenating the last $M$ samples of each
   successive output block, we will be able to implement linear
   convolution between the long input sequence of samples and the
   filter's impulse response. This simple idea employed in the
@@ -37,7 +37,7 @@ better.
   the overhead incurred in discarding the output samples. On the other hand,
   the computational complexity (e.g., by counting the number of
   multiplications performed) of doing direct linear convolution and the
-  overlap -save algorithm on a block of $M$ input samples are
+  overlap-save algorithm on a block of $M$ input samples are
   $\mathcal{O}\left( L M\right)$ and $\mathcal{O}\left( m \,2^m\right)$,
   respectively. Hence, we would also want $m \ll L$ in order to gain the
   computational advantage offered by FFT. Putting these two
@@ -50,7 +50,7 @@ better.
   computationally efficient to implement a direct linear convolution. 
 * The class `FilterOverlapSave` in [`filters.cpp`](code:filters_cpp)
   gives an example implementation of the overlap-save algorithm using
-  the `fft` wrapper in [`fft.hpp`](code:fft). The implementation shown
+  the `fft` wrapper in [`fft.hpp`](code:fft). This implementation
   supports both single-rate and multi-rate filtering (see next section).
   To use the single-rate implementation:
   1. Instantiate a `FilterOverlapSave` object using the single-rate constructor:
@@ -65,7 +65,7 @@ better.
        ```c++
        filter_osa.set_head(true);  // reset=true
        ```
-       if filter the first sequence of samples in a continuous flow of
+       if filtering the first sequence of samples in a continuous flow of
        samples. Otherwise, copy the tail $L-1$ samples from the previous
        filter input to the head $L-1$ of current filter input to set
        up the correct boundary condition for
@@ -73,7 +73,7 @@ better.
        ```c++
        filter_osa.set_head(); // reset=false by default
        ```
-    3. Do filtering
+    3. Do filtering:
         ```c++
         filter_osa.filter(in, out); 
         ```

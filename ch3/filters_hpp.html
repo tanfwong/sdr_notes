@@ -434,8 +434,8 @@ document.write(`
 <span class="linenos"> 2</span><span class="c1">// Tan F. Wong</span>
 <span class="linenos"> 3</span><span class="c1">// Feb 2, 2021</span>
 <span class="linenos"> 4</span>
-<span class="linenos"> 5</span><span class="cp">#ifndef FILTERS_H</span>
-<span class="linenos"> 6</span><span class="cp">#define FILTERS_H</span>
+<span class="linenos"> 5</span><span class="cp">#pragma once</span>
+<span class="linenos"> 6</span>
 <span class="linenos"> 7</span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;fft.hpp&quot;</span>
 <span class="linenos"> 8</span>
 <span class="linenos"> 9</span><span class="c1">// Overlap-save filter class</span>
@@ -488,7 +488,6 @@ document.write(`
 <span class="linenos">56</span><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">nxD</span><span class="p">;</span><span class="w"> </span><span class="c1">// length of down-sampled signals</span>
 <span class="linenos">57</span><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">complex</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;*</span><span class="w"> </span><span class="n">F</span><span class="p">;</span><span class="w"> </span><span class="c1">// FFTs of impulse responses of polyphase filters</span>
 <span class="linenos">58</span><span class="p">};</span>
-<span class="linenos">59</span><span class="cp">#endif </span><span class="c1">//FILTERS_H</span>
 </pre></div>
 </div>
 </section>

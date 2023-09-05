@@ -422,15 +422,15 @@ document.write(`
 <span id="sec-osa"></span><h1><span class="section-number">3.2. </span>Overlap Save Algorithm<a class="headerlink" href="#overlap-save-algorithm" title="Permalink to this headline">#</a></h1>
 <ul>
 <li><p>In order to implement filtering operations in the frequency domain
-using FFT, the FFT size must be at least as large as the output length
-so that circular convolution implemented by FFT becomes linear
-convolution. This requirement is not practical since the input length
-is usually very large leading to an excessive FFT size. The common
-approach is to divide the input sequence into blocks and perform
-frequency-domain filtering on each block.</p></li>
+using FFT, the FFT size must be at least as large as the output
+length so that circular convolution implemented by FFT becomes
+linear convolution. This requirement is often not practical since
+the input length is usually very large leading to an excessive FFT
+size. A common solution is to divide the input signal into blocks
+and perform frequency-domain filtering on each block in sequence.</p></li>
 <li><p>There are two main approaches, namely the <em>overlap-add</em>
 and <em>overlap-save</em> algorithms, to do block-wise frequency-domain
-filter. Here, we focus on the <strong>overlap-save algorithm</strong> because it
+filtering. Here, we focus on the <strong>overlap-save algorithm</strong> because it
 fits the batch FFTW3 implementation of FFT in <a class="reference internal" href="fft.html#code-fft"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">fft.hpp</span></code></span></a>
 better.</p></li>
 <li><p>Let <span class="math notranslate nohighlight">\(L\)</span> be the length of the filter’s impulse response. Pick an FFT
@@ -441,7 +441,7 @@ samples of the output block are corrupted due to circular convolution
 while the last <span class="math notranslate nohighlight">\(M = 2^m-L+1\)</span> samples in the output block are “clean”
 in the sense that they are the same as those given out by linear
 convolution. Hence, by overlapping consecutive blocks of <span class="math notranslate nohighlight">\(2^m\)</span> samples
-by <span class="math notranslate nohighlight">\(L-1\)</span> and then concatenating the last <span class="math notranslate nohighlight">\(M\)</span> samples of each
+by <span class="math notranslate nohighlight">\(L-1\)</span> samples and then concatenating the last <span class="math notranslate nohighlight">\(M\)</span> samples of each
 successive output block, we will be able to implement linear
 convolution between the long input sequence of samples and the
 filter’s impulse response. This simple idea employed in the
@@ -454,7 +454,7 @@ output samples every FFT block, we would want <span class="math notranslate nohi
 the overhead incurred in discarding the output samples. On the other hand,
 the computational complexity (e.g., by counting the number of
 multiplications performed) of doing direct linear convolution and the
-overlap -save algorithm on a block of <span class="math notranslate nohighlight">\(M\)</span> input samples are
+overlap-save algorithm on a block of <span class="math notranslate nohighlight">\(M\)</span> input samples are
 <span class="math notranslate nohighlight">\(\mathcal{O}\left( L M\right)\)</span> and <span class="math notranslate nohighlight">\(\mathcal{O}\left( m \,2^m\right)\)</span>,
 respectively. Hence, we would also want <span class="math notranslate nohighlight">\(m \ll L\)</span> in order to gain the
 computational advantage offered by FFT. Putting these two
@@ -469,7 +469,7 @@ computationally efficient to implement a direct linear convolution.</p>
 </li>
 <li><p>The class <code class="docutils literal notranslate"><span class="pre">FilterOverlapSave</span></code> in <a class="reference internal" href="filters_cpp.html#code-filters-cpp"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">filters.cpp</span></code></span></a>
 gives an example implementation of the overlap-save algorithm using
-the <code class="docutils literal notranslate"><span class="pre">fft</span></code> wrapper in <a class="reference internal" href="fft.html#code-fft"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">fft.hpp</span></code></span></a>. The implementation shown
+the <code class="docutils literal notranslate"><span class="pre">fft</span></code> wrapper in <a class="reference internal" href="fft.html#code-fft"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">fft.hpp</span></code></span></a>. This implementation
 supports both single-rate and multi-rate filtering (see next section).
 To use the single-rate implementation:</p>
 <ol class="arabic">
@@ -486,7 +486,7 @@ impulse response  array, and
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">filter_osa</span><span class="p">.</span><span class="n">set_head</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span><span class="w">  </span><span class="c1">// reset=true</span>
 </pre></div>
 </div>
-<p>if filter the first sequence of samples in a continuous flow of
+<p>if filtering the first sequence of samples in a continuous flow of
 samples. Otherwise, copy the tail <span class="math notranslate nohighlight">\(L-1\)</span> samples from the previous
 filter input to the head <span class="math notranslate nohighlight">\(L-1\)</span> of current filter input to set
 up the correct boundary condition for
@@ -495,7 +495,7 @@ continuous filtering:</p>
 </pre></div>
 </div>
 </li>
-<li><p>Do filtering</p>
+<li><p>Do filtering:</p>
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">filter_osa</span><span class="p">.</span><span class="n">filter</span><span class="p">(</span><span class="n">in</span><span class="p">,</span><span class="w"> </span><span class="n">out</span><span class="p">);</span><span class="w"> </span>
 </pre></div>
 </div>

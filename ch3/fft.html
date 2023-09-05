@@ -597,7 +597,7 @@ document.write(`
 <span class="linenos">162</span><span class="p">};</span>
 </pre></div>
 </div>
-<ul>
+<ul class="simple">
 <li><p>The <code class="docutils literal notranslate"><span class="pre">fft</span></code> class defined above uses the FFTW3 advanced interface
 <code class="docutils literal notranslate"><span class="pre">fftwf_plan_many_dft</span></code> to create a plan to calculate multiple
 single-precision, 1-d FFTs along a 1-d array of samples and the guru
@@ -610,23 +610,7 @@ more flexible that the way they are used here. Please refer to
 <li><p>Can define the compile flag <code class="docutils literal notranslate"><span class="pre">USE_VOLK</span></code> to use the
 <a class="reference external" href="https://www.libvolk.org/">VOLK</a> library for SIMD-accelerated
 arithmetic kernels such that <code class="docutils literal notranslate"><span class="pre">volk_32fc_s32fc_multiply_32fc()</span></code>.</p></li>
-<li><p>The internal multi-threaded implementation of FFTW is used.</p>
-<div class="admonition caution">
-<p class="admonition-title">Caution</p>
-<ol class="arabic simple">
-<li><p>The internal multi-threaded implementation of FFTW seems to
-interfere with setting the thread priority using the IHD
-method <code class="docutils literal notranslate"><span class="pre">uhd::set_thread_priority_safe()</span></code>. In particular,
-<code class="docutils literal notranslate"><span class="pre">priority</span></code> is set to the highest value regardless of what we
-set <code class="docutils literal notranslate"><span class="pre">priority</span></code> to, but <code class="docutils literal notranslate"><span class="pre">realtime</span></code> is not affected. I
-haven’t been able to work out the exact reason for that. FFTW3
-uses Pthreads to set the priority of its threads and
-hence probably overwrites the value set by <code class="docutils literal notranslate"><span class="pre">uhd::set_thread_priority_safe()</span></code>.</p></li>
-<li><p>Setting <code class="docutils literal notranslate"><span class="pre">realtime</span></code> to <code class="docutils literal notranslate"><span class="pre">true</span></code> actually results in slower FFT
-calculations in this case.</p></li>
-</ol>
-</div>
-</li>
+<li><p>The internal multi-threaded implementation of FFTW is used.</p></li>
 </ul>
 </section>
 <section id="usage">

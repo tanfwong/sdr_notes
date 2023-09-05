@@ -338,8 +338,8 @@ int FilterPolyphase::filter(std::complex<float>* in, std::complex<float>* out) {
    integer such that $2^m \geq 8 L$ in `FilterOverlapSave` ($2^m \geq
    8 L_p$ in `FilterPolyphase`), and set the FFT size to be
    $2^m$. This selection makes sure that the condition that $2^m \gg
-   L$ ($2^m \gg L_p)$. If $L$ ($L_p$) is longer enough, say $L ($L_p$)
-   \geq 32$, we also have $L \gg mD$ ($L_p \gg m)$.
+   L$ ($2^m \gg L_p)$. If $L$ ($L_p$) is long enough, say $L$ ($L_p$)
+   $\geq 32$, we also have $L \gg mD$ ($L_p \gg m$).
 * Since the `fft` class is used, it is nice to run the method
 `fft:cleanup()` before `main()` exits when using the filter classes.
 * <u>Usage example</u>: [`test_filters.cpp`](code:test_filters)
@@ -349,7 +349,8 @@ int FilterPolyphase::filter(std::complex<float>* in, std::complex<float>* out) {
 1. Study the source code for `FilterOverlapSave` and `FilterPolyphase`.
 1. While I have tried to use the FFTW3 interfaces very efficiently and VOLK,
    the other operations required in the frequency-domain filtering
-   implementations are not exactly optimized. Try to work on develop
+   implementations are not exactly optimized. Try to work on
+   developing
    your own implementation to see if you can beat mine:
    - For example, one may be able to do a better job in structuring the 
      memory storage organization of the input and output, in particular

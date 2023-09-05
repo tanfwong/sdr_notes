@@ -181,18 +181,6 @@ class fft{
   [VOLK](https://www.libvolk.org/) library for SIMD-accelerated
   arithmetic kernels such that `volk_32fc_s32fc_multiply_32fc()`.
 * The internal multi-threaded implementation of FFTW is used. 
-   ```{caution}
-   1. The internal multi-threaded implementation of FFTW seems to
-        interfere with setting the thread priority using the IHD
-        method `uhd::set_thread_priority_safe()`. In particular,
-        `priority` is set to the highest value regardless of what we
-        set `priority` to, but `realtime` is not affected. I
-        haven't been able to work out the exact reason for that. FFTW3
-        uses Pthreads to set the priority of its threads and
-        hence probably overwrites the value set by `uhd::set_thread_priority_safe()`.
-    1. Setting `realtime` to `true` actually results in slower FFT
-        calculations in this case.
-   ```
 
 ## Usage
 * 1-d constructor: 
