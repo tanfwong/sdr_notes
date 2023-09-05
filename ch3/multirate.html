@@ -422,12 +422,12 @@ document.write(`
 <span id="sec-multirate"></span><h1><span class="section-number">3.3. </span>Multi-rate Filtering<a class="headerlink" href="#multi-rate-filtering" title="Permalink to this headline">#</a></h1>
 <ul>
 <li><p>As mentioned before, we may often need to implement multi-rate filters. A typical multi-rate filter is as shown below:</p>
-<a class="reference internal image-reference" href="../_images/multirate.png"><img alt="Multi-rate filter" class="align-center" src="../_images/multirate.png" style="width: 800px;" /></a>
+<a class="reference internal image-reference" href="../_images/multirate.jpg"><img alt="Multi-rate filter" class="align-center" src="../_images/multirate.jpg" style="width: 800px;" /></a>
 <ol class="arabic simple">
 <li><p>The input signal <span class="math notranslate nohighlight">\(x[n]\)</span> is first up-sampled by a factor of <span class="math notranslate nohighlight">\(U\)</span>.</p></li>
-<li><p>The up-sampled signal is then passed through a filter with
+<li><p>The up-sampled signal <span class="math notranslate nohighlight">\(x^U[n]\)</span> is then passed through a filter with
 transfer function <span class="math notranslate nohighlight">\(H(z)\)</span>, running at <span class="math notranslate nohighlight">\(U\)</span> times the input rate.</p></li>
-<li><p>Finally the filter output is down-sampled by a factor of <span class="math notranslate nohighlight">\(D\)</span> to
+<li><p>Finally the filter output <span class="math notranslate nohighlight">\(y^U[n]\)</span> is down-sampled by a factor of <span class="math notranslate nohighlight">\(D\)</span> to
 obtain <span class="math notranslate nohighlight">\(y[n]\)</span>.
 The overall rate of <span class="math notranslate nohighlight">\(y[n]\)</span> is <span class="math notranslate nohighlight">\(\frac{U}{D}\)</span> times that of <span class="math notranslate nohighlight">\(x[n]\)</span>.</p></li>
 </ol>

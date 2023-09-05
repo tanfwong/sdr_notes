@@ -1,15 +1,15 @@
 (sec:multirate)=
 # Multi-rate Filtering
 * As mentioned before, we may often need to implement multi-rate filters. A typical multi-rate filter is as shown below:
-  ```{image} ../figures/multirate.png
+  ```{image} ../figures/multirate.jpg
   :alt: Multi-rate filter
   :width: 800px
   :align: center
   ``` 
   1. The input signal $x[n]$ is first up-sampled by a factor of $U$.
-  1. The up-sampled signal is then passed through a filter with
+  1. The up-sampled signal $x^U[n]$ is then passed through a filter with
       transfer function $H(z)$, running at $U$ times the input rate.
-  1. Finally the filter output is down-sampled by a factor of $D$ to
+  1. Finally the filter output $y^U[n]$ is down-sampled by a factor of $D$ to
      obtain $y[n]$.
   The overall rate of $y[n]$ is $\frac{U}{D}$ times that of $x[n]$.
 * Note that the filter $H(z)$ (also let $h[n]$ denote its impulse
