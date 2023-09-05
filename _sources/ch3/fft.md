@@ -9,11 +9,10 @@
 // Tan F. Wong
 // Feb 2, 2021
 
-#ifndef FFT_H
-#define FFT_H
+#pragma once
+
 #include <complex>
 #include <fftw3.h>
-//#include <thread>
 #ifdef USE_VOLK
 #include <volk/volk.h>
 #endif
@@ -64,7 +63,7 @@ class fft{
         // Initialize FFTW3 multi-threaded implementation
         fftwf_init_threads();
         fftwf_plan_with_nthreads(nthreads);
-        // InstantiateForward FFT plan usinf FFTW3's advanced interface 
+        // Instantiate FFT plan using FFTW3's advanced interface 
         plan = fftwf_plan_many_dft(1, &fftsize, nblocks, 
                                   reinterpret_cast<fftwf_complex *>(in), 
                                   NULL, 1, in_nsteps, 
@@ -168,7 +167,6 @@ class fft{
         }
     }
 };
-#endif //FFT_H
 ```
 * The `fft` class defined above uses the FFTW3 advanced interface
   `fftwf_plan_many_dft` to create a plan to calculate multiple
@@ -182,9 +180,9 @@ class fft{
 * Can define the compile flag `USE_VOLK` to use the 
   [VOLK](https://www.libvolk.org/) library for SIMD-accelerated
   arithmetic kernels such that `volk_32fc_s32fc_multiply_32fc()`.
-* The internal multi-threading implementation of FFTW is used. 
+* The internal multi-threaded implementation of FFTW is used. 
    ```{caution}
-   1. The internal multi-threading implementation of FFTW seems to
+   1. The internal multi-threaded implementation of FFTW seems to
         interfere with setting the thread priority using the IHD
         method `uhd::set_thread_priority_safe()`. In particular,
         `priority` is set to the highest value regardless of what we

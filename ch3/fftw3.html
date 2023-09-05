@@ -494,16 +494,16 @@ FFTW3 also supports doing calculation with the
 simply replace the prefix <code class="docutils literal notranslate"><span class="pre">fftwf</span></code> in each method or type name by
 <code class="docutils literal notranslate"><span class="pre">fftw</span></code> and <code class="docutils literal notranslate"><span class="pre">fftwl</span></code>, respectively.</p></li>
 <li><p>The method <code class="docutils literal notranslate"><span class="pre">fftwf_plan_dft_1d</span></code> above is one of the many <em>basic
-interface</em> that FFTW3 provides. A basic interface computes a single
+interfaces</em> that FFTW3 provides. A basic interface computes a single
 transform of contiguous data. See <span id="id2">[<a class="reference internal" href="filter_exs.html#id9" title="M. Frigo and S. G. Johnson. FFTW Manual for version 3.3.9. fftw.org, 2020. URL: http://www.fftw.org/fftw3.pdf.">2</a>]</span> for other basic
 interfaces provided. FFTW3 also provides two more levels of
 interfaces — <em>advanced</em> and <em>guru</em>. An advanced interface computes
-multiple transforms of over contiguous or strided data. A
+multiple transforms over contiguous or strided data. A
 guru interface supports the most general data layouts,
 multiplicities, and strides.</p></li>
 <li><p>For later purposes, we often need to perform multiple FFT
 calculations on a batch of samples. To avoid overheads incurred in
-calling a basic interfacing method multiple times, it is beneficial
+calling a basic interface method multiple times, it is beneficial
 to use advanced or guru interface instead. For ease of later use and
 as examples to show the use of the advanced and guru interface, I
 have implemented the class <code class="docutils literal notranslate"><span class="pre">fft</span></code> which serves as a simple wrapper to
@@ -526,13 +526,17 @@ above is included in <code class="docutils literal notranslate"><span class="pre
 <li><p>To use the wrapper:</p>
 <ol class="arabic">
 <li><p>Instantiate the <code class="docutils literal notranslate"><span class="pre">fft</span></code> object:</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="c1">// To perform nblocks forward fftsize-point FFTs on a 1-d</span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="c1">// Example 1:</span>
+<span class="c1">// To perform nblocks forward fftsize-point FFTs on a 1-d</span>
 <span class="c1">// array of samples use the following constructor:</span>
 <span class="n">fft</span><span class="w"> </span><span class="nf">fwd_fft</span><span class="p">(</span><span class="n">nthreads</span><span class="p">,</span><span class="w"> </span><span class="n">fftsize</span><span class="p">,</span><span class="w"> </span><span class="n">nblocks</span><span class="p">,</span><span class="w"> </span><span class="n">fftsize</span><span class="p">,</span><span class="w"> </span><span class="n">fftsize</span><span class="p">,</span><span class="w"> </span><span class="nb">false</span><span class="p">);</span>
+<span class="c1">//</span>
+<span class="c1">// Example 2:</span>
 <span class="c1">// To perform nblocks inverse fftsize-point FFTs along each </span>
 <span class="c1">// of the D rows of a 2-d array of samples use the following constructor:</span>
 <span class="n">fft</span><span class="w"> </span><span class="nf">inv_fft</span><span class="p">(</span><span class="n">nthreads</span><span class="p">,</span><span class="w"> </span><span class="n">fftsize</span><span class="p">,</span><span class="w"> </span><span class="n">nblocks</span><span class="p">,</span><span class="w"> </span><span class="n">fftsize</span><span class="p">,</span><span class="w"> </span><span class="n">fftsize</span><span class="p">,</span><span class="w"> </span><span class="n">D</span><span class="p">,</span><span class="w"> </span><span class="nb">true</span><span class="p">);</span>
-<span class="c1">// where both use nthreads threads and move forward</span>
+<span class="c1">//</span>
+<span class="c1">// Both examples use nthreads threads and move forward</span>
 <span class="c1">// fftsize steps to get to the next input and output FFT block</span>
 </pre></div>
 </div>

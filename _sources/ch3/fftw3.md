@@ -64,16 +64,16 @@
   simply replace the prefix `fftwf` in each method or type name by
   `fftw` and `fftwl`, respectively.
 * The method `fftwf_plan_dft_1d` above is one of the many *basic
-  interface* that FFTW3 provides. A basic interface computes a single
+  interfaces* that FFTW3 provides. A basic interface computes a single
   transform of contiguous data. See {cite}`frigo2020` for other basic
   interfaces provided. FFTW3 also provides two more levels of
   interfaces --- *advanced* and *guru*. An advanced interface computes
-  multiple transforms of over contiguous or strided data. A
+  multiple transforms over contiguous or strided data. A
   guru interface supports the most general data layouts,
   multiplicities, and strides. 
 * For later purposes, we often need to perform multiple FFT
   calculations on a batch of samples. To avoid overheads incurred in
-  calling a basic interfacing method multiple times, it is beneficial
+  calling a basic interface method multiple times, it is beneficial
   to use advanced or guru interface instead. For ease of later use and
   as examples to show the use of the advanced and guru interface, I
   have implemented the class `fft` which serves as a simple wrapper to
@@ -94,13 +94,17 @@
 * To use the wrapper:
   1. Instantiate the `fft` object:
       ```c++
+      // Example 1:
       // To perform nblocks forward fftsize-point FFTs on a 1-d
       // array of samples use the following constructor:
       fft fwd_fft(nthreads, fftsize, nblocks, fftsize, fftsize, false);
+      //
+      // Example 2:
       // To perform nblocks inverse fftsize-point FFTs along each 
       // of the D rows of a 2-d array of samples use the following constructor:
       fft inv_fft(nthreads, fftsize, nblocks, fftsize, fftsize, D, true);
-      // where both use nthreads threads and move forward
+      //
+      // Both examples use nthreads threads and move forward
       // fftsize steps to get to the next input and output FFT block
       ```
   2. Get pointer to the input and output arrays:
