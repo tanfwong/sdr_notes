@@ -439,7 +439,7 @@ anti-aliasing filtering operations respectively for the up-sampling
 and down-sampling steps above. Ideally, <span class="math notranslate nohighlight">\(H(z)\)</span> should be lowpass
 with the (normalized) cutoff frequency set at <span class="math notranslate nohighlight">\(\min\left(
 \frac{1}{2U}, \frac{1}{2D} \right)\)</span>.</p></li>
-<li><p>Practically, we approximate the ideal lowpass cutoff by a relatively
+<li><p>Practically, we approximate the ideal lowpass filter by a relatively
 long FIR filter for <span class="math notranslate nohighlight">\(H(z)\)</span>. This has significant complexity impacts
 on our multi-rate filter implementation. Not only does the filter
 have to operate at <span class="math notranslate nohighlight">\(U\)</span> times the input rate, but it also needs to

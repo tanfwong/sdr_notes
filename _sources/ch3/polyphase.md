@@ -34,7 +34,7 @@
 
 * Again, as shown in {cite}`oppenheim2010` Section 4.7.4, the $p$th
   branch above involving polyphase filter $z^{\left\lfloor
-  \frac{pD}{U} \right\rfloor} E_{pD\%U}(z)$ can itself be
+  pD/U \right\rfloor} E_{pD\%U}(z)$ can itself be
   equivalent to the following polyphase structure:
   ```{image} ../figures/polyphase_branch.jpg
   :alt: Polyphase implementation of a branch
