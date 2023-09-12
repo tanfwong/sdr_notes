@@ -446,7 +446,7 @@ of the
 </div>
 </li>
 <li><p>This architecture allows both direct-conversion and low-IF
-(superheterodyne with a low IF which is digitally implemented)
+(superheterodyne with a low IF based on digital implementation)
 transceiver implementations, depending on the frequency tuning
 setting. Three methods of tuning the oscillator frequency are
 supported:</p></li>
@@ -459,7 +459,7 @@ The VCO in the daughterboard is tuned to as close to the target
 frequency as possible. The remaining difference is digitally corrected
 by the <a class="reference external" href="https://en.wikipedia.org/wiki/CORDIC">CORDIC</a> in the FPGA on
 the motherboard.</p></li>
-<li><p>Strictly speaking, this is a low-IF implementation. Nevertheless the
+<li><p>Strictly speaking, this is a low-IF implementation. Nevertheless, the
 difference between the target frequency and the actual VCO frequency
 is often small because the VCO, by default using fractional-N
 tuning, has fine frequency steps. The resulting IF is very close to DC. Hence, the
@@ -491,7 +491,7 @@ RX frequencies that are set to after issuing
 <code class="docutils literal notranslate"><span class="pre">uhd::usrp::multi_usrp::set_rx_freq()</span></code>, respectively. To obtain
 detailed tuning information, we may query the <code class="docutils literal notranslate"><span class="pre">uhd::tune_result_t</span></code>
 objects returned above by using the pretty print string class method
-<code class="docutils literal notranslate"><span class="pre">uhd::tune_result_t</span> <span class="pre">::to_pp_string()</span></code>:</p>
+<code class="docutils literal notranslate"><span class="pre">uhd::tune_result_t::to_pp_string()</span></code>:</p>
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">tx_tune_result</span><span class="p">.</span><span class="n">to_pp_string</span><span class="p">();</span><span class="w"> </span>
 <span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">rx_tune_result</span><span class="p">.</span><span class="n">to_pp_string</span><span class="p">();</span><span class="w"> </span>
 </pre></div>
@@ -515,7 +515,7 @@ object:</p>
 to as close to <code class="docutils literal notranslate"><span class="pre">target_freq</span> <span class="pre">+</span> <span class="pre">IF_freq</span></code> as possible. As a
 result, the RX signal will be mixed down to IF and then sampled. The
 CORDIC in the FPGA then performs IF processing and mixes the IF signal
-down to baseband. The tuning process is simply the opposite on the TX
+down to baseband. The tuning process is simply the reverse on the TX
 side.</p>
 </li>
 <li><p>Since the sampling rate of the ADCs on the N210 motherboard is 100
@@ -523,22 +523,22 @@ MHz, the IF frequency can only ranges from <span class="math notranslate nohighl
 a positive (negative) <code class="docutils literal notranslate"><span class="pre">IF_freq</span></code> corresponding to up- (down-)
 conversion.</p></li>
 <li><p>As in any superheterodyne RX architecture, low-IF tuning suffers
-from the problem of image. The image occurs at <code class="docutils literal notranslate"><span class="pre">target_freq</span> <span class="pre">+</span> <span class="pre">2*IF_freq</span></code>. While neither is the SBX nor CBX daughterboard equipped
+from the problem of imaging. The image occurs at <code class="docutils literal notranslate"><span class="pre">target_freq</span> <span class="pre">+</span> <span class="pre">2*IF_freq</span></code>. While neither is the SBX nor CBX daughterboard equipped
 with an image rejection filter before the RF mixer, the complex
 baseband implementation of the IF stage in the FPGA implicitly
-provides image suppression equivalent to the Hartley architecture (see
-<span id="id1">[<a class="reference internal" href="usrp_refs.html#id10" title="B. Razavi. Design considerations for direct-conversion receivers. IEEE Transactions on Circuits and Systems II: Analog and Digital Signal Processing, 44(6):428-435, 1997. doi:10.1109/82.592569.">1</a>]</span>). However, due to the problem of <em>IQ imbalance</em>
-(see <a class="reference internal" href="iq.html#sec-iq"><span class="std std-ref">next section</span></a>), the image suppression ability resulted
-is suboptimal. For example, see the captured RX spectrum below:</p>
+provides image suppression equivalent to the Hartley architecture
+(see <span id="id1">[<a class="reference internal" href="usrp_refs.html#id10" title="B. Razavi. Design considerations for direct-conversion receivers. IEEE Transactions on Circuits and Systems II: Analog and Digital Signal Processing, 44(6):428-435, 1997. doi:10.1109/82.592569.">1</a>]</span>). However, due to the problem of <em>I-Q
+imbalance</em> (see <a class="reference internal" href="iq.html#sec-iq"><span class="std std-numref">Section 5.2</span></a>), the resulting image suppression
+ability is suboptimal. For example, see the captured RX
+spectrum below:</p>
 <a class="reference internal image-reference" href="../_images/lo_offset.png"><img alt="Image resulted from IQ imbalance" class="align-center" src="../_images/lo_offset.png" style="width: 800px;" /></a>
-<p>where the <code class="docutils literal notranslate"><span class="pre">target_freq</span></code> and <code class="docutils literal notranslate"><span class="pre">IF_freq</span></code> are set to <span class="math notranslate nohighlight">\(5.720\)</span> GHz and
-<span class="math notranslate nohighlight">\(2\)</span> MHz, respectively. The TX signal centered at <span class="math notranslate nohighlight">\(5.724\)</span> GHz acts as
-an image in this case. Notice that the image is mixed into the IF band
+<p>where the <code class="docutils literal notranslate"><span class="pre">target_freq</span></code> and <code class="docutils literal notranslate"><span class="pre">IF_freq</span></code> are set to <span class="math notranslate nohighlight">\(5.720\)</span> GHz and <span class="math notranslate nohighlight">\(2\)</span>
+MHz, respectively. The TX signal centered at <span class="math notranslate nohighlight">\(5.724\)</span> GHz acts as an
+image in this case. Notice that the image is mixed into the IF band
 and then mixed down to the baseband (shown as centered at
-<code class="docutils literal notranslate"><span class="pre">target_freq</span></code>). The equivalent Hartley architecture
-provides about a <span class="math notranslate nohighlight">\(35\)</span> dB image suppression performance. The spike
-shown at <span class="math notranslate nohighlight">\(5.722\)</span> GHz is due to the VCO (LO) leakage (see
-<a class="reference internal" href="iq.html#sec-iq"><span class="std std-ref">next section</span></a>).</p>
+<code class="docutils literal notranslate"><span class="pre">target_freq</span></code>). The equivalent Hartley architecture provides about a
+<span class="math notranslate nohighlight">\(35\)</span> dB image suppression performance. The spike shown at <span class="math notranslate nohighlight">\(5.722\)</span>
+GHz is due to the VCO (LO) leakage (see <a class="reference internal" href="iq.html#sec-iq"><span class="std std-numref">Section 5.2</span></a>).</p>
 </li>
 </ul>
 </section>
@@ -549,8 +549,8 @@ shown at <span class="math notranslate nohighlight">\(5.722\)</span> GHz is due 
 by setting the relevant members in the <code class="docutils literal notranslate"><span class="pre">uhd::tune_request_t</span></code> class
 object to the desired values. There could be a number of possible setting
 combinations and the details can be deduced from the
-<a class="reference external" href="https://files.ettus.com/manual_archive/v3.15.0.0/html/structuhd_1_1tune__request__t.html">UHD manual</a>.
-Below is a typical example that sets the VCO frequency is set to the
+<a class="reference external" href="https://files.ettus.com/manual/structuhd_1_1tune__request__t.html">UHD manual</a>.
+Below is a typical example that sets the VCO frequency to the
 allowable value closest to <code class="docutils literal notranslate"><span class="pre">target_freq+IF_freq</span></code> and send IF signal
 samples back to the host computer, <em>provided the sampling rate is
 set high enough</em>:</p>
