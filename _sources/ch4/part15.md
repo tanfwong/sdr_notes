@@ -2,33 +2,33 @@
 
 ## General Regulations 
 
-* [FCC Regulations Part 15](https://ecfr.federalregister.gov/current/title-47/chapter-I/subchapter-A/part-15)
+* [FCC Regulations Part 15](https://ecfr.gov/current/title-47/chapter-I/subchapter-A/part-15)
  "sets out the regulations under which an intentional, unintentional,
 or incidental radiator may be operated without an individual license."
-We will perform experiments using the USRP radios within the purview of
-Part 15.
+**We will perform experiments using the USRP radios within the purview of
+Part 15.**
 
 * The following sections in Part 15 are most relevant to us: 
-  - [Subpart A](https://ecfr.federalregister.gov/current/title-47/chapter-I/subchapter-A/part-15/subpart-A?toc=1): General 
-    - [Section 15.5](https://ecfr.federalregister.gov/current/title-47/chapter-I/subchapter-A/part-15/subpart-A/section-15.5): General conditions of operation
-    - [Section 15.23](https://ecfr.federalregister.gov/current/title-47/chapter-I/subchapter-A/part-15/subpart-A/section-15.23): Home-built devices 
-  - [Subpart C](https://ecfr.federalregister.gov/current/title-47/chapter-I/subchapter-A/part-15/subpart-C?toc=1): Intentional Radiators
-    - [Section 15.205](https://ecfr.federalregister.gov/current/title-47/chapter-I/subchapter-A/part-15/subpart-C/section-15.205): Restricted bands of operation
-    - [Section 15.209](https://ecfr.federalregister.gov/current/title-47/chapter-I/subchapter-A/part-15/subpart-C/section-15.209): Radiated emission limits; general requirements
-    - [Section 15.245](https://ecfr.federalregister.gov/current/title-47/chapter-I/subchapter-A/part-15/subpart-C/subject-group-ECFRf45d172319b1f81/section-15.245): Operation within the bands 902-928 MHz, 2435-2465 MHz, 5785-5815 MHz, 10500-10550 MHz, and 24075-24175 MHz.
-    - [Section 15.247](https://ecfr.federalregister.gov/current/title-47/chapter-I/subchapter-A/part-15/subpart-C/subject-group-ECFRf45d172319b1f81/section-15.247): Operation within the bands 902–928 MHz, 2400–2483.5 MHz, and 5725–5850 MHz.
-    - [Section 15.249](https://ecfr.federalregister.gov/current/title-47/chapter-I/subchapter-A/part-15/subpart-C/subject-group-ECFRf45d172319b1f81/section-15.249): Operation within the bands 902–928 MHz, 2400–2483.5 MHz, 5725–5875 MHZ, and 24.0–24.25 GHz.
-  - [Subpart E](https://ecfr.federalregister.gov/current/title-47/chapter-I/subchapter-A/part-15/subpart-E?toc=1): Unlicensed National Information Infrastructure Devices
+  - [Subpart A](https://ecfr.gov/current/title-47/chapter-I/subchapter-A/part-15/subpart-A?toc=1): General 
+    - [Section 15.5](https://ecfr.gov/current/title-47/chapter-I/subchapter-A/part-15/subpart-A/section-15.5): General conditions of operation
+    - [Section 15.23](https://ecfr.gov/current/title-47/chapter-I/subchapter-A/part-15/subpart-A/section-15.23): Home-built devices 
+  - [Subpart C](https://ecfr.gov/current/title-47/chapter-I/subchapter-A/part-15/subpart-C?toc=1): Intentional Radiators
+    - [Section 15.205](https://ecfr.gov/current/title-47/chapter-I/subchapter-A/part-15/subpart-C/section-15.205): Restricted bands of operation
+    - [Section 15.209](https://ecfr.gov/current/title-47/chapter-I/subchapter-A/part-15/subpart-C/section-15.209): Radiated emission limits; general requirements
+    - [Section 15.245](https://ecfr.gov/current/title-47/chapter-I/subchapter-A/part-15/subpart-C/subject-group-ECFRf45d172319b1f81/section-15.245): Operation within the bands 902-928 MHz, 2435-2465 MHz, 5785-5815 MHz, 10500-10550 MHz, and 24075-24175 MHz.
+    - [Section 15.247](https://ecfr.gov/current/title-47/chapter-I/subchapter-A/part-15/subpart-C/subject-group-ECFRf45d172319b1f81/section-15.247): Operation within the bands 902–928 MHz, 2400–2483.5 MHz, and 5725–5850 MHz.
+    - [Section 15.249](https://ecfr.gov/current/title-47/chapter-I/subchapter-A/part-15/subpart-C/subject-group-ECFRf45d172319b1f81/section-15.249): Operation within the bands 902–928 MHz, 2400–2483.5 MHz, 5725–5875 MHZ, and 24.0–24.25 GHz.
+  - [Subpart E](https://ecfr.gov/current/title-47/chapter-I/subchapter-A/part-15/subpart-E?toc=1): Unlicensed National Information Infrastructure Devices
 * Other sections that we won't use but you may want to take a look at:
-  - [Subpart F](https://ecfr.federalregister.gov/current/title-47/chapter-I/subchapter-A/part-15/subpart-F?toc=1): Ultra-Wideband Operation
-  - [Subpart G](https://ecfr.federalregister.gov/current/title-47/chapter-I/subchapter-A/part-15/subpart-G?toc=1): Access Broadband Over Power Line (Access BPL)
-  - [Subpart H](https://ecfr.federalregister.gov/current/title-47/chapter-I/subchapter-A/part-15/subpart-H?toc=1): (TV) White Space Devices
+  - [Subpart F](https://ecfr.gov/current/title-47/chapter-I/subchapter-A/part-15/subpart-F?toc=1): Ultra-Wideband Operation
+  - [Subpart G](https://ecfr.gov/current/title-47/chapter-I/subchapter-A/part-15/subpart-G?toc=1): Access Broadband Over Power Line (Access BPL)
+  - [Subpart H](https://ecfr.gov/current/title-47/chapter-I/subchapter-A/part-15/subpart-H?toc=1): (TV) White Space Devices
 
 ## Industrial, Scientific, and Medical bands
 * We will conduct our radio experiments in the 902-928 MHz, 2400-2483.5 MHz, and 5725-5850 MHz Industrial, Scientific, and Medical (ISM) bands.
 * Note that the SBX daughterboards can operate in the 902-928 MHz and 2400-2483.5 MHz bands, while the CBX daughterboards can operate in the 2400-2483.5 MHz and 5725-5850 MHz bands.
-* [Section 15.245](https://ecfr.federalregister.gov/current/title-47/chapter-I/subchapter-A/part-15/subpart-C/subject-group-ECFRf45d172319b1f81/section-15.245),  [Section 15.247](https://ecfr.federalregister.gov/current/title-47/chapter-I/subchapter-A/part-15/subpart-C/subject-group-ECFRf45d172319b1f81/section-15.247), and [Section 15.249](https://ecfr.federalregister.gov/current/title-47/chapter-I/subchapter-A/part-15/subpart-C/subject-group-ECFRf45d172319b1f81/section-15.249) allow low-power, non-licensed transmission in these bands. Section 15.247 concerns us the most because it mainly specifies the restrictions for communication signals.
-* Below is a summary of transmission allowed by  [Section 15.247](https://ecfr.federalregister.gov/current/title-47/chapter-I/subchapter-A/part-15/subpart-C/subject-group-ECFRf45d172319b1f81/section-15.247) (some of the wordings below are direct quotes from the FCC sections above):
+* [Section 15.245](https://ecfr.gov/current/title-47/chapter-I/subchapter-A/part-15/subpart-C/subject-group-ECFRf45d172319b1f81/section-15.245),  [Section 15.247](https://ecfr.gov/current/title-47/chapter-I/subchapter-A/part-15/subpart-C/subject-group-ECFRf45d172319b1f81/section-15.247), and [Section 15.249](https://ecfr.gov/current/title-47/chapter-I/subchapter-A/part-15/subpart-C/subject-group-ECFRf45d172319b1f81/section-15.249) allow low-power, non-licensed transmission in these bands. Section 15.247 concerns us the most because it mainly specifies the restrictions for communication signals.
+* Below is a summary of the types of transmission allowed by  [Section 15.247](https://ecfr.gov/current/title-47/chapter-I/subchapter-A/part-15/subpart-C/subject-group-ECFRf45d172319b1f81/section-15.247) (some of the wordings below are direct quotes from the FCC sections above):
 
 ### Frequency hopping 
 * Any two hopping channel carrier frequencies must be separated by at least the maximum between 25 kHz and the 20 dB bandwidth of the hopping channel.
@@ -58,16 +58,16 @@ Part 15.
 * The minimum 6 dB bandwidth must be at least 500 kHz.
 * The maximum peak conducted output power or the maximum conducted output power shall not exceed 1 W. Maximum Conducted Output Power is defined as the total transmit power delivered to all antennas and antenna elements averaged across all symbols in the signaling alphabet when the transmitter is operating at its maximum power control level. The average must not include any time intervals during which the transmitter is off or is transmitting at a reduced power level. If multiple modes of operation are possible (e.g., alternative modulation methods), the maximum conducted output power is the highest total transmit power occurring in any mode.
 * The power spectral density conducted to the antenna shall not be greater than 8 dBm in any 3 kHz band during any time interval of continuous transmission.
-* Devices using digital modulation techniques in the 5725-5850 MHz bands are specified under [Subpart E](https://ecfr.federalregister.gov/current/title-47/chapter-I/subchapter-A/part-15/subpart-F?toc=1).
+* Devices using digital modulation techniques in the 5725-5850 MHz bands are specified under [Subpart E](https://ecfr.gov/current/title-47/chapter-I/subchapter-A/part-15/subpart-E?toc=1).
 
 ### Antenna gain
 * The conducted output power limit above is based on the use of antennas with directional gains that do not exceed 6 dBi. 
 * If transmitting antennas of directional gain greater than 6 dBi are used, the conducted output power shall be reduced below the stated values by the amount in dB that the directional gain of the antenna exceeds 6 dBi. 
-* Other further restrictions may also apply. See [Section 15.247(c)](https://ecfr.federalregister.gov/current/title-47/chapter-I/subchapter-A/part-15/subpart-C/subject-group-ECFRf45d172319b1f81/section-15.247) for details.
+* Other further restrictions may also apply. See [Section 15.247(c)](https://ecfr.gov/current/title-47/chapter-I/subchapter-A/part-15/subpart-C/subject-group-ECFRf45d172319b1f81/section-15.247) for details.
 
 ### Out-of-band radiation
 * In any 100 kHz bandwidth outside the frequency band in which the system is operating, the radio frequency power that is produced by the intentional radiator must be at least 20 dB below that in the 100 kHz bandwidth within the band that contains the highest level of the desired power, provided the transmitter demonstrates compliance with the peak conducted power limits. 
 * If the transmitter complies with the conducted power limits based on the use of RMS averaging over a time interval, the attenuation required shall be 30 dB.
 * Attenuation below the general limits specified in Section 15.209 is not required. 
-* Radiated emissions which fall in the restricted bands, as defined in Section 15.205, must comply with the radiated emission limits specified in [Section 15.209](https://ecfr.federalregister.gov/current/title-47/chapter-I/subchapter-A/part-15/subpart-C/section-15.209).
+* Radiated emissions which fall in the restricted bands, as defined in Section 15.205, must comply with the radiated emission limits specified in [Section 15.209](https://ecfr.gov/current/title-47/chapter-I/subchapter-A/part-15/subpart-C/section-15.209).
 
