@@ -153,7 +153,7 @@
   for correction are estimated on-the-fly (see the discussion below). 
   The overload methods may be invoked by passing a `true` as the first
   input argument to the methods. The default setting is to perform
-  automatic correction for DC offset. See the UHD [manual](https://files.ettus.com/manual_archive/v3.15.0.0/html/classuhd_1_1usrp_1_1multi__usrp.html#a7beb49c1a04a81b3e7569db482453746)
+  automatic correction for DC offset. See the UHD [manual](https://files.ettus.com/manual/classuhd_1_1usrp_1_1multi__usrp.html#a7beb49c1a04a81b3e7569db482453746)
   for details.
   ```
 * Similarly, the effects of TX DC offset and IQ imbalance can be
