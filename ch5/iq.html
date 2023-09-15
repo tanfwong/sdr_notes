@@ -437,16 +437,15 @@ document.write(`
 <section id="tx-model">
 <h2><span class="section-number">5.2.1. </span>TX model<a class="headerlink" href="#tx-model" title="Permalink to this headline">#</a></h2>
 <ul>
-<li><p>Consider the TX chain shown in the N210 architecture
-<a class="reference internal" href="tuning.html#sec-tuning"><span class="std std-ref">before</span></a>. The mixers in the I and Q chains are not
-perfectly balanced, and thus may apply different gains to the mixed
+<li><p>Consider the TX chain of the N210 radio shown in <a class="reference internal" href="tuning.html#sec-tuning"><span class="std std-numref">Section 5.1</span></a>.
+The mixers in the I and Q chains may not be perfectly balanced in practice,
+and thus may apply different gains to the mixed
 signals. In addition, the phase shifter may not perfectly provide a
-<span class="math notranslate nohighlight">\(90^\circ\)</span> phase shift, and thus the I and Q carriers generated may
+<span class="math notranslate nohighlight">\(90^\circ\)</span> phase shift, and hence the I and Q carriers generated may
 not be exactly <span class="math notranslate nohighlight">\(90^\circ\)</span> out of phase. The combination of the gain
 and phase imbalance between the I and Q paths is commonly referred
-to as <strong>IQ imbalance</strong>. More generally, the two lowpass filters in
-the I and Q paths may not be perfectly matched either. Thus, IQ
-imbalance may also be frequency selective.</p></li>
+to as <strong>IQ imbalance</strong>. More generally, the IQ
+imbalance effects may also be frequency selective.</p></li>
 <li><p>The isolation between the VCO and the TX amplifier may not be
 perfect in that the (hopefully weakened) VCO signal may leak
 directly to the amplifier input. This adds an unintended carrier
@@ -482,7 +481,7 @@ x(t) = %\left\{
 %\right\} e^{j 2\pi f_c t}
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(m(t) = m_I(t) + j m_Q (t)\)</span> and <span class="math notranslate nohighlight">\(x(t)\)</span> are the
-complex envelops of the message and TX signals, respectively.</p>
+complex envelops of the message and TX signal, respectively.</p>
 </li>
 <li><p>Practically, the value of <span class="math notranslate nohighlight">\(\phi\)</span> should be no larger than a few degrees,
 and <span class="math notranslate nohighlight">\(\alpha_I\)</span> and <span class="math notranslate nohighlight">\(\alpha_Q\)</span> should differ by only a few percentages.</p></li>
@@ -496,7 +495,7 @@ of the RX chain. The VCO leakage on the RX side is to the input of
 the LNA. The effect still results in a DC offset in the complex baseband
 demodulated signal. Again, assume that the DC offset and IQ imbalance
 are time-invariant and frequency non-selective and that the RX amplifiers
-aree perfectly linear. Then the following model can be used
+are perfectly linear. Then, the following model can be used
 to describe the RX circuit defects in the complex baseband:</p>
 <div class="math notranslate nohighlight" id="equation-e-rxmodel-complex">
 <span class="eqno">(5.3)<a class="headerlink" href="#equation-e-rxmodel-complex" title="Permalink to this equation">#</a></span>\[\begin{equation} 
@@ -509,7 +508,7 @@ y^*(t) %^e^{-j 2\pi f_c t} \right)^*
 + \beta_{dc} e^{j \zeta}
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\hat m(t)\)</span> and <span class="math notranslate nohighlight">\(y(t)\)</span> are the complex envelops
-of the demodulated baseband message and RX signals, respectively.</p>
+of the demodulated baseband message and RX signal, respectively.</p>
 </li>
 <li><p>As before, the value of <span class="math notranslate nohighlight">\(\psi\)</span> is no larger than a few degrees, and
 <span class="math notranslate nohighlight">\(\beta_I\)</span> and <span class="math notranslate nohighlight">\(\beta_Q\)</span> differ by at most a few percentages.</p></li>

@@ -2,16 +2,15 @@
 # DC Offset and IQ Imbalance
 
 ## TX model
-* Consider the TX chain shown in the N210 architecture
-  [before](sec:tuning). The mixers in the I and Q chains are not
-  perfectly balanced, and thus may apply different gains to the mixed
+* Consider the TX chain of the N210 radio shown in {numref}`sec:tuning`.
+  The mixers in the I and Q chains may not be perfectly balanced in practice, 
+  and thus may apply different gains to the mixed
   signals. In addition, the phase shifter may not perfectly provide a
-  $90^\circ$ phase shift, and thus the I and Q carriers generated may
+  $90^\circ$ phase shift, and hence the I and Q carriers generated may
   not be exactly $90^\circ$ out of phase. The combination of the gain
   and phase imbalance between the I and Q paths is commonly referred
-  to as **IQ imbalance**. More generally, the two lowpass filters in
-  the I and Q paths may not be perfectly matched either. Thus, IQ
-  imbalance may also be frequency selective.
+  to as **IQ imbalance**. More generally, the IQ
+  imbalance effects may also be frequency selective.
 * The isolation between the VCO and the TX amplifier may not be
   perfect in that the (hopefully weakened) VCO signal may leak
   directly to the amplifier input. This adds an unintended carrier
@@ -51,7 +50,7 @@
   \end{equation}
   ```
   where $m(t) = m_I(t) + j m_Q (t)$ and $x(t)$ are the
-  complex envelops of the message and TX signals, respectively.
+  complex envelops of the message and TX signal, respectively.
 * Practically, the value of $\phi$ should be no larger than a few degrees, 
   and $\alpha_I$ and $\alpha_Q$ should differ by only a few percentages.
 
@@ -61,7 +60,7 @@
   the LNA. The effect still results in a DC offset in the complex baseband 
   demodulated signal. Again, assume that the DC offset and IQ imbalance
   are time-invariant and frequency non-selective and that the RX amplifiers
-  aree perfectly linear. Then the following model can be used
+  are perfectly linear. Then, the following model can be used
   to describe the RX circuit defects in the complex baseband:
   ```{math}
   :label: e:RXmodel_complex
@@ -76,7 +75,7 @@
   \end{equation}
   ```
   where $\hat m(t)$ and $y(t)$ are the complex envelops
-  of the demodulated baseband message and RX signals, respectively.
+  of the demodulated baseband message and RX signal, respectively.
 * As before, the value of $\psi$ is no larger than a few degrees, and
   $\beta_I$ and $\beta_Q$ differ by at most a few percentages.
 
