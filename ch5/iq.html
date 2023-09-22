@@ -680,7 +680,7 @@ correction each time the transceiver is used. This is the approach
 adopted by UHD:</p>
 <ul>
 <li><p>For RX DC offset, the FPGA calculates a long-term average of the
-DAC outputs as an estimate of <span class="math notranslate nohighlight">\(\beta_{dc} e^{j \zeta}\)</span> (based on
+ADC outputs as an estimate of <span class="math notranslate nohighlight">\(\beta_{dc} e^{j \zeta}\)</span> (based on
 the assumption that transmission is mostly idle over a long term
 or that the RX DC offset dominates over the level of most RX
 signals). Then it automatically removes the DC offset from the RX
@@ -699,7 +699,7 @@ ON</strong></p>
 <p>Both spectrums are captured when the channel is idle. The RX LO
 frequency is set to <span class="math notranslate nohighlight">\(5.72\)</span> GHz. From the first spectrum (when RX
 DC offset correction is OFF), we can see that the RX DC offset at
-this frequency is very severe. Fron the second spectrum (when RX
+this frequency is very severe. From the second spectrum (when RX
 DC offset correction is ON), the correction process successfully
 removes the majority of the DC offset but nonetheless still
 leaves a leaked carrier component significantly above the noise
@@ -726,17 +726,19 @@ following three programs:</p>
 <p>The optimal correction factors are obtained by a straightforward
 search over each carrier frequency step over the frequency range
 supported by the daughterboard. The pre-calibration results are
-stored in the directory <code class="docutils literal notranslate"><span class="pre">~/.uhd/cal/</span></code>. Corrections are made
+stored in the directory <code class="docutils literal notranslate"><span class="pre">~/.local/share/uhd/cal/</span></code>. Corrections are made
 automatically by UHD each time the TX and RX frequency is set by
 the class methods <code class="docutils literal notranslate"><span class="pre">uhd::usrp::multi_usrp::set_tx_freq()</span></code> and
 <code class="docutils literal notranslate"><span class="pre">uhd::usrp::multi_usrp::set_rx_freq()</span></code>. For more details about the
 implementation of this pre-calibration process, refer to the
-<a class="reference external" href="https://github.com/EttusResearch/uhd/tree/UHD-3.15.LTS/host/utils">source codes</a>
-of the calibration programs above.</p>
+<a class="reference external" href="https://github.com/EttusResearch/uhd/tree/master/host/utils">source
+codes</a>
+of the calibration programs above and
+<a class="reference external" href="https://files.ettus.com/manual/page_calibration.html">this</a> UHD manual page.</p>
 <p>The captured spectrums below show the improvements obtained after
 applying all three corrections to the single-tone image example
-considered <a class="reference internal" href="#sec-single-tone"><span class="std std-ref">above</span></a> and to the low-IF tuning image
-example considered in the <a class="reference internal" href="tuning.html#sec-tuning"><span class="std std-ref">previous</span></a> section:</p>
+considered in <a class="reference internal" href="#sec-single-tone"><span class="std std-numref">Section 5.2.3</span></a> and to the low-IF tuning image
+example considered in <a class="reference internal" href="tuning.html#sec-lowif"><span class="std std-numref">Section 5.1.2</span></a>:</p>
 <p align=center><strong>Offset single-tone image with corrections</strong></p>
 <a class="reference internal image-reference" href="../_images/iq_image_with_iq_balancing.png"><img alt="Offset single-tone image with corrections" class="align-center" src="../_images/iq_image_with_iq_balancing.png" style="width: 800px;" /></a>
 <p align=center><strong>Low-IF tuning with corrections</strong></p>
@@ -747,7 +749,7 @@ the corrections making the IRR in the single-tone example at least
 <span class="math notranslate nohighlight">\(-50\)</span> dB and the low-IF image suppressed by at least 45
 dB. However, the continuous transmission of the offset tone appears
 to have skewed the long-term averaging correction of the RC DC
-offset.</p>
+offset in the first example.</p>
 </li>
 </ul>
 </li>

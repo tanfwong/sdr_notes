@@ -8,11 +8,11 @@ one main design consideration is to control the spectral shape of the
 TX signal. This is typically done by carefully design the **pulse
 shape** of the digital symbols. We will discuss a standard pulse
 shaping design here. In addition, we are primarily interested in
-implementing a packet-switched communication system here. In a
+implementing a packet-switched communication system. In a
 packet-switched system, the transmission is neither continuous nor
 regular. Hence, we must determine at the RX whether the RX samples
 contain the TX signal. This is typical done by an energy detector. We
-will discuss here different energy detectors and a related processing
-step called automatic gain control.
+will discuss different energy detectors and a related processing
+step called **automatic gain control**.
 
 

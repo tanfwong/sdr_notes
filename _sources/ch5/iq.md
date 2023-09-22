@@ -224,7 +224,7 @@
   correction each time the transceiver is used. This is the approach
   adopted by UHD:
   - For RX DC offset, the FPGA calculates a long-term average of the
-    DAC outputs as an estimate of $\beta_{dc} e^{j \zeta}$ (based on
+    ADC outputs as an estimate of $\beta_{dc} e^{j \zeta}$ (based on
     the assumption that transmission is mostly idle over a long term
     or that the RX DC offset dominates over the level of most RX
     signals). Then it automatically removes the DC offset from the RX
@@ -255,7 +255,7 @@
     Both spectrums are captured when the channel is idle. The RX LO
     frequency is set to $5.72$ GHz. From the first spectrum (when RX
     DC offset correction is OFF), we can see that the RX DC offset at
-    this frequency is very severe. Fron the second spectrum (when RX
+    this frequency is very severe. From the second spectrum (when RX
     DC offset correction is ON), the correction process successfully
     removes the majority of the DC offset but nonetheless still
     leaves a leaked carrier component significantly above the noise
@@ -280,18 +280,20 @@
     The optimal correction factors are obtained by a straightforward
     search over each carrier frequency step over the frequency range
     supported by the daughterboard. The pre-calibration results are
-    stored in the directory `~/.uhd/cal/`. Corrections are made
+    stored in the directory `~/.local/share/uhd/cal/`. Corrections are made
     automatically by UHD each time the TX and RX frequency is set by
     the class methods `uhd::usrp::multi_usrp::set_tx_freq()` and
     `uhd::usrp::multi_usrp::set_rx_freq()`. For more details about the
     implementation of this pre-calibration process, refer to the
-    [source codes](https://github.com/EttusResearch/uhd/tree/UHD-3.15.LTS/host/utils)
-    of the calibration programs above. 
+    [source
+    codes](https://github.com/EttusResearch/uhd/tree/master/host/utils)
+    of the calibration programs above and
+    [this](https://files.ettus.com/manual/page_calibration.html) UHD manual page. 
 
     The captured spectrums below show the improvements obtained after
     applying all three corrections to the single-tone image example
-    considered [above](sec:single_tone) and to the low-IF tuning image
-    example considered in the [previous](sec:tuning) section:
+    considered in {numref}`sec:single_tone` and to the low-IF tuning image
+    example considered in {numref}`sec:lowIF`:
     
     <p align=center><strong>Offset single-tone image with corrections</strong></p>
     
@@ -315,5 +317,5 @@
     $-50$ dB and the low-IF image suppressed by at least 45
     dB. However, the continuous transmission of the offset tone appears
     to have skewed the long-term averaging correction of the RC DC
-    offset.
+    offset in the first example.
 

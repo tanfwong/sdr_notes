@@ -69,6 +69,7 @@ supported:
    or by accessing their members `target_dsp_freq`,
   `target_rf_freq`, `actual_dsp_freq`, and `actual_rf_freq` directly.
 
+(sec:lowIF)=
 ## Automatic low-IF tuning 
 * This method is similar to automatic direct-conversion tuning
   discussed above, except that we explicitly specify the IF frequency in
