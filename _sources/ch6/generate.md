@@ -12,7 +12,7 @@
   we transmit one signal from the finite collection $\{s_0(t), s_1(t), \ldots,
   s_{M-1}(t)\}$ to convey one symbol worth of data. We usually call the
   vector-space representation of the collection of signals, or just
-  the collection itself, the signal **constellation**. The choice
+  the collection itself, the **signal constellation**. The choice
   of which signal to send is determined by the whole symbol
   sequence $b[n]$ in general. For the $n$th symbol period, denote the
   signal transmitted by $s(t-nT;n)$, where the delay $nT$ accounts for

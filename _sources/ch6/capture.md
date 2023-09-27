@@ -204,6 +204,6 @@
     job of such an AGC is to automatically scale the signal to a
     desired level for later processing. Since we often process blocks
     of RX samples at the host computer, we may simply apply the
-    requirement normalization in an open-loop manner on each block of
+    required normalization in an open-loop manner on each block of
     RX samples.
 
