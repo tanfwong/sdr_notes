@@ -20,12 +20,12 @@
   because of how acquisition is commonly implemented, it also serves
   to identify whether the captured signal is one of our interest.
 * In a typical digital communication system, acquisition is only
-  performed once at the beginning of RX after the signal is
-  captured. If the packet is long, symbol synchronization is achieved
-  and maintained by closed-loop circuitry during the whole duration of
-  the packet to account for the possibility of hardware clock
-  frequency offset and drift.  On the other hand, if the packet is
-  short, one-shot symbol synchronization may be performed at the
-  beginning of RX together with acquisition.
+  performed once after the packet's signal is captured. If the packet
+  is long, symbol synchronization is achieved and maintained by
+  closed-loop circuitry during the whole duration of the packet to
+  account for the possibility of hardware clock frequency offset and
+  drift.  On the other hand, if the packet is short, one-shot symbol
+  synchronization may be performed at the beginning together with
+  acquisition.
 
 
