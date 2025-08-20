@@ -509,7 +509,7 @@ employ this latter approach here.</p></li>
 <a class="reference internal image-reference" href="../_images/n200.png"><img alt="N200/210 block diagram from Ettus" class="align-center" src="../_images/n200.png" style="width: 800px;" /></a>
 <ul class="simple">
 <li><p>DAC/ADC resolution: 16/14 bits</p></li>
-<li><p>Maximum transfer rate to/from host host PC: 25 M complex samples/s (16-bit) or 50 M complex samples/s (8-bit)</p></li>
+<li><p>Maximum transfer rate to/from host PC: 25 M complex samples/s (16-bit) or 50 M complex samples/s (8-bit)</p></li>
 <li><p>Digital up/down convertors:</p>
 <ul>
 <li><p>Needed to reconcile the differences between host sampling rates and ADC/DAC sampling rates</p></li>
@@ -542,7 +542,8 @@ employ this latter approach here.</p></li>
 <ul>
 <li><p>No RF chain, serves as a simple interface between motherboard and external RF frontends (I &amp; Q channels)</p></li>
 <li><p>Analog BW: 250 MHz</p></li>
-<li><p>Can be used (via direct connection to antenna and aliasing) as a
+<li><p>Can be used (via direct connection to antenna and Nyquist zone
+sampling) as a
 low-sensitivity RX frontend around the FM band</p></li>
 </ul>
 </li>
@@ -558,7 +559,7 @@ low-sensitivity RX frontend around the FM band</p></li>
 <li><p>Newer versions of UHD also contain <a class="reference external" href="https://www.ettus.com/sdr-software/rfnoc/">RF Network-on-Chip
 (RFNoC)</a>  APIs that
 support block-level programming of FPGA IP blocks on
-some of the newer USRP radios, such as X3xx and N3/4xx</p></li>
+some of the newer USRP radios, such as X3xx/4xx and N3/4xx</p></li>
 <li><p><strong>We will use the basic C++ UHD APIs throughout the course</strong></p></li>
 </ul>
 </section>
@@ -589,10 +590,10 @@ developing SDR applications.</p>
 <div class="attention admonition">
 <p class="admonition-title">Why not use GNU Radio as our teaching platform?</p>
 <ul class="simple">
-<li><p>We will study some physical-layer (PHY) communication and signal
+<li><p>We will study physical-layer (PHY) communication and signal
 processing techniques/algorithms that are used to implement
-SDRs. We will definitely learn better by implementing them from
-scratch.</p></li>
+SDRs. We will definitely learn better by implementing the algorithms
+from scratch.</p></li>
 <li><p>I believe learning the software plumbings that build SDRs is
 also very important. GNU Radio is great but it hides most of
 the plumbing stuff.</p></li>

@@ -71,7 +71,7 @@
 :align: center
 ```
 - DAC/ADC resolution: 16/14 bits
-- Maximum transfer rate to/from host host PC: 25 M complex samples/s (16-bit) or 50 M complex samples/s (8-bit)
+- Maximum transfer rate to/from host PC: 25 M complex samples/s (16-bit) or 50 M complex samples/s (8-bit)
 - Digital up/down convertors:
     * Needed to reconcile the differences between host sampling rates and ADC/DAC sampling rates
     * Host sampling rates should be selected carefully to work with various rate conversion operations and filtering in DDC/DUC
@@ -94,7 +94,8 @@
 * <u>Basic TX and RX:</U>
     - No RF chain, serves as a simple interface between motherboard and external RF frontends (I & Q channels)
     - Analog BW: 250 MHz
-    - Can be used (via direct connection to antenna and aliasing) as a
+    - Can be used (via direct connection to antenna and Nyquist zone
+      sampling) as a
       low-sensitivity RX frontend around the FM band
 
 
@@ -106,7 +107,7 @@
 * Newer versions of UHD also contain [RF Network-on-Chip
   (RFNoC)](https://www.ettus.com/sdr-software/rfnoc/)  APIs that
   support block-level programming of FPGA IP blocks on
-  some of the newer USRP radios, such as X3xx and N3/4xx
+  some of the newer USRP radios, such as X3xx/4xx and N3/4xx
 * **We will use the basic C++ UHD APIs throughout the course**
 
 ## [GNU Radio](https://www.gnuradio.org/)
@@ -128,10 +129,10 @@
   developing SDR applications.
   ```{admonition} Why not use GNU Radio as our teaching platform?
   :class: attention
-     - We will study some physical-layer (PHY) communication and signal
+     - We will study physical-layer (PHY) communication and signal
 	 processing techniques/algorithms that are used to implement
-	 SDRs. We will definitely learn better by implementing them from
-	 scratch.
+	 SDRs. We will definitely learn better by implementing the algorithms
+     from scratch.
 	 - I believe learning the software plumbings that build SDRs is
        also very important. GNU Radio is great but it hides most of
        the plumbing stuff.
