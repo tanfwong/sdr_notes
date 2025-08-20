@@ -61,7 +61,7 @@
 ## [USRP N210 Radios](https://en.wikipedia.org/wiki/Universal_Software_Radio_Peripheral)[^n210] used in class
 
 [^n210]: Unfortunately, Ettus Research has retired the N210
-  series. Nevertheless, the N210 radios we have are still fully
+  series. Nevertheless, the N210 radios we have are fully
   functional and perfect for class purposes.
 
 ### Motherboard
