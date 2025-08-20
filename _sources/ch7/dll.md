@@ -78,7 +78,7 @@ estimation of the symbol timing in an AWGN channel.
 ## Non-decision-directed DLLs
 * For simplicity, consider the BPSK symbols here (i.e. $b[n] = \pm
   1$). When no training sequence of symbols is available, we model the
-  symbols as i.i.d. binary random variables wiht equal probabilities.
+  symbols as i.i.d. binary random variables with equal probabilities.
   Again, this model suggests that we do not want to estimate/demodulate
   the symbols at this point. Further assume that the pulse shape $p(t)$
   have most of its energy concentrated to a symbol period. Then it is
