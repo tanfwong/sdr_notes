@@ -58,10 +58,9 @@
   PC. All baseband processing is done by software in the host PC. We will
   employ this latter approach here.
 
-## [USRP N210 Radios](https://en.wikipedia.org/wiki/Universal_Software_Radio_Peripheral)
-  used in class
+## [USRP N210 Radios](https://en.wikipedia.org/wiki/Universal_Software_Radio_Peripheral)[^n210] used in class
 
-* Unfortunately, Ettus Research has retired the N210
+[^n210]: Unfortunately, Ettus Research has retired the N210
   series. Nevertheless, the N210 radios we have are still fully
   functional and perfect for class purposes.
 
