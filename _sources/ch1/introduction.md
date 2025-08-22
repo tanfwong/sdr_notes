@@ -40,9 +40,12 @@
 * USRP stands for "Universal Software Radio Peripheral"
 * A collection of relatively low-cost, high-performance SDRs developed
   by [Ettus Research](http://www.ettus.com/)
-* A USRP radio generally consists of a "motherboard" and a number of
-  interchangeable "daughterboards" (except for the B-series, 
-  E-series, and some of the newer N-series radios)
+* A USRP radio generally consists of a "motherboard" and a
+  "daughterboard." For some older USRP radios (such as the N2xx
+  series and X3xx series), the daughterboard is interchangeable. For most newer USRP
+  radios,  such the B-series, 
+  E-series, and some of the newer N-series and X-series radios, the
+  "dautherboard" is intergrated and thus can't be changed.
 * A daughterboard typically contains an RF frontend with programmable
   mixers (carrier frequency) and amplifiers (gains)
 * The motherboard typically contains high-speed ADCs, DACs, an FPGA,
