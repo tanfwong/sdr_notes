@@ -438,8 +438,9 @@ document.write(`
 <li><p>It provides C++ APIs to set up, query, and control a USRP radio and
 to transfer signal samples between the USRP radio and a host
 computer.</p></li>
-<li><p>The version of UHD that we will use in class (installed on <code class="docutils literal notranslate"><span class="pre">lab-1</span></code>
-and <code class="docutils literal notranslate"><span class="pre">lab-2</span></code>) is <a class="reference external" href="https://files.ettus.com/manual/">UHD 4.4.0</a>.</p></li>
+<li><p>The version of UHD that we will use in class (installed on
+<code class="docutils literal notranslate"><span class="pre">sdr-alice</span></code>
+and <code class="docutils literal notranslate"><span class="pre">sdr-bob</span></code>) is <a class="reference external" href="https://files.ettus.com/manual/">UHD 4.8.0</a>.</p></li>
 </ul>
 <section id="uhd-safe-main-macro-and-termination-trick">
 <h2><span class="section-number">2.1.1. </span>UHD_SAFE_MAIN macro and Termination trick<a class="headerlink" href="#uhd-safe-main-macro-and-termination-trick" title="Permalink to this headline">#</a></h2>
@@ -481,9 +482,9 @@ catches and prints out an exception, in case it is thrown, to
 that help us do many common application tasks. We will mainly use
 the Boost libraries for option parsing, printing, and sometimes
 threading. The version of Boost installed installed on
-<code class="docutils literal notranslate"><span class="pre">lab-1</span></code> and <code class="docutils literal notranslate"><span class="pre">lab-2</span></code> is <a class="reference external" href="https://www.boost.org/doc/libs/1_74_0/">Boost 1.74.0</a>.</p></li>
+<code class="docutils literal notranslate"><span class="pre">sdr-alice</span></code> and <code class="docutils literal notranslate"><span class="pre">sdr-bob</span></code> is <a class="reference external" href="https://www.boost.org/libraries/1.83.0/grid/">Boost 1.83.0</a>.</p></li>
 <li><p>In particular,
-<a class="reference external" href="https://www.boost.org/doc/libs/1_74_0/doc/html/program_options.html">Boost.Program_options</a>
+<a class="reference external" href="https://www.boost.org/library/1.83.0/program_options/">Boost.Program_options</a>
 library will come in handy when parsing program options.</p></li>
 <li><p><u>Example</u>: <a class="reference internal" href="age.html#code-age"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">age.cpp</span></code></span></a></p></li>
 </ul>

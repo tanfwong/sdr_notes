@@ -4,8 +4,9 @@
 * It provides C++ APIs to set up, query, and control a USRP radio and
   to transfer signal samples between the USRP radio and a host
   computer.
-* The version of UHD that we will use in class (installed on `lab-1`
-  and `lab-2`) is [UHD 4.4.0](https://files.ettus.com/manual/).
+* The version of UHD that we will use in class (installed on
+  `sdr-alice`
+  and `sdr-bob`) is [UHD 4.8.0](https://files.ettus.com/manual/).
 
 
 ## UHD_SAFE_MAIN macro and Termination trick
@@ -43,9 +44,9 @@
   that help us do many common application tasks. We will mainly use
   the Boost libraries for option parsing, printing, and sometimes
   threading. The version of Boost installed installed on
-  `lab-1` and `lab-2` is [Boost 1.74.0](https://www.boost.org/doc/libs/1_74_0/).
+  `sdr-alice` and `sdr-bob` is [Boost 1.83.0](https://www.boost.org/libraries/1.83.0/grid/).
 * In particular,
-  [Boost.Program_options](https://www.boost.org/doc/libs/1_74_0/doc/html/program_options.html)
+  [Boost.Program_options](https://www.boost.org/library/1.83.0/program_options/)
   library will come in handy when parsing program options. 
 * <u>Example</u>: [`age.cpp`](code:age)
 
