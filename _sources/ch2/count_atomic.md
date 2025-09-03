@@ -95,7 +95,8 @@ int UHD_SAFE_MAIN(int argc, char *argv[]) {
         
     // Keep running until CTRL-C issued
     while (not stop_signal_called) {
-        std::this_thread::yield(); // This is more CPU efficient
+        // This tells the Linux Scheduler that this thread may give up its time share
+        std::this_thread::yield(); 
     }
 
     // Join all worker threads

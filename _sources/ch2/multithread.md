@@ -54,7 +54,9 @@
 * The priority of the main thread can be set using the
   `uhd::set_thread_priority_safe()` method in `main()`. The same
   method can be used to set the thread priority in the function that a
-  spawned thread executes. The `uhd::set_thread_priority_safe()`
+  spawned thread executes. All threads spawned in a parent thread will
+  inherit the priority of the parent thread if not otherwise set.
+* The `uhd::set_thread_priority_safe()`
   method is a UHD wrapper to set thread priority using
   [Pthreads](https://computing.llnl.gov/tutorials/pthreads/) in
   UNIX-based systems. The `gcc` compiler, in most of such systems,
@@ -115,14 +117,14 @@ such an implementation is not **thread-safe**.
   construct mutexes. 
   ```{admonition} Dig deeper 
   You may also use the somewhat more versatile `boost::mutex` class from the
-  [Boost.Thread](https://www.boost.org/doc/libs/1_74_0/doc/html/thread.html)
+  [Boost.Thread](https://www.boost.org/library/1.83.0/thread/)
   library. 
   ```
 * There are many ways to use mutexes for thread synchronization.
    The following three simple ways are pretty much all needed for most
    of our purposes.
   ```{admonition} Dig deeper 
-  See this [tutorial](http://www.boost.org/doc/libs/1_74_0/doc/html/thread/synchronization.html)
+  See this [tutorial](http://www.boost.org/doc/libs/1_83_0/doc/html/thread/synchronization.html)
   for a short introduction and {cite}`williams2019` for a more
   detailed treatment. 
   ```

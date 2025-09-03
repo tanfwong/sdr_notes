@@ -520,17 +520,18 @@ document.write(`
 <span class="linenos"> 88</span><span class="w">        </span>
 <span class="linenos"> 89</span><span class="w">    </span><span class="c1">// Keep running until CTRL-C issued</span>
 <span class="linenos"> 90</span><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">not</span><span class="w"> </span><span class="n">stop_signal_called</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="linenos"> 91</span><span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">this_thread</span><span class="o">::</span><span class="n">yield</span><span class="p">();</span><span class="w"> </span><span class="c1">// This is more CPU efficient</span>
-<span class="linenos"> 92</span><span class="w">    </span><span class="p">}</span>
-<span class="linenos"> 93</span>
-<span class="linenos"> 94</span><span class="w">    </span><span class="c1">// Join all worker threads</span>
-<span class="linenos"> 95</span><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">&lt;</span><span class="n">num_threads</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="linenos"> 96</span><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">worker</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">joinable</span><span class="p">())</span><span class="w"> </span><span class="n">worker</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">join</span><span class="p">();</span>
-<span class="linenos"> 97</span><span class="w">    </span><span class="p">}</span>
-<span class="linenos"> 98</span>
-<span class="linenos"> 99</span><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-<span class="linenos">100</span><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">EXIT_SUCCESS</span><span class="p">;</span>
-<span class="linenos">101</span><span class="p">}</span>
+<span class="linenos"> 91</span><span class="w">        </span><span class="c1">// This tells the Linux Scheduler that this thread may give up its time share</span>
+<span class="linenos"> 92</span><span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">this_thread</span><span class="o">::</span><span class="n">yield</span><span class="p">();</span><span class="w"> </span>
+<span class="linenos"> 93</span><span class="w">    </span><span class="p">}</span>
+<span class="linenos"> 94</span>
+<span class="linenos"> 95</span><span class="w">    </span><span class="c1">// Join all worker threads</span>
+<span class="linenos"> 96</span><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">&lt;</span><span class="n">num_threads</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos"> 97</span><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">worker</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">joinable</span><span class="p">())</span><span class="w"> </span><span class="n">worker</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">join</span><span class="p">();</span>
+<span class="linenos"> 98</span><span class="w">    </span><span class="p">}</span>
+<span class="linenos"> 99</span>
+<span class="linenos">100</span><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="linenos">101</span><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">EXIT_SUCCESS</span><span class="p">;</span>
+<span class="linenos">102</span><span class="p">}</span>
 </pre></div>
 </div>
 <div class="hint admonition">
