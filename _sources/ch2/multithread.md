@@ -25,7 +25,7 @@
   ```
   ```{admonition} Dig deeper
   You may also use the somewhat more powerful
-  [Boost.Thread](https://www.boost.org/doc/libs/1_74_0/doc/html/thread.html)
+  [Boost.Thread](https://www.boost.org/library/1.83.0/thread/)
   library to do multi-threading. 
   ```
 
