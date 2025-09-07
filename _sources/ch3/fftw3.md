@@ -5,7 +5,7 @@
   dimensions, of arbitrary input size, and of both real- and
   complex-valued data. The FFTW3 library has been highly optimized to
   run with different levels of precision and under a number of CPU
-  architectures. We will employ in most cases the multi-threaded,
+  architectures. We will employ in most cases the single-/multi-threaded,
   single-precision, 1-d FFT library functions.
 
 * The nice thing about FFTW3 is that a detailed
@@ -47,7 +47,7 @@
    forward (`FFTW_FORWARD`) and inverse (`FFTW_BACKWARD`) FFT
    plans above, respectively. Executing the forward plan calculates
    \begin{equation*}
-     \sum_{n=0}^{N-1} x_n e^{-j \frac{2\pi n k}{N}},
+     \sum_{n=0}^{N-1} x[n] e^{-j \frac{2\pi n k}{N}},
    \end{equation*}
    while executing the inverse plan calculates
    \begin{equation*}

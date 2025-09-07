@@ -426,7 +426,7 @@ computing DFT (and some other related transforms) in one or more
 dimensions, of arbitrary input size, and of both real- and
 complex-valued data. The FFTW3 library has been highly optimized to
 run with different levels of precision and under a number of CPU
-architectures. We will employ in most cases the multi-threaded,
+architectures. We will employ in most cases the single-/multi-threaded,
 single-precision, 1-d FFT library functions.</p></li>
 <li><p>The nice thing about FFTW3 is that a detailed
 manual <span id="id1">[<a class="reference internal" href="filter_exs.html#id9" title="M. Frigo and S. G. Johnson. FFTW Manual for version 3.3.9. fftw.org, 2020. URL: http://www.fftw.org/fftw3.pdf.">2</a>]</span> is available. One should
@@ -475,7 +475,7 @@ forward (<code class="docutils literal notranslate"><span class="pre">FFTW_FORWA
 plans above, respectively. Executing the forward plan calculates</p>
 <div class="amsmath math notranslate nohighlight">
 \[\begin{equation*}
-     \sum_{n=0}^{N-1} x_n e^{-j \frac{2\pi n k}{N}},
+     \sum_{n=0}^{N-1} x[n] e^{-j \frac{2\pi n k}{N}},
    \end{equation*}\]</div>
 <p>while executing the inverse plan calculates</p>
 <div class="amsmath math notranslate nohighlight">

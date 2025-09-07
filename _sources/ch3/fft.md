@@ -157,7 +157,7 @@ class fft{
             for (int i=0; i<U_D*nblocks; i++) {
                 unsigned idx = i*out_nsteps;
 #ifdef USE_VOLK
-                volk_32fc_s32fc_multiply_32fc(out+idx, out+idx, one_over_fftsize_c, fftsize);
+                volk_32fc_s32fc_multiply2_32fc(out+idx, out+idx, &one_over_fftsize_c, fftsize);
 #else
                 for (int j=0; j<fftsize; j++) {
                     out[idx++] *= one_over_fftsize;
@@ -179,7 +179,7 @@ class fft{
   {cite}`frigo2020` for more usage information.
 * Can define the compile flag `USE_VOLK` to use the 
   [VOLK](https://www.libvolk.org/) library for SIMD-accelerated
-  arithmetic kernels such that `volk_32fc_s32fc_multiply_32fc()`.
+  arithmetic kernels such that `volk_32fc_s32fc_multiply2_32fc()`.
 * The internal multi-threaded implementation of FFTW is used. 
 
 ## Usage
