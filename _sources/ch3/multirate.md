@@ -19,7 +19,8 @@
   and down-sampling steps above. Ideally, $H(z)$ should be lowpass
   with the (normalized) cutoff frequency set at $\min\left(
   \frac{1}{2U}, \frac{1}{2D} \right)$.
-* Practically, we approximate the ideal lowpass filter by a relatively
+* Practically, we approximate the ideal lowpass filter (assuming that
+   the objective is to implement ideal rate conversion) by a relatively
   long FIR filter for $H(z)$. This has significant complexity impacts
   on our multi-rate filter implementation. Not only does the filter
   have to operate at $U$ times the input rate, but it also needs to

@@ -5,7 +5,7 @@
   using FFT, the FFT size must be at least as large as the output
   length so that circular convolution implemented by FFT becomes
   linear convolution. This requirement is often not practical since
-  the input length is usually very large leading to an excessive FFT
+  the input length is usually very large, leading to an excessive FFT
   size. A common solution is to divide the input signal into blocks
   and perform frequency-domain filtering on each block in sequence.
 * There are two main approaches, namely the *overlap-add*
