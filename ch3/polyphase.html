@@ -440,7 +440,8 @@ algorithm described below works even when <span class="math notranslate nohighli
 <section id="polyphase-structure">
 <h2><span class="section-number">3.4.1. </span>Polyphase structure<a class="headerlink" href="#polyphase-structure" title="Permalink to this headline">#</a></h2>
 <ul>
-<li><p>As shown in <span id="id1">[<a class="reference internal" href="filter_exs.html#id8" title="A. V. Oppenheim and R. W. Shafer. Discrete-time Signal Processing. Prentice Hall, 3rd. edition, 2010. ISBN 978-0-13-198842-2.">1</a>]</span> Section 4.7.4, the multi-rate
+<li><p>As shown in <span id="id1">[<a class="reference internal" href="filter_exs.html#id8" title="A. V. Oppenheim and R. W. Shafer. Discrete-time Signal Processing. Prentice Hall, 3rd. edition, 2010. ISBN 978-0-13-198842-2.">1</a>]</span> Section 4.7.4 or in <a class="reference external" href="https://tanfwong.github.io/dsp_notes/ch7/polydecomp.html">my DSP
+notes</a>, the multi-rate
 filter in <a class="reference internal" href="multirate.html#sec-multirate"><span class="std std-numref">Section 3.3</span></a> is equivalent to the
 <strong>polyphase</strong> structure below:</p>
 <a class="reference internal image-reference" href="../_images/polyphase.jpg"><img alt="Polyphase implementation of multi-rate filter" class="align-center" src="../_images/polyphase.jpg" style="width: 800px;" /></a>
@@ -458,7 +459,8 @@ implementation:</p>
 (MUX) runs in the counter-clockwise direction at <span class="math notranslate nohighlight">\(U\)</span> times the
 rate of the down-samplers.</p>
 </li>
-<li><p>Again, as shown in <span id="id2">[<a class="reference internal" href="filter_exs.html#id8" title="A. V. Oppenheim and R. W. Shafer. Discrete-time Signal Processing. Prentice Hall, 3rd. edition, 2010. ISBN 978-0-13-198842-2.">1</a>]</span> Section 4.7.4, the <span class="math notranslate nohighlight">\(p\)</span>th
+<li><p>Again, as shown in <span id="id2">[<a class="reference internal" href="filter_exs.html#id8" title="A. V. Oppenheim and R. W. Shafer. Discrete-time Signal Processing. Prentice Hall, 3rd. edition, 2010. ISBN 978-0-13-198842-2.">1</a>]</span> Section 4.7.4 or or in <a class="reference external" href="https://tanfwong.github.io/dsp_notes/ch7/polydecomp.html">my DSP
+notes</a>,, the <span class="math notranslate nohighlight">\(p\)</span>th
 branch above involving polyphase filter <span class="math notranslate nohighlight">\(z^{\left\lfloor
 pD/U \right\rfloor} E_{pD\%U}(z)\)</span> can itself be
 equivalent to the following polyphase structure:</p>

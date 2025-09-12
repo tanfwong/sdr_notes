@@ -6,7 +6,8 @@
   algorithm described below works even when $U$ and $D$ are not.
 
 ## Polyphase structure
-* As shown in {cite}`oppenheim2010` Section 4.7.4, the multi-rate
+* As shown in {cite}`oppenheim2010` Section 4.7.4 or in [my DSP
+  notes](https://tanfwong.github.io/dsp_notes/ch7/polydecomp.html), the multi-rate
   filter in {numref}`sec:multirate` is equivalent to the
   **polyphase** structure below:
   ```{image} ../figures/polyphase.jpg
@@ -32,7 +33,8 @@
   (MUX) runs in the counter-clockwise direction at $U$ times the 
   rate of the down-samplers.
 
-* Again, as shown in {cite}`oppenheim2010` Section 4.7.4, the $p$th
+* Again, as shown in {cite}`oppenheim2010` Section 4.7.4 or or in [my DSP
+  notes](https://tanfwong.github.io/dsp_notes/ch7/polydecomp.html),, the $p$th
   branch above involving polyphase filter $z^{\left\lfloor
   pD/U \right\rfloor} E_{pD\%U}(z)$ can itself be
   equivalent to the following polyphase structure:
