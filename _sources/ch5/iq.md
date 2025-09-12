@@ -50,7 +50,7 @@
   \end{equation}
   ```
   where $m(t) = m_I(t) + j m_Q (t)$ and $x(t)$ are the
-  complex envelops of the message and TX signal, respectively.
+  complex envelopes of the message and TX signal, respectively.
 * Practically, the value of $\phi$ should be no larger than a few degrees, 
   and $\alpha_I$ and $\alpha_Q$ should differ by only a few percentages.
 
@@ -74,7 +74,7 @@
   + \beta_{dc} e^{j \zeta}
   \end{equation}
   ```
-  where $\hat m(t)$ and $y(t)$ are the complex envelops
+  where $\hat m(t)$ and $y(t)$ are the complex envelopes
   of the demodulated baseband message and RX signal, respectively.
 * As before, the value of $\psi$ is no larger than a few degrees, and
   $\beta_I$ and $\beta_Q$ differ by at most a few percentages.
@@ -316,6 +316,6 @@
     the corrections making the IRR in the single-tone example at least
     $-50$ dB and the low-IF image suppressed by at least 45
     dB. However, the continuous transmission of the offset tone appears
-    to have skewed the long-term averaging correction of the RC DC
+    to have skewed the long-term averaging correction of the RX DC
     offset in the first example.
 
