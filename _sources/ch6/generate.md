@@ -100,7 +100,7 @@
 * For BPSK, $b[n]$ are i.i.d. symbols selected from $\{-1,+1\}$ with
   equal probabilities. For DBPSK, $b[n] = a[n] b[n-1]$, where $a[n]$
   are i.i.d. symbols selected from $\{-1,+1\}$ with equal probabilities.
-  For these two binary (linear) modulations, $R_b[k] = \delta[n]$ and
+  For these two binary (linear) modulations, $R_b[k] = \delta[k]$ and
   $S_b\left( e^{j2 \pi \hat f} \right) = 1$. Therefore, the TX PSD is
   \begin{equation*}
   S_x(f) = \frac{1}{T} \left|P(f)\right|^2.
