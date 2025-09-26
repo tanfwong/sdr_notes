@@ -18,7 +18,8 @@
   allows us to synchronize to the boundaries between different units
   so that we may process the relevant information. In addition,
   because of how acquisition is commonly implemented, it also serves
-  to identify whether the captured signal is one of our interest.
+  to identify whether the captured signal is one that is transmitted
+  by our TX.
 * In a typical digital communication system, acquisition is only
   performed once after the packet's signal is captured. If the packet
   is long, symbol synchronization is achieved and maintained by
