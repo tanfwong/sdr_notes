@@ -97,9 +97,10 @@ sequence $x[n]$.
   approximately the auto-correlation function of the signature
   signal (see below). Hence, finding the autocorrelation peak gives us
   the correct timing.
-* For another example, we can employ Property 8 to gauge how
-  "distinguishing" a set of signature sequences are compared to the
-  lower bound on $\theta_{\max}$.
+* For another example, we can employ  the
+  lower bound on $\theta_{\max}$ in Property 8 to gauge how
+  "distinguishable" a signature sequence can be among a set of signature
+  sequences.
 
 ## Correlation functions of signature signals
 * To simplify discussion, let us assume that the signature sequences
