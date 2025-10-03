@@ -1,6 +1,6 @@
 # Zadoff–Chu Sequences
 
-* If we allowed complex-valued symbols, then **Zadoff-Chu sequences**
+* If we allow complex-valued symbols, then **Zadoff-Chu sequences**
   are popular choices for use as signature sequences.
 
 * An $N$-length *root* Zadoff-Chu sequence parameterized by $M$ 
@@ -13,7 +13,7 @@
   \end{cases}
   \end{equation*}
   where $M$ and $N$ are relative primes. 
-* Clearly, different phases $Tx_M, \ldots, T^{N-1}x_M$ are also 
+* Clearly, the phases $Tx_M, \ldots, T^{N-1}x_M$ are also 
   Zadoff-Chu sequences and have the same periodic auto-correlation
   function as the root  Zadoff-Chu sequence $x_M$.
 
