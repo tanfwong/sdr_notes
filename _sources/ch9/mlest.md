@@ -16,7 +16,8 @@
   and $\theta$.
 
 # ML Estimation Using Pilot Symbols
-* Suppose first that $b[n]$ is known to the RX. That is, they are all
+* Suppose first that the symbol sequence $b[n]$ is known to the
+  RX. That is, it contains all
   pilot symbols. This can be the situation in which we reuse the
   signature sequence for acquisition and/or timing synchronization as
   pilots to perform carrier synchronization. Under this condition, it
