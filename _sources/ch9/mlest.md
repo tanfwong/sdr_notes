@@ -41,7 +41,7 @@
   \left[ r(t) * p^*(-t) \big|_{t=nT} \right].
   \end{equation*}
   Note that the approximated ML estimator above is obtained based on
-  the assumption that $\omega_o \ll \frac{2\pi}{T}$.
+  the assumption that $|\omega_o| \ll \frac{2\pi}{T}$.
 * It is clear that the (approximate) ML estimator in {eq}`e:dd_ml` can
   be rewritten as
   ```{math}
