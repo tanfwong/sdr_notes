@@ -454,14 +454,14 @@ offsets.</p>
 <li><p>If all the signals in the constellation are equally likely to be
 transmitted, then the ML coherent demodulator minimizes the average
 symbol (demodulation) error probability. It is not hard to show (see
-<span id="id1">[<a class="reference internal" href="../ch9/carrier_refs.html#id12" title="J. G. Proakis and M. Salehi. Digital Communications. McGraw-Hill, 5th edition, 2008. ISBN 978-0-07-295716-7.">1</a>]</span> Ch. 4) that the ML coherent is given by</p>
+<span id="id1">[<a class="reference internal" href="#id13" title="J. G. Proakis and M. Salehi. Digital Communications. McGraw-Hill, 5th edition, 2008. ISBN 978-0-07-295716-7.">1</a>]</span> Ch. 4) that the ML coherent is given by</p>
 <div class="math notranslate nohighlight" id="equation-e-ml">
 <span class="eqno">(10.1)<a class="headerlink" href="#equation-e-ml" title="Permalink to this equation">#</a></span>\[\begin{split}\begin{align}
 \hat m 
 &amp;= \arg\hspace{-15pt}\max_{m \in \{0,1,\ldots,M-1\}} 
 \text{Re} \left\{ \int_{-\infty}^{\infty} r(t) s^*_m (t) dt \right\} -\frac{E_m}{2} 
 \\
-&amp; = arg\hspace{-15pt}\max_{m \in \{0,1,\ldots,M-1\}} 
+&amp; = \arg\hspace{-15pt}\max_{m \in \{0,1,\ldots,M-1\}} 
 \text{Re} \left\{ r(t) * s^*_m(-t) \big|_{t=0} \right\} -\frac{E_m}{2} 
 \end{align}\end{split}\]</div>
 <p>where <span class="math notranslate nohighlight">\(E_m \triangleq \int_{-\infty}^{\infty} |s_m(t)|^2 dt\)</span> is the

@@ -28,7 +28,7 @@ may perform coherent demodulation.
   &= \arg\hspace{-15pt}\max_{m \in \{0,1,\ldots,M-1\}} 
   \text{Re} \left\{ \int_{-\infty}^{\infty} r(t) s^*_m (t) dt \right\} -\frac{E_m}{2} 
   \\
-  & = arg\hspace{-15pt}\max_{m \in \{0,1,\ldots,M-1\}} 
+  & = \arg\hspace{-15pt}\max_{m \in \{0,1,\ldots,M-1\}} 
   \text{Re} \left\{ r(t) * s^*_m(-t) \big|_{t=0} \right\} -\frac{E_m}{2} 
   \end{align}
   ```
