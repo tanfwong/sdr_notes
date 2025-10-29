@@ -122,7 +122,7 @@ detecting transmission errors.
 
 (sec:boostcrc)=
 ## Boost.CRC
-* [Boost.CRC](https://www.boost.org/doc/libs/1_71_0/doc/html/crc.html)
+* [Boost.CRC](https://www.boost.org/doc/libs/1_83_0/doc/html/crc.html)
   is a Boost implementation for CRC codes.
 * For simple usage, one may use one of the following three pre-defined CRC classes in Boost.CRC:
   - `boost::crc_16_type`: $g(D) = D^{16} + D^{15} + D^2 + 1$
