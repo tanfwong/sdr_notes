@@ -75,7 +75,7 @@ int UHD_SAFE_MAIN(int argc, char *argv[]){
     return EXIT_SUCCESS;
 }
 ```
-* In this decoding process here, we enter only the portion o fthe RX
+* In this decoding process here, we enter only the portion of the RX
 codeward byte array corresponding to the information part in the
 codeword into the class method `process_bytes()`. This corresponds to
 the first decoding method discussed [before](sec:boostcrc). We have to
