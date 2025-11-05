@@ -28,11 +28,11 @@
 * If one is to perform cancellation of the self interference in the RX
   chain, that must be done in the analog domain before the
   ADC. Unfortunately, our USRP radios are not equipped with the
-  analogu circuitry to perform self interference cancellation.
+  analog circuitry to perform self interference cancellation.
 * In all, while full-duplex operations in the same frequency band
   using our USRP radios is theoretically possible, it is practically
   hard to do so. Therefore, we may opt for either one of the following
-  more practical approaches:
+  more practical approaches.
 
 ## Frequency-division duplexing (FDD)
 * In FDD, the forward and feedback channels occupy different frequency
@@ -44,7 +44,7 @@
   the center frequencies of the forward and feedback bands need to be
   separated by more than 40 MHz plus the larger of the bandwidths of
   the forward and feedback signals. The band separation often needs to
-  be larger due to strong sidelobs that may also present in the self
+  be larger due to strong sidelobes that may also present in the self
   interference signal due to amplifier nonlinearities.
 * If the above frequency band separation requirement is satisfied,
   full-duplex operations can be supported and hence the ARQ protocols
@@ -113,7 +113,7 @@
 * Note that this protocol establishes a master-slave relationship
   between the source and sink. The source acts as the master to control
   transmission timings of both the forward and feedback channels. The
-  sink acts the slave responding to the transmission events initiated by
+  sink acts as  the slave responding to the transmission events initiated by
   the source.
 * Additional communication between the threads running the transmit
   and receive objects is needed to implement this protocol. For
